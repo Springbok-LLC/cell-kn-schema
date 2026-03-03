@@ -636,6 +636,55 @@ slots:
         exact_mappings:
             - SKOS:exactMatch
 
+    subclass_of:
+        description: A relation between a more specific class and a more general class.
+
+    has_quality:
+        description: >-
+            A relation between an entity and a quality inhering in it.
+        exact_mappings:
+            - RO:0000086
+
+    name:
+        description: The name of an entity.
+        range: string
+
+    disease:
+        description: A disease associated with an entity.
+        range: string
+
+    study:
+        description: A study associated with an entity.
+        range: string
+
+    protein_target:
+        description: A protein that is the target of a drug.
+        range: string
+
+    publication_doi_identifier:
+        description: A Digital Object Identifier for a publication.
+        range: doi
+
+    gene_name:
+        description: The name of a gene.
+        range: string
+
+    annotation_score:
+        description: A score indicating the level of annotation for a protein.
+        range: integer
+
+    subject:
+        description: The subject of a triple.
+        range: string
+
+    predicate:
+        description: The predicate of a triple.
+        range: uriorcurie
+
+    object:
+        description: The object of a triple.
+        range: string
+
 classes:
   
     CellSet:
