@@ -686,6 +686,18 @@ slots:
         range: string
 
 classes:
+
+    Association:
+        description: >-
+            A typed association between two entities, linked by a predicate.
+        slots:
+            - subject
+            - predicate
+            - object
+        defining_slots:
+            - subject
+            - predicate
+            - object
   
     CellSet:
         description: A collection of cells that have some common property.
@@ -947,7 +959,7 @@ classes:
 
     CellTypePartOfAnatomicalStructure:
         description: A relationship between a cell type and the anatomical structure it is part of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -975,7 +987,7 @@ classes:
         description: >-
             A relationship between an anatomical structure and another anatomical structure
             it is part of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1000,7 +1012,7 @@ classes:
 
     CellTypeInteractsWithCellType:
         description: A relationship between two cell types that are causally connected.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1031,7 +1043,7 @@ classes:
         description: >-
             A relationship between a cell type and another cell type it directly or
             indirectly develops from.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1062,7 +1074,7 @@ classes:
         description: >-
             A relationship between a cell type whose instances are also instances of another
             cell type.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1091,7 +1103,7 @@ classes:
         description: >-
             A relationship between a cell type and a gene such that the process of gene
             transcription is occuring in the cell type.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1122,7 +1134,7 @@ classes:
         description: >-
             A relationship between a cell type and a protein that is part of its plasma
             membrane.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1152,7 +1164,7 @@ classes:
         description: >-
             A relationship between a cell type and a protein that is not part of its plasma
             membrane but is part of the plasma membrane of related cell types.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1180,7 +1192,7 @@ classes:
 
     ProteinPartOfCellType:
         description: A relationship between a protein and a cell type that it is part of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1208,7 +1220,7 @@ classes:
         description: >-
             A relationship between a gene that is the input to a transcription process and
             the protein that is the output.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1236,7 +1248,7 @@ classes:
 
     GeneIsGeneticBasisForDisease:
         description: A relationship between a gene and a disease it predisposes an organism to.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1264,7 +1276,7 @@ classes:
 
     GeneHasQualityMutation:
         description: A relationship between a gene and some alteration to its nucleic acid sequence.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1294,7 +1306,7 @@ classes:
         description: >-
             A relationship between a mutation and a drug such that the nucleic acid sequence
             alteration changes some effect of the drug.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1321,7 +1333,7 @@ classes:
         description: >-
             A relationship between a drug and a protein that it directly interacts with via
             binding or some modification to either.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1348,7 +1360,7 @@ classes:
         description: >-
             A relationship between a drug and a disease that it has been shown in a phase
             III clinical trial to be safe and effective at treating.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1375,7 +1387,7 @@ classes:
         description: >-
             A relationship between a cell type and a dataset in which some of the data
             exemplify the cell type.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1403,7 +1415,7 @@ classes:
         description: >-
             A relationship between a cell set and an anatomical structure it was extracted
             from for analysis.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1429,7 +1441,7 @@ classes:
 
     CellSetHasSourceCellSetDataset:
         description: A relationship between a cell set and the dataset that contains data about it.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1452,7 +1464,7 @@ classes:
 
     GenePartOfBiomarkerCombination:
         description: A relationship between a gene and a biomarker combination it is a member of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1481,7 +1493,7 @@ classes:
         description: >-
             A relationship between a cell set and a biomarker combination that can be used
             to uniquely identify it.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1509,7 +1521,7 @@ classes:
         description: >-
             A relationship between a cell set dataset and the publication that can be used
             as a reference for it.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1534,7 +1546,7 @@ classes:
         description: >-
             A relationship between a cell set and a cell type that comprises most or all of
             the set.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1561,7 +1573,7 @@ classes:
 
     DrugEvaluatedInClinicalTrial:
         description: A relationship between a drug and some clinical trial it was tested in.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1584,7 +1596,7 @@ classes:
         description: >-
             A relationship between a drug and some gene whose gene products directly
             interact with the drug. This is a symmetric relationship.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1612,7 +1624,7 @@ classes:
         description: >-
             A relationship between a gene and a drug wherein a gene product of that gene
             binds with or modifies the behavior of the drug.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1640,7 +1652,7 @@ classes:
         description: >-
             A relationship between a gene and a second gene that it modifies the activity
             of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1668,7 +1680,7 @@ classes:
         description: >-
             A relationship between two cell sets that are both instances of the same cell
             type that have been mapped to each other.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1691,7 +1703,7 @@ classes:
         description: >-
             A relationship between a biomarker combination and a set of binary genes that
             its members are a member of.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1717,7 +1729,7 @@ classes:
 
     CellSetExpressesBinaryGeneSet:
         description: A relationship between a cell set and a set of binary genes that it expresses.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1742,7 +1754,7 @@ classes:
         description: >-
             A relationship between a protein and a molecular function that it is directly
             involved in carrying out.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1773,7 +1785,7 @@ classes:
         description: >-
             A relationship between a protein and a biological process that it is directly
             involved in carrying out.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
@@ -1806,7 +1818,7 @@ classes:
         description: >-
             A relationship between a protein and a cellular component that is a constituent
             part of it.
-        is_a: linkml:Association
+        is_a: Association
         slot_usage:
             subject:
                 name: subject
