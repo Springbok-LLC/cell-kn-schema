@@ -733,7 +733,6 @@ classes:
             - database_cross_reference
             - ontology_purl
             - biological_process
-            - linkml:examples
         slot_usage:
             ontology_purl:
                 pattern: "CL:[0-9]{7}"
@@ -1848,7 +1847,7 @@ classes:
             - predicate
             - object
         slots:
-            - linkml:knowledge_source
+            - source
 
 
     ###############################################################################################################
