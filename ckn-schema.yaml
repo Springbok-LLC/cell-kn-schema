@@ -818,7 +818,7 @@ classes:
             - author_list
             - pmcid
             - pmid
-            - doi
+            - publication_doi_identifier
             - journal
 
     BiomarkerCombination:
