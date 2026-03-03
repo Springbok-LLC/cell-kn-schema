@@ -1668,8 +1668,11 @@ classes:
                 subproperty_of: genetically_interacts_with
             object:
                 name: object
-                description: agent helping to realise the given entity (e.g. such as a publication)
-                range: agent
+                description: >-
+                    A region (or regions) that includes all of the sequence elements necessary to
+                    encode a functional transcript. A gene may include regulatory regions,
+                    transcribed regions and/or other functional sequence regions.
+                range: Gene
         defining_slots:
             - subject
             - predicate
