@@ -418,7 +418,6 @@ slots:
 
     part_of:
         description: A core relation that holds between a part and its whole.
-        inverse: has part
         exact_mappings:
             - BFO:0000050
 
@@ -443,7 +442,6 @@ slots:
 
     has_part:
         description: A core relation that holds between a whole and its part.
-        inverse: part of
         exact_mappings:
             - BFO:0000051
 
@@ -489,7 +487,6 @@ slots:
         description: >-
             A relation that applies between a cell type and a set of markers that can be
             used to uniquely identify that cell type.
-        inverse: is_characterizing_marker_set_for
         exact_mappings:
             - RO:0015004
 
@@ -497,7 +494,6 @@ slots:
         description: >-
             A relation that applies between a set of markers and a cell type that can be
             used to uniquely identify that cell type.
-        inverse: has_characterizing_marker_set
 
     evaluated_in:
         description: A relation between a drug and some clinical trial it was tested in.
