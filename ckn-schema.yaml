@@ -534,9 +534,15 @@ slots:
         description: >-
             A relation that applies between a set of markers and a cell type that can be
             used to uniquely identify that cell type.
+        # Placeholder
+        exact_mappings:
+            - RO:0015005
 
     evaluated_in:
         description: A relation between a drug and some clinical trial it was tested in.
+        # Placeholder
+        exact_mappings:
+            - RO_0020325
 
     regulates_level_of:
         description: p regulates levels of c if p regulates some amount of c.
@@ -597,6 +603,9 @@ slots:
         description: >-
             A relation between a material entity and a drug such that the material entity
             changes some effect of the drug.
+        # Placeholder
+        exact_mappings:
+            - RO_0002027
 
     has_plasma_membrane_part:
         description: >-
@@ -670,6 +679,9 @@ slots:
         description: >-
             A relation between a disease and a material biological entity that has been
             altered.
+        # Placeholder
+        exact_mappings:
+            - RO_0004037
 
     exact_match:
         description: A mapping relation between two entities that are of the same type.
@@ -678,6 +690,9 @@ slots:
 
     subclass_of:
         description: A relation between a more specific class and a more general class.
+        # Placeholder
+        exact_mappings:
+            - rdfs:subClassOf
 
     has_quality:
         description: >-
