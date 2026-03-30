@@ -34,6 +34,7 @@ types:
 
     doi:
         typeof: uriorcurie
+        uri: xsd:anyURI
 
     https identifier:
         typeof: string
@@ -395,6 +396,10 @@ slots:
             on.
         range: string
 
+    drug_name:
+        description: An name for a drug compound.
+        range: string
+
     trade_names:
         description: >-
             The names for an entity that businesses use to market their product to
@@ -423,6 +428,92 @@ slots:
 
     object:
         description: The object of a triple.
+        range: string
+
+    silhouette_score:
+        description: >-
+            A measure of clustering quality that quantifies how similar an object is to its
+            own cluster compared to other clusters, ranging from -1 to 1.
+        range: float
+
+    collection_id:
+        description: An identifier for a CELLxGENE collection.
+        examples:
+            - value: bcb61471-2a44-4c97-8c7a-26512e27ccc8
+        range: string
+
+    citation:
+        description: A formatted bibliographic reference to a publication.
+        range: string
+
+    gene_id:
+        description: A numeric identifier assigned by the NCBI Entrez Gene database.
+        examples:
+            - value: "1000"
+        range: string
+
+    also_known_as:
+        description: Alternative names or aliases for an entity.
+        range: string
+
+    uniprot_name:
+        description: The protein name associated with a gene as curated by UniProt.
+        range: string
+
+    drug_description:
+        description: A textual description of a drug product.
+        range: string
+
+    drug_type:
+        description: A classification of a drug based on its molecular characteristics.
+        examples:
+            - value: Small molecule
+        range: string
+
+    link_to_pubchem_record:
+        description: A URL linking to a compound record in the PubChem database.
+        examples:
+            - value: https://pubchem.ncbi.nlm.nih.gov/compound/5090
+        range: string
+
+    link_to_uniprot_id:
+        description: A URL linking to a protein record in the UniProt database.
+        examples:
+            - value: https://www.uniprot.org/uniprot/P19022
+        range: string
+
+    genotype_id:
+        description: An identifier for a specific genotype.
+        range: string
+
+    genotype:
+        description: The genetic constitution of an organism at one or more loci.
+        range: string
+
+    phenotype:
+        description: >-
+            An observable characteristic of an organism resulting from the interaction of its
+            genotype with the environment.
+        range: string
+
+    genotype_annotation:
+        description: A textual annotation describing the functional effect of a genotype.
+        range: string
+
+    evidence_level:
+        description: >-
+            A classification indicating the strength of the evidence supporting a
+            genotype-phenotype or pharmacogenomic association.
+        range: string
+
+    literature:
+        description: A reference to a publication or body of published work.
+        range: string
+
+    variant_consequence_label:
+        description: A label describing the predicted consequence of a sequence variant.
+        examples:
+            - value: missense_variant
         range: string
 
     ###############################################################################################################
@@ -710,6 +801,9 @@ classes:
             - expressed_genes
             - cellxgene_collection
             - cellxgene_dataset
+            - label
+            - f_beta_score
+            - silhouette_score
         slot_usage:
             ontology_purl:
                 range: CellType
@@ -749,6 +843,10 @@ classes:
             - refseq_summary
             - mrna_(nm)_and_protein_(np)_sequences
             - reference_sequence_identifier
+            - gene_id
+            - also_known_as
+            - uniprot_name
+            - link_to_uniprot_id
   
     Drug:
         description: A drug product that is bearer of a clinical drug role.
@@ -756,16 +854,19 @@ classes:
         aliases:
             - Bioactive Compound
         slots:
-            - name
+            - drug_name
             - disease
-            - study
+            - study_id
             - uniprot_id
-            - protein_target
-            # - bioactive_molecule_type # Find out more about 'type' annotation before creating a slot for it
+            - protein
             - mechanism_of_action
             - trade_names
             - exact_synonym
             - approval_status
+            - drug_description
+            - drug_type
+            - link_to_pubchem_record
+            - link_to_uniprot_id
 
     AnatomicalStructure:
         description: >-
@@ -803,6 +904,9 @@ classes:
             - cell_count
             - cell_type
             - cellxgene_collection
+            - cellxgene_dataset
+            - collection_id
+            - citation
 
     Publication:
         description: A document that is the output of a publishing process.
@@ -813,7 +917,7 @@ classes:
             - author_list
             - pmcid
             - pmid
-            - publication_doi_identifier
+            - publication_doi
             - journal
 
     BiomarkerCombination:
@@ -838,7 +942,7 @@ classes:
             - number_of_amino_acids
             - protein_function
             - species
-            - gene_name
+            - gene_symbol
             - annotation_score
 
     Disease:
@@ -945,6 +1049,22 @@ classes:
         class_uri: SO:0001059
         slots:
             - reference_sequence_identifier
+            - genotype_id
+            - genotype
+            - phenotype
+            - genotype_annotation
+            - evidence_level
+            - source
+            - literature
+
+    VariantConsequence:
+        description: >-
+            The predicted effect of a sequence variant on a gene product or genomic
+            feature, classified using Sequence Ontology terms.
+        class_uri: SO:0001537
+        slots:
+            - ontology_purl
+            - variant_consequence_label
 
     ###############################################################################################################
     #########################################          Triples           ##########################################
