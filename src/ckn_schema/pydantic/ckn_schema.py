@@ -282,7 +282,8 @@ class Gene(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['Gene Symbol'],
          'class_uri': 'SO:0000704',
-         'from_schema': 'https://w3id.org/nlm-ckn-schema'})
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'slot_usage': {'gene_symbol': {'name': 'gene_symbol', 'required': True}}})
 
     gene_symbol: str = Field(default=..., description="""A unique, standardized short name for a gene, often formed by the abbreviation of the gene name, that is assigned by the HUGO Gene Nomenclature Committee (HGNC).""", json_schema_extra = { "linkml_meta": {'domain_of': ['Gene', 'Protein'], 'examples': [{'value': 'HSPA1B'}]} })
     label: Optional[str] = Field(default=None, description="""The name for an entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellSet',
@@ -492,7 +493,9 @@ class Protein(ConfiguredBaseModel):
     """
     An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'PR:000000001', 'from_schema': 'https://w3id.org/nlm-ckn-schema'})
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'class_uri': 'PR:000000001',
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'slot_usage': {'gene_symbol': {'name': 'gene_symbol', 'required': True}}})
 
     comment: Optional[str] = Field(default=None, description="""One or more statements that provide additional information about a resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Protein'], 'slot_uri': 'rdfs:comment'} })
     label: Optional[str] = Field(default=None, description="""The name for an entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['CellSet',
@@ -1077,7 +1080,7 @@ class CellTypeExpressesGene(Association):
 
     subject: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""relation between some biological entity and a gene that is the input of some gene expression process""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'expresses'} })
-    object: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class CellTypeHasPlasmaMembranePartProtein(Association):
@@ -1110,7 +1113,7 @@ class CellTypeHasPlasmaMembranePartProtein(Association):
 
     subject: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a cell c and a protein complex or protein p that is part of the cell's plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'has_plasma_membrane_part'} })
-    object: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class CellTypeLacksPlasmaMembranePartProtein(Association):
@@ -1143,7 +1146,7 @@ class CellTypeLacksPlasmaMembranePartProtein(Association):
 
     subject: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation that asserts the lack of a presence of some cellular component in a cell's plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'lacks_plasma_membrane_part'} })
-    object: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class ProteinPartOfCellType(Association):
@@ -1172,7 +1175,7 @@ class ProteinPartOfCellType(Association):
                                     'name': 'subject',
                                     'range': 'Protein'}}})
 
-    subject: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a part and some whole entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'part_of'} })
     object: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1205,9 +1208,9 @@ class GeneProducesProtein(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between two material entites wherein some process that occurs in a has output b.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'produces'} })
-    object: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class GeneIsGeneticBasisForDisease(Association):
@@ -1237,7 +1240,7 @@ class GeneIsGeneticBasisForDisease(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a gene and a disease or disorder in which it is a causal input to.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'],
          'subproperty_of': 'is_genetic_basis_for_condition'} })
     object: Optional[Disease] = Field(default=None, description="""A disposition to undergo pathological processes that exists in an organism because of one or more disorders in that organism.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
@@ -1272,7 +1275,7 @@ class GeneHasQualityMutation(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between an independent continuant and a quality that specifically dependends on the independent continuant.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'has_quality'} })
     object: Optional[Mutation] = Field(default=None, description="""A sequence_alteration is a sequence_feature whose extent is the deviation from another sequence.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1331,7 +1334,7 @@ class DrugMolecularlyInteractsWithProtein(Association):
 
     subject: Optional[Drug] = Field(default=None, description="""A drug product that is bearer of a clinical drug role.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'molecularly_interacts_with'} })
-    object: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class DrugIsSubstanceThatTreatsDisease(Association):
@@ -1480,7 +1483,7 @@ class GenePartOfBiomarkerCombination(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a part and some whole entity.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'part_of'} })
     object: Optional[BiomarkerCombination] = Field(default=None, description="""A cell type marker gene is a gene that is selectively expressed in cells of a given type and can be reliably used alone or in combination as a canonical characteristic to optimally classify them.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1629,7 +1632,7 @@ class DrugMolecularlyInteractsWithGene(Association):
 
     subject: Optional[Drug] = Field(default=None, description="""A drug product that is bearer of a clinical drug role.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'molecularly_interacts_with'} })
-    object: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class GeneMolecularlyInteractsWithDrug(Association):
@@ -1658,7 +1661,7 @@ class GeneMolecularlyInteractsWithDrug(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'molecularly_interacts_with'} })
     object: Optional[Drug] = Field(default=None, description="""A drug product that is bearer of a clinical drug role.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1693,9 +1696,9 @@ class GeneGeneticallyInteractsWithGene(Association):
                                     'name': 'subject',
                                     'range': 'Gene'}}})
 
-    subject: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two genetic entities that interact at the genetic level.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'genetically_interacts_with'} })
-    object: Optional[str] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 
 class CellSetExactMatchCellSet(Association):
@@ -1811,7 +1814,7 @@ class ProteinCapableOfMolecularFunction(Association):
                                     'name': 'subject',
                                     'range': 'Protein'}}})
 
-    subject: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a material entity (such as a cell) and a process, in which the material entity has the ability to carry out the process.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'capable_of'} })
     object: Optional[MolecularFunction] = Field(default=None, description="""A molecular process that can be carried out by the action of a single macromolecular machine, usually via direct physical interactions with other molecular entities. Function in this sense denotes an action, or activity, that a gene product (or a complex) performs.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1852,7 +1855,7 @@ class ProteinInvolvedInBiologicalProcess(Association):
                                     'name': 'subject',
                                     'range': 'Protein'}}})
 
-    subject: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a material entity and a process in which the material entity enables some subprocess that is part of the larger process.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'involved_in'} })
     object: Optional[BiologicalProcess] = Field(default=None, description="""A biological process is the execution of a genetically-encoded biological module or program. It consists of all the steps required to achieve the specific biological objective of the module. A biological process is accomplished by a particular set of molecular functions carried out by specific gene products (or macromolecular complexes), often in a highly regulated manner and in a particular temporal sequence.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
@@ -1898,7 +1901,7 @@ class ProteinLocatedInCellularComponent(Association):
 
     source: Optional[str] = Field(default=None, description="""The resource from which some information, data, or knowledge originated.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Mutation', 'ProteinLocatedInCellularComponent'],
          'slot_uri': 'dc:source'} })
-    subject: Optional[str] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
+    subject: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
     predicate: Optional[str] = Field(default=None, description="""A relation between two independent continuants, the target and the location, in which the target is entirely within the location""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'located_in'} })
     object: Optional[CellularComponent] = Field(default=None, description="""A location, relative to cellular compartments and structures, occupied by a macromolecular machine. There are three types of cellular components described in the gene ontology: (1) the cellular anatomical entity where a gene product carries out a molecular function (e.g., plasma membrane, cytoskeleton) or membrane-enclosed compartments (e.g., mitochondrion); (2)virion components, where viral proteins act, and (3) the stable macromolecular complexes of which gene product are parts (e.g., the clathrin complex).""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 

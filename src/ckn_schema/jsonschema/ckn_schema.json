@@ -794,11 +794,15 @@
             "description": "A relationship between a cell type and a gene such that the process of gene transcription is occuring in the cell type.",
             "properties": {
                 "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
                     "description": "relation between some biological entity and a gene that is the input of some gene expression process",
@@ -864,11 +868,15 @@
             "description": "A relationship between a cell type and a protein that is part of its plasma membrane.",
             "properties": {
                 "object": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
                     "description": "A relation between a cell c and a protein complex or protein p that is part of the cell's plasma membrane.",
@@ -934,11 +942,15 @@
             "description": "A relationship between a cell type and a protein that is not part of its plasma membrane but is part of the plasma membrane of related cell types.",
             "properties": {
                 "object": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
                     "description": "A relation that asserts the lack of a presence of some cellular component in a cell's plasma membrane.",
@@ -1330,11 +1342,15 @@
             "description": "A relationship between a drug and some gene whose gene products directly interact with the drug. This is a symmetric relationship.",
             "properties": {
                 "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
                     "description": "Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.",
@@ -1363,11 +1379,15 @@
             "description": "A relationship between a drug and a protein that it directly interacts with via binding or some modification to either.",
             "properties": {
                 "object": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
                     "description": "Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.",
@@ -1411,10 +1431,7 @@
                 },
                 "gene_symbol": {
                     "description": "A unique, standardized short name for a gene, often formed by the abbreviation of the gene name, that is assigned by the HUGO Gene Nomenclature Committee (HGNC).",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "type": "string"
                 },
                 "gene_type": {
                     "description": "A category for genes based on whether they encode or don't encode proteins.",
@@ -1491,11 +1508,15 @@
             "description": "A relationship between a gene and a second gene that it modifies the activity of.",
             "properties": {
                 "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
                     "description": "Symmetric relation between two genetic entities that interact at the genetic level.",
@@ -1505,11 +1526,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneGeneticallyInteractsWithGene",
@@ -1538,11 +1563,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneHasQualityMutation",
@@ -1571,11 +1600,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneIsGeneticBasisForDisease",
@@ -1604,11 +1637,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneMolecularlyInteractsWithDrug",
@@ -1637,11 +1674,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GenePartOfBiomarkerCombination",
@@ -1652,11 +1693,15 @@
             "description": "A relationship between a gene that is the input to a transcription process and the protein that is the output.",
             "properties": {
                 "object": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
                     "description": "A relation between two material entites wherein some process that occurs in a has output b.",
@@ -1666,11 +1711,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneProducesProtein",
@@ -1951,11 +2000,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 }
             },
             "title": "ProteinCapableOfMolecularFunction",
@@ -1984,11 +2037,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 }
             },
             "title": "ProteinInvolvedInBiologicalProcess",
@@ -2024,11 +2081,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 }
             },
             "title": "ProteinLocatedInCellularComponent",
@@ -2057,11 +2118,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Protein"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 }
             },
             "title": "ProteinPartOfCellType",

@@ -154,7 +154,6 @@ slots:
             (HGNC).
         examples:
             - value: HSPA1B
-        identifier: true
         range: string
 
     mutation_id:
@@ -847,6 +846,9 @@ classes:
             - also_known_as
             - uniprot_name
             - link_to_uniprot_id
+        slot_usage:
+            gene_symbol:
+                required: true
   
     Drug:
         description: A drug product that is bearer of a clinical drug role.
@@ -944,6 +946,9 @@ classes:
             - species
             - gene_symbol
             - annotation_score
+        slot_usage:
+            gene_symbol:
+                required: true
 
     Disease:
         description: >-
