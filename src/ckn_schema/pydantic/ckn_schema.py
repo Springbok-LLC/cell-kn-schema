@@ -1050,7 +1050,7 @@ class CellTypeSubclassOfCellType(Association):
 
 class CellTypeExpressesGene(Association):
     """
-    A relationship between a cell type and a gene such that the process of gene transcription is occuring in the cell type.
+    A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
@@ -1063,12 +1063,12 @@ class CellTypeExpressesGene(Association):
                                                   'sequence regions.',
                                    'name': 'object',
                                    'range': 'Gene'},
-                        'predicate': {'description': 'relation between some biological '
-                                                     'entity and a gene that is the '
-                                                     'input of some gene expression '
-                                                     'process',
+                        'predicate': {'description': 'A relation between a cell type '
+                                                     'and a gene that is selectively '
+                                                     'expressed in that cell type '
+                                                     'relative to other cell types.',
                                       'name': 'predicate',
-                                      'subproperty_of': 'expresses'},
+                                      'subproperty_of': 'selectively_expresses'},
                         'subject': {'description': 'A material entity of anatomical '
                                                    'origin (part of or deriving from '
                                                    'an organism) that has as its parts '
@@ -1079,7 +1079,7 @@ class CellTypeExpressesGene(Association):
                                     'range': 'CellType'}}})
 
     subject: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
-    predicate: Optional[str] = Field(default=None, description="""relation between some biological entity and a gene that is the input of some gene expression process""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'expresses'} })
+    predicate: Optional[str] = Field(default=None, description="""A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association'], 'subproperty_of': 'selectively_expresses'} })
     object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'domain_of': ['Association']} })
 
 

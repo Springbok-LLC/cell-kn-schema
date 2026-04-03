@@ -669,6 +669,16 @@ slots:
         exact_mappings:
             - RO_0002292
 
+    selectively_expresses:
+        description: >-
+            A relation between a cell type and a gene such that the gene is transcribed
+            at a significantly higher level in that cell type relative to other cell types,
+            and can be used as a marker for the cell type.
+        is_a: expresses
+        # Placeholder — RO_0002294 does not exist in RO; using as a project-local term
+        exact_mappings:
+            - RO_0002294
+
     has_pharmacological_effect:
         description: >-
             A relation between a material entity and a drug such that the material entity
@@ -1219,8 +1229,8 @@ classes:
 
     CellTypeExpressesGene:
         description: >-
-            A relationship between a cell type and a gene such that the process of gene
-            transcription is occuring in the cell type.
+            A relationship between a cell type and a gene such that the gene is
+            selectively expressed in that cell type and can be used as a marker.
         is_a: Association
         slot_usage:
             subject:
@@ -1233,9 +1243,9 @@ classes:
             predicate:
                 name: predicate
                 description: >-
-                    relation between some biological entity and a gene that is the input of some
-                    gene expression process
-                subproperty_of: expresses
+                    A relation between a cell type and a gene that is selectively expressed
+                    in that cell type relative to other cell types.
+                subproperty_of: selectively_expresses
             object:
                 name: object
                 description: >-
