@@ -757,7 +757,7 @@ slots:
             Symmetric relation between two genetic entities that interact at the genetic
             level.
         exact_mappings:
-            - RO:002435
+            - RO:0002435
 
     caused_by_disruption_of:
         description: >-

@@ -3605,7 +3605,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                              'entities that '
                                                              'interact at the '
                                                              'genetic level.',
-                                              'exact_mappings': ['RO:002435'],
+                                              'exact_mappings': ['RO:0002435'],
                                               'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                               'name': 'genetically_interacts_with'},
                'genotype': {'description': 'The genetic constitution of an '
