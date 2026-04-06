@@ -1,4 +1,4 @@
-from __future__ import annotations 
+from __future__ import annotations
 
 import re
 import sys
@@ -7,8 +7,8 @@ from datetime import (
     datetime,
     time
 )
-from decimal import Decimal 
-from enum import Enum 
+from decimal import Decimal
+from enum import Enum
 from typing import (
     Any,
     ClassVar,
@@ -22,7 +22,10 @@ from pydantic import (
     ConfigDict,
     Field,
     RootModel,
-    field_validator
+    SerializationInfo,
+    SerializerFunctionWrapHandler,
+    field_validator,
+    model_serializer
 )
 
 
@@ -32,6 +35,8 @@ version = "None"
 
 class ConfiguredBaseModel(BaseModel):
     model_config = ConfigDict(
+        serialize_by_alias = True,
+        validate_by_name = True,
         validate_assignment = True,
         validate_default = True,
         extra = "forbid",
@@ -39,8 +44,20 @@ class ConfiguredBaseModel(BaseModel):
         use_enum_values = True,
         strict = False,
     )
-    pass
 
+    @model_serializer(mode='wrap', when_used='unless-none')
+    def treat_empty_lists_as_none(
+            self, handler: SerializerFunctionWrapHandler,
+            info: SerializationInfo) -> dict[str, Any]:
+        if info.exclude_none:
+            _instance = self.model_copy()
+            for field, field_info in type(_instance).model_fields.items():
+                if getattr(_instance, field) == [] and not(
+                        field_info.is_required()):
+                    setattr(_instance, field, None)
+        else:
+            _instance = self
+        return handler(_instance, info)
 
 
 
@@ -4609,7 +4626,7 @@ class Gene(ConfiguredBaseModel):
          'name': 'refseq_summary',
          'owner': 'Gene',
          'range': 'string'} })
-    mrna_(nm)_and_protein_(np)_sequences: Optional[str] = Field(default=None, description="""The mRNA and protein reference sequences for a given gene.""", json_schema_extra = { "linkml_meta": {'alias': 'mrna_(nm)_and_protein_(np)_sequences',
+    mrna__nm__and_protein__np__sequences: Optional[str] = Field(default=None, alias="mrna_(nm)_and_protein_(np)_sequences", description="""The mRNA and protein reference sequences for a given gene.""", json_schema_extra = { "linkml_meta": {'alias': 'mrna_(nm)_and_protein_(np)_sequences',
          'description': 'The mRNA and protein reference sequences for a given gene.',
          'domain_of': ['Gene'],
          'examples': [{'value': 'NM_032119 -> NP_115495, adhesion G-protein coupled '
@@ -7939,4 +7956,3 @@ CellSetExpressesBinaryGeneSet.model_rebuild()
 ProteinCapableOfMolecularFunction.model_rebuild()
 ProteinInvolvedInBiologicalProcess.model_rebuild()
 ProteinLocatedInCellularComponent.model_rebuild()
-
