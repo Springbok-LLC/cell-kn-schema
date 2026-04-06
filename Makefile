@@ -9,7 +9,7 @@ copy-schema:
 	cp $(SCHEMA) $(SRC)/schema/ckn_schema.yaml
 
 gen-pydantic: copy-schema
-	gen-pydantic --meta full $(SCHEMA) > $(SRC)/pydantic/ckn_schema.py
+	gen-pydantic --meta FULL $(SCHEMA) > $(SRC)/pydantic/ckn_schema.py
 
 gen-shacl: copy-schema
 	gen-shacl $(SCHEMA) > $(SRC)/shacl/ckn_schema.shacl.ttl
