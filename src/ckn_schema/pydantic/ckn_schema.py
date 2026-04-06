@@ -3137,7 +3137,9 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
      'id': 'https://w3id.org/nlm-ckn-schema',
      'imports': ['linkml:types'],
      'name': 'nlm-ckn-schema',
-     'prefixes': {'CHEBI': {'prefix_prefix': 'CHEBI',
+     'prefixes': {'BFO': {'prefix_prefix': 'BFO',
+                          'prefix_reference': 'https://purl.obolibrary.org/obo/BFO_'},
+                  'CHEBI': {'prefix_prefix': 'CHEBI',
                             'prefix_reference': 'https://purl.obolibrary.org/obo/CHEBI_'},
                   'CL': {'prefix_prefix': 'CL',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/CL_'},
@@ -3163,10 +3165,16 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'prefix_reference': 'https://purl.obolibrary.org/obo/PATO_'},
                   'PR': {'prefix_prefix': 'PR',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/PR_'},
+                  'RO': {'prefix_prefix': 'RO',
+                         'prefix_reference': 'https://purl.obolibrary.org/obo/RO_'},
+                  'SKOS': {'prefix_prefix': 'SKOS',
+                           'prefix_reference': 'http://www.w3.org/2004/02/skos/core#'},
                   'SO': {'prefix_prefix': 'SO',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/SO_'},
                   'UBERON': {'prefix_prefix': 'UBERON',
                              'prefix_reference': 'https://purl.obolibrary.org/obo/UBERON_'},
+                  'dc': {'prefix_prefix': 'dc',
+                         'prefix_reference': 'http://purl.org/dc/elements/1.1/'},
                   'foaf': {'prefix_prefix': 'foaf',
                            'prefix_reference': 'http://xmlns.com/foaf/0.1/'},
                   'linkml': {'prefix_prefix': 'linkml',
@@ -3288,7 +3296,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                           'disease and a material '
                                                           'biological entity that '
                                                           'has been altered.',
-                                           'exact_mappings': ['RO_0004037'],
+                                           'exact_mappings': ['RO:0004037'],
                                            'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                            'name': 'caused_by_disruption_of'},
                'cell_count': {'description': 'A count of all cells within a '
@@ -3483,7 +3491,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                              'range': 'string'},
                'evaluated_in': {'description': 'A relation between a drug and some '
                                                'clinical trial it was tested in.',
-                                'exact_mappings': ['RO_0020325'],
+                                'exact_mappings': ['RO:0020325'],
                                 'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                 'name': 'evaluated_in'},
                'evidence_level': {'description': 'A classification indicating the '
@@ -3555,7 +3563,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                             'processed from a transcript that was '
                                             'transcribed as part of the gene '
                                             'expression process.',
-                             'exact_mappings': ['RO_0002292'],
+                             'exact_mappings': ['RO:0002292'],
                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
                              'name': 'expresses'},
                'f_beta_score': {'description': 'A measure of a binary '
@@ -3597,7 +3605,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                              'entities that '
                                                              'interact at the '
                                                              'genetic level.',
-                                              'exact_mappings': ['RO_:002435'],
+                                              'exact_mappings': ['RO:002435'],
                                               'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                               'name': 'genetically_interacts_with'},
                'genotype': {'description': 'The genetic constitution of an '
@@ -3654,7 +3662,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                              'material entity '
                                                              'changes some effect '
                                                              'of the drug.',
-                                              'exact_mappings': ['RO_0002027'],
+                                              'exact_mappings': ['RO:0002027'],
                                               'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                               'name': 'has_pharmacological_effect'},
                'has_phenotype': {'description': 'A relationship that holds between '
@@ -4036,7 +4044,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                         'types, and can be used as '
                                                         'a marker for the cell '
                                                         'type.',
-                                         'exact_mappings': ['RO_0002294'],
+                                         'exact_mappings': ['RO:0002294'],
                                          'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                          'is_a': 'expresses',
                                          'name': 'selectively_expresses'},

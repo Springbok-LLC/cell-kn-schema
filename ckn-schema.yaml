@@ -27,6 +27,10 @@ prefixes:
     rdfs: http://www.w3.org/2000/01/rdf-schema#
     obo: http://www.geneontology.org/formats/oboInOwl#
     foaf: http://xmlns.com/foaf/0.1/
+    RO: https://purl.obolibrary.org/obo/RO_
+    BFO: https://purl.obolibrary.org/obo/BFO_
+    SKOS: http://www.w3.org/2004/02/skos/core#
+    dc: http://purl.org/dc/elements/1.1/
 
 default_prefix: nlm-ckn
 
@@ -612,7 +616,7 @@ slots:
         description: A relation between a drug and some clinical trial it was tested in.
         # Placeholder
         exact_mappings:
-            - RO_0020325
+            - RO:0020325
 
     regulates_level_of:
         description: p regulates levels of c if p regulates some amount of c.
@@ -667,7 +671,7 @@ slots:
             processed from a transcript that was transcribed as part of the gene expression
             process.
         exact_mappings:
-            - RO_0002292
+            - RO:0002292
 
     selectively_expresses:
         description: >-
@@ -677,7 +681,7 @@ slots:
         is_a: expresses
         # Placeholder — RO_0002294 does not exist in RO; using as a project-local term
         exact_mappings:
-            - RO_0002294
+            - RO:0002294
 
     has_pharmacological_effect:
         description: >-
@@ -685,7 +689,7 @@ slots:
             changes some effect of the drug.
         # Placeholder
         exact_mappings:
-            - RO_0002027
+            - RO:0002027
 
     has_plasma_membrane_part:
         description: >-
@@ -753,7 +757,7 @@ slots:
             Symmetric relation between two genetic entities that interact at the genetic
             level.
         exact_mappings:
-            - RO_:002435
+            - RO:002435
 
     caused_by_disruption_of:
         description: >-
@@ -761,7 +765,7 @@ slots:
             altered.
         # Placeholder
         exact_mappings:
-            - RO_0004037
+            - RO:0004037
 
     exact_match:
         description: A mapping relation between two entities that are of the same type.
