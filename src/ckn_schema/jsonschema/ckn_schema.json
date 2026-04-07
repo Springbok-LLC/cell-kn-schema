@@ -1844,7 +1844,7 @@
             "title": "Mutation",
             "type": "object"
         },
-        "MutationHasPharamcologicalEffectDrug": {
+        "MutationHasPharmacologicalEffectDrug": {
             "additionalProperties": false,
             "description": "A relationship between a mutation and a drug such that the nucleic acid sequence alteration changes some effect of the drug.",
             "properties": {
@@ -1878,7 +1878,7 @@
                     "description": "A sequence_alteration is a sequence_feature whose extent is the deviation from another sequence."
                 }
             },
-            "title": "MutationHasPharamcologicalEffectDrug",
+            "title": "MutationHasPharmacologicalEffectDrug",
             "type": "object"
         },
         "OrganismTrait": {

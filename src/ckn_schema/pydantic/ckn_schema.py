@@ -2546,7 +2546,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                         'evidence_level',
                                         'source',
                                         'literature']},
-                 'MutationHasPharamcologicalEffectDrug': {'defining_slots': ['subject',
+                 'MutationHasPharmacologicalEffectDrug': {'defining_slots': ['subject',
                                                                              'predicate',
                                                                              'object'],
                                                           'description': 'A '
@@ -2569,7 +2569,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                          'drug.',
                                                           'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                                           'is_a': 'Association',
-                                                          'name': 'MutationHasPharamcologicalEffectDrug',
+                                                          'name': 'MutationHasPharmacologicalEffectDrug',
                                                           'slot_usage': {'object': {'description': 'A '
                                                                                                    'drug '
                                                                                                    'product '
@@ -6737,7 +6737,7 @@ class GeneHasQualityMutation(Association):
          'range': 'Mutation'} })
 
 
-class MutationHasPharamcologicalEffectDrug(Association):
+class MutationHasPharmacologicalEffectDrug(Association):
     """
     A relationship between a mutation and a drug such that the nucleic acid sequence alteration changes some effect of the drug.
     """
@@ -6747,7 +6747,7 @@ class MutationHasPharamcologicalEffectDrug(Association):
                         'drug.',
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'is_a': 'Association',
-         'name': 'MutationHasPharamcologicalEffectDrug',
+         'name': 'MutationHasPharmacologicalEffectDrug',
          'slot_usage': {'object': {'description': 'A drug product that is bearer of a '
                                                   'clinical drug role.',
                                    'name': 'object',
@@ -6771,7 +6771,7 @@ class MutationHasPharamcologicalEffectDrug(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'subject',
-         'owner': 'MutationHasPharamcologicalEffectDrug',
+         'owner': 'MutationHasPharmacologicalEffectDrug',
          'range': 'Mutation'} })
     predicate: Optional[str] = Field(default=None, description="""A relation between a material entity and a drug such that the material entity changes some effect of the drug.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
          'description': 'A relation between a material entity and a drug such that the '
@@ -6779,7 +6779,7 @@ class MutationHasPharamcologicalEffectDrug(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'predicate',
-         'owner': 'MutationHasPharamcologicalEffectDrug',
+         'owner': 'MutationHasPharmacologicalEffectDrug',
          'range': 'uriorcurie',
          'subproperty_of': 'has_pharmacological_effect'} })
     object: Optional[Drug] = Field(default=None, description="""A drug product that is bearer of a clinical drug role.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
@@ -6787,7 +6787,7 @@ class MutationHasPharamcologicalEffectDrug(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'object',
-         'owner': 'MutationHasPharamcologicalEffectDrug',
+         'owner': 'MutationHasPharmacologicalEffectDrug',
          'range': 'Drug'} })
 
 
@@ -7958,7 +7958,7 @@ ProteinPartOfCellType.model_rebuild()
 GeneProducesProtein.model_rebuild()
 GeneIsGeneticBasisForDisease.model_rebuild()
 GeneHasQualityMutation.model_rebuild()
-MutationHasPharamcologicalEffectDrug.model_rebuild()
+MutationHasPharmacologicalEffectDrug.model_rebuild()
 DrugMolecularlyInteractsWithProtein.model_rebuild()
 DrugIsSubstanceThatTreatsDisease.model_rebuild()
 CellTypeHasExemplarDataCellSetDataset.model_rebuild()

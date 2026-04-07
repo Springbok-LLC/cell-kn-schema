@@ -1434,7 +1434,7 @@ classes:
             - predicate
             - object
 
-    MutationHasPharamcologicalEffectDrug:
+    MutationHasPharmacologicalEffectDrug:
         description: >-
             A relationship between a mutation and a drug such that the nucleic acid sequence
             alteration changes some effect of the drug.
