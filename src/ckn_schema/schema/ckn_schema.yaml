@@ -819,7 +819,7 @@ classes:
             - silhouette_score
         slot_usage:
             ontology_purl:
-                range: CellType
+                pattern: "CS:[0-9]{7}"
   
     CellType:
         description: >-

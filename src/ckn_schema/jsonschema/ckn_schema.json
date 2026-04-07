@@ -294,15 +294,12 @@
                     ]
                 },
                 "ontology_purl": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/CellType"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A Uniform Resource Locator that redirects to an ontology resource."
+                    "description": "A Uniform Resource Locator that redirects to an ontology resource.",
+                    "pattern": "CS:[0-9]{7}",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "publication": {
                     "description": "A textual entity intended to identify a particular publication.",
