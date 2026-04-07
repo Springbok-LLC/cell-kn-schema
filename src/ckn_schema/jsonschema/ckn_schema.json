@@ -295,7 +295,7 @@
                 },
                 "ontology_purl": {
                     "description": "A Uniform Resource Locator that redirects to an ontology resource.",
-                    "pattern": "CS:[0-9]{7}",
+                    "pattern": "CL:[0-9]{7}",
                     "type": [
                         "string",
                         "null"
