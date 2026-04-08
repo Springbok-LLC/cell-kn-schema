@@ -821,7 +821,7 @@ classes:
             - trade_names
             - exact_synonym
             - approval_status
-            - description
+            - definition
             - drug_type
 
     AnatomicalStructure:
