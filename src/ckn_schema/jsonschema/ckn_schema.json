@@ -231,7 +231,7 @@
                     ]
                 },
                 "binary_gene_set": {
-                    "description": "A collection of genes that are highly expresssed in an instance of some entity (e.g., cell).",
+                    "description": "A collection of genes that are highly expressed in an instance of some entity (e.g., cell).",
                     "type": [
                         "string",
                         "null"
@@ -397,13 +397,6 @@
                 },
                 "cellxgene_dataset": {
                     "description": "A datasets associated with a publication.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "citation": {
-                    "description": "A formatted bibliographic reference to a publication.",
                     "type": [
                         "string",
                         "null"
@@ -786,43 +779,6 @@
             "title": "CellTypeDevelopsFromCellType",
             "type": "object"
         },
-        "CellTypeExpressesGene": {
-            "additionalProperties": false,
-            "description": "A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.",
-            "properties": {
-                "object": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/Gene"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
-                },
-                "predicate": {
-                    "description": "A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "subject": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/CellType"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane."
-                }
-            },
-            "title": "CellTypeExpressesGene",
-            "type": "object"
-        },
         "CellTypeHasExemplarDataCellSetDataset": {
             "additionalProperties": false,
             "description": "A relationship between a cell type and a dataset in which some of the data exemplify the cell type.",
@@ -1008,6 +964,43 @@
             "title": "CellTypePartOfAnatomicalStructure",
             "type": "object"
         },
+        "CellTypeSelectivelyExpressesGene": {
+            "additionalProperties": false,
+            "description": "A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.",
+            "properties": {
+                "object": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
+                },
+                "predicate": {
+                    "description": "A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subject": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CellType"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane."
+                }
+            },
+            "title": "CellTypeSelectivelyExpressesGene",
+            "type": "object"
+        },
         "CellTypeSubclassOfCellType": {
             "additionalProperties": false,
             "description": "A relationship between a cell type whose instances are also instances of another cell type.",
@@ -1047,7 +1040,7 @@
         },
         "CellularComponent": {
             "additionalProperties": false,
-            "description": "A location, relative to cellular compartments and structures, occupied by a macromolecular machine. There are three types of cellular components described in the gene ontology: (1) the cellular anatomical entity where a gene product carries out a molecular function (e.g., plasma membrane, cytoskeleton) or membrane-enclosed compartments (e.g., mitochondrion); (2)virion components, where viral proteins act, and (3) the stable macromolecular complexes of which gene product are parts (e.g., the clathrin complex).",
+            "description": "A location, relative to cellular compartments and structures, occupied by a macromolecular machine. There are three types of cellular components described in the gene ontology: (1) the cellular anatomical entity where a gene product carries out a molecular function (e.g., plasma membrane, cytoskeleton) or membrane-enclosed compartments (e.g., mitochondrion); (2) virion components, where viral proteins act, and (3) the stable macromolecular complexes of which gene product are parts (e.g., the clathrin complex).",
             "properties": {
                 "definition": {
                     "description": "The official description of something that explains its meaning.",
@@ -1172,22 +1165,15 @@
                         "null"
                     ]
                 },
+                "definition": {
+                    "description": "The official description of something that explains its meaning.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "disease": {
                     "description": "A disease associated with an entity.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "drug_description": {
-                    "description": "A textual description of a drug product.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "drug_name": {
-                    "description": "An name for a drug compound.",
                     "type": [
                         "string",
                         "null"
@@ -1207,15 +1193,8 @@
                         "null"
                     ]
                 },
-                "link_to_pubchem_record": {
-                    "description": "A URL linking to a compound record in the PubChem database.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "link_to_uniprot_id": {
-                    "description": "A URL linking to a protein record in the UniProt database.",
+                "label": {
+                    "description": "The name for an entity.",
                     "type": [
                         "string",
                         "null"
@@ -1412,8 +1391,8 @@
             "additionalProperties": false,
             "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
             "properties": {
-                "also_known_as": {
-                    "description": "Alternative names or aliases for an entity.",
+                "exact_synonym": {
+                    "description": "An alternative name for an entity that has the exact same meaning as the preferred or primary label.",
                     "type": [
                         "string",
                         "null"
@@ -1439,13 +1418,6 @@
                 },
                 "label": {
                     "description": "The name for an entity.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "link_to_uniprot_id": {
-                    "description": "A URL linking to a protein record in the UniProt database.",
                     "type": [
                         "string",
                         "null"
@@ -1701,7 +1673,7 @@
                     "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
-                    "description": "A relation between two material entites wherein some process that occurs in a has output b.",
+                    "description": "A relation between two material entities wherein some process that occurs in a has output b.",
                     "type": [
                         "string",
                         "null"
@@ -1812,15 +1784,15 @@
                         "null"
                     ]
                 },
-                "literature": {
-                    "description": "A reference to a publication or body of published work.",
+                "phenotype": {
+                    "description": "An observable characteristic of an organism resulting from the interaction of its genotype with the environment.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
-                "phenotype": {
-                    "description": "An observable characteristic of an organism resulting from the interaction of its genotype with the environment.",
+                "publication": {
+                    "description": "A textual entity intended to identify a particular publication.",
                     "type": [
                         "string",
                         "null"
@@ -2147,20 +2119,6 @@
                         "null"
                     ]
                 },
-                "pmcid": {
-                    "description": "An identifier curated by Pubmed Central for a publication.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "pmid": {
-                    "description": "An identifier curated by Pubmed for a publication.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
                 "publication_doi": {
                     "description": "An identifier for a scientific publication.",
                     "type": [
@@ -2213,28 +2171,6 @@
                 }
             },
             "title": "Species",
-            "type": "object"
-        },
-        "VariantConsequence": {
-            "additionalProperties": false,
-            "description": "The predicted effect of a sequence variant on a gene product or genomic feature, classified using Sequence Ontology terms.",
-            "properties": {
-                "ontology_purl": {
-                    "description": "A Uniform Resource Locator that redirects to an ontology resource.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "variant_consequence_label": {
-                    "description": "A label describing the predicted consequence of a sequence variant.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                }
-            },
-            "title": "VariantConsequence",
             "type": "object"
         }
     },

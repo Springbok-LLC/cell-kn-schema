@@ -166,12 +166,6 @@ slots:
             - value: RS/2070673
         range: string
   
-    variant_consequence_purl:
-        description: A persistent URL that represents a type of variant consequence.
-        examples:
-            - value: SO:0000436
-        range: uriorcurie
-  
     biomarker_combination:
         description: >-
             A collection of biological entities that together can be used to identify some
@@ -182,7 +176,7 @@ slots:
   
     binary_gene_set:
         description: >-
-            A collection of genes that are highly expresssed in an instance of some entity
+            A collection of genes that are highly expressed in an instance of some entity
             (e.g., cell).
         examples:
             - value: '[TM4SF18, VPS35L, CCL21, MMRN1, SNCG, PPFIBP1, NRP2, AKAP12, PDPN, GNG11]'
@@ -239,19 +233,6 @@ slots:
     author_list:
         description: A list of people who contributed to a publication.
         slot_uri: IAO:0000321
-        range: string
-
-    pmcid:
-        description: An identifier curated by Pubmed Central for a publication.
-        examples:
-            - value: PMC10387117
-        range: string
-
-    pmid:
-        description: An identifier curated by Pubmed for a publication.
-        slot_uri: OBI:0001617
-        examples:
-            - value: "37516747"
         range: string
 
     journal:
@@ -399,10 +380,6 @@ slots:
             on.
         range: string
 
-    drug_name:
-        description: An name for a drug compound.
-        range: string
-
     trade_names:
         description: >-
             The names for an entity that businesses use to market their product to
@@ -445,44 +422,20 @@ slots:
             - value: bcb61471-2a44-4c97-8c7a-26512e27ccc8
         range: string
 
-    citation:
-        description: A formatted bibliographic reference to a publication.
-        range: string
-
     gene_id:
         description: A numeric identifier assigned by the NCBI Entrez Gene database.
         examples:
             - value: "1000"
         range: string
 
-    also_known_as:
-        description: Alternative names or aliases for an entity.
-        range: string
-
     uniprot_name:
         description: The protein name associated with a gene as curated by UniProt.
-        range: string
-
-    drug_description:
-        description: A textual description of a drug product.
         range: string
 
     drug_type:
         description: A classification of a drug based on its molecular characteristics.
         examples:
             - value: Small molecule
-        range: string
-
-    link_to_pubchem_record:
-        description: A URL linking to a compound record in the PubChem database.
-        examples:
-            - value: https://pubchem.ncbi.nlm.nih.gov/compound/5090
-        range: string
-
-    link_to_uniprot_id:
-        description: A URL linking to a protein record in the UniProt database.
-        examples:
-            - value: https://www.uniprot.org/uniprot/P19022
         range: string
 
     genotype_id:
@@ -507,16 +460,6 @@ slots:
         description: >-
             A classification indicating the strength of the evidence supporting a
             genotype-phenotype or pharmacogenomic association.
-        range: string
-
-    literature:
-        description: A reference to a publication or body of published work.
-        range: string
-
-    variant_consequence_label:
-        description: A label describing the predicted consequence of a sequence variant.
-        examples:
-            - value: missense_variant
         range: string
 
     ###############################################################################################################
@@ -743,7 +686,7 @@ slots:
     expressed_in:
         description: >-
             x expressed in y if and only if there is a gene expression process (gene
-            expressiongo) that occurs in y, and one of the following holds: (i) x is a gene,
+            expression) that occurs in y, and one of the following holds: (i) x is a gene,
             and x is transcribed into a transcript as part of the gene expression process
             (ii) x is a transcript, and the transcription of x is part of the gene
             expression process (iii) x is a mature gene product such as a protein, and x was
@@ -857,9 +800,8 @@ classes:
             - mrna_(nm)_and_protein_(np)_sequences
             - reference_sequence_identifier
             - gene_id
-            - also_known_as
+            - exact_synonym
             - uniprot_name
-            - link_to_uniprot_id
         slot_usage:
             gene_symbol:
                 required: true
@@ -870,7 +812,7 @@ classes:
         aliases:
             - Bioactive Compound
         slots:
-            - drug_name
+            - label
             - disease
             - study_id
             - uniprot_id
@@ -879,10 +821,8 @@ classes:
             - trade_names
             - exact_synonym
             - approval_status
-            - drug_description
+            - definition
             - drug_type
-            - link_to_pubchem_record
-            - link_to_uniprot_id
 
     AnatomicalStructure:
         description: >-
@@ -922,7 +862,7 @@ classes:
             - cellxgene_collection
             - cellxgene_dataset
             - collection_id
-            - citation
+            - publication
 
     Publication:
         description: A document that is the output of a publishing process.
@@ -931,8 +871,6 @@ classes:
             - year
             - title
             - author_list
-            - pmcid
-            - pmid
             - publication_doi
             - journal
 
@@ -1009,7 +947,7 @@ classes:
             macromolecular machine. There are three types of cellular components described
             in the gene ontology: (1) the cellular anatomical entity where a gene product
             carries out a molecular function (e.g., plasma membrane, cytoskeleton) or
-            membrane-enclosed compartments (e.g., mitochondrion); (2)virion components,
+            membrane-enclosed compartments (e.g., mitochondrion); (2) virion components,
             where viral proteins act, and (3) the stable macromolecular complexes of which
             gene product are parts (e.g., the clathrin complex).
         class_uri: GO:0005575
@@ -1074,16 +1012,7 @@ classes:
             - genotype_annotation
             - evidence_level
             - source
-            - literature
-
-    VariantConsequence:
-        description: >-
-            The predicted effect of a sequence variant on a gene product or genomic
-            feature, classified using Sequence Ontology terms.
-        class_uri: SO:0001537
-        slots:
-            - ontology_purl
-            - variant_consequence_label
+            - publication
 
     ###############################################################################################################
     #########################################          Triples           ##########################################
@@ -1231,7 +1160,7 @@ classes:
             - predicate
             - object
 
-    CellTypeExpressesGene:
+    CellTypeSelectivelyExpressesGene:
         description: >-
             A relationship between a cell type and a gene such that the gene is
             selectively expressed in that cell type and can be used as a marker.
@@ -1364,7 +1293,7 @@ classes:
             predicate:
                 name: predicate
                 description: >-
-                    A relation between two material entites wherein some process that occurs in a
+                    A relation between two material entities wherein some process that occurs in a
                     has output b.
                 subproperty_of: produces
             object:
