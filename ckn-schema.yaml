@@ -428,10 +428,6 @@ slots:
             - value: "1000"
         range: string
 
-    uniprot_name:
-        description: The protein name associated with a gene as curated by UniProt.
-        range: string
-
     drug_type:
         description: A classification of a drug based on its molecular characteristics.
         examples:
@@ -801,7 +797,6 @@ classes:
             - reference_sequence_identifier
             - gene_id
             - exact_synonym
-            - uniprot_name
         slot_usage:
             gene_symbol:
                 required: true
