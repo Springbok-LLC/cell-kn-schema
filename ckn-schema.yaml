@@ -807,15 +807,13 @@ classes:
             - Bioactive Compound
         slots:
             - label
-            - disease
-            - study_id
+            - definition
             - uniprot_id
             - protein
             - mechanism_of_action
             - trade_names
             - exact_synonym
             - approval_status
-            - definition
             - drug_type
 
     AnatomicalStructure:
