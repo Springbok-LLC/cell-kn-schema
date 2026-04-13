@@ -754,7 +754,6 @@ classes:
             - cellxgene_collection
             - cellxgene_dataset
             - label
-            - f_beta_score
             - silhouette_score
         slot_usage:
             ontology_purl:
