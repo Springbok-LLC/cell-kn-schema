@@ -231,7 +231,7 @@
                     ]
                 },
                 "binary_gene_set": {
-                    "description": "A collection of genes that are highly expresssed in an instance of some entity (e.g., cell).",
+                    "description": "A collection of genes that are highly expressed in an instance of some entity (e.g., cell).",
                     "type": [
                         "string",
                         "null"
@@ -279,21 +279,39 @@
                         "null"
                     ]
                 },
+                "f_beta_score": {
+                    "description": "A measure of a binary classification model's accuracy that is calculated by taking the harmonic mean of precision and recall and applying weights to recall.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "label": {
+                    "description": "The name for an entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "ontology_purl": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/CellType"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A Uniform Resource Locator that redirects to an ontology resource."
+                    "description": "A Uniform Resource Locator that redirects to an ontology resource.",
+                    "pattern": "CL:[0-9]{7}",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "publication": {
                     "description": "A textual entity intended to identify a particular publication.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "silhouette_score": {
+                    "description": "A measure of clustering quality that quantifies how similar an object is to its own cluster compared to other clusters, ranging from -1 to 1.",
+                    "type": [
+                        "number",
                         "null"
                     ]
                 },
@@ -372,6 +390,20 @@
                 },
                 "cellxgene_collection": {
                     "description": "A set of multiple datasets associated with a publication.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cellxgene_dataset": {
+                    "description": "A datasets associated with a publication.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "collection_id": {
+                    "description": "An identifier for a CELLxGENE collection.",
                     "type": [
                         "string",
                         "null"
@@ -747,39 +779,6 @@
             "title": "CellTypeDevelopsFromCellType",
             "type": "object"
         },
-        "CellTypeExpressesGene": {
-            "additionalProperties": false,
-            "description": "A relationship between a cell type and a gene such that the process of gene transcription is occuring in the cell type.",
-            "properties": {
-                "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "predicate": {
-                    "description": "relation between some biological entity and a gene that is the input of some gene expression process",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "subject": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/CellType"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane."
-                }
-            },
-            "title": "CellTypeExpressesGene",
-            "type": "object"
-        },
         "CellTypeHasExemplarDataCellSetDataset": {
             "additionalProperties": false,
             "description": "A relationship between a cell type and a dataset in which some of the data exemplify the cell type.",
@@ -965,6 +964,43 @@
             "title": "CellTypePartOfAnatomicalStructure",
             "type": "object"
         },
+        "CellTypeSelectivelyExpressesGene": {
+            "additionalProperties": false,
+            "description": "A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.",
+            "properties": {
+                "object": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
+                },
+                "predicate": {
+                    "description": "A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subject": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CellType"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane."
+                }
+            },
+            "title": "CellTypeSelectivelyExpressesGene",
+            "type": "object"
+        },
         "CellTypeSubclassOfCellType": {
             "additionalProperties": false,
             "description": "A relationship between a cell type whose instances are also instances of another cell type.",
@@ -1004,7 +1040,7 @@
         },
         "CellularComponent": {
             "additionalProperties": false,
-            "description": "A location, relative to cellular compartments and structures, occupied by a macromolecular machine. There are three types of cellular components described in the gene ontology: (1) the cellular anatomical entity where a gene product carries out a molecular function (e.g., plasma membrane, cytoskeleton) or membrane-enclosed compartments (e.g., mitochondrion); (2)virion components, where viral proteins act, and (3) the stable macromolecular complexes of which gene product are parts (e.g., the clathrin complex).",
+            "description": "A location, relative to cellular compartments and structures, occupied by a macromolecular machine. There are three types of cellular components described in the gene ontology: (1) the cellular anatomical entity where a gene product carries out a molecular function (e.g., plasma membrane, cytoskeleton) or membrane-enclosed compartments (e.g., mitochondrion); (2) virion components, where viral proteins act, and (3) the stable macromolecular complexes of which gene product are parts (e.g., the clathrin complex).",
             "properties": {
                 "definition": {
                     "description": "The official description of something that explains its meaning.",
@@ -1129,8 +1165,22 @@
                         "null"
                     ]
                 },
+                "definition": {
+                    "description": "The official description of something that explains its meaning.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "disease": {
                     "description": "A disease associated with an entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "drug_type": {
+                    "description": "A classification of a drug based on its molecular characteristics.",
                     "type": [
                         "string",
                         "null"
@@ -1143,6 +1193,13 @@
                         "null"
                     ]
                 },
+                "label": {
+                    "description": "The name for an entity.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "mechanism_of_action": {
                     "description": "A drug category based on biological mechanism or pathway that a given drug acts on.",
                     "type": [
@@ -1150,22 +1207,15 @@
                         "null"
                     ]
                 },
-                "name": {
-                    "description": "The name of an entity.",
+                "protein": {
+                    "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
-                "protein_target": {
-                    "description": "A protein that is the target of a drug.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "study": {
-                    "description": "A study associated with an entity.",
+                "study_id": {
+                    "description": "An identifier for a research study.",
                     "type": [
                         "string",
                         "null"
@@ -1268,11 +1318,15 @@
             "description": "A relationship between a drug and some gene whose gene products directly interact with the drug. This is a symmetric relationship.",
             "properties": {
                 "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
                     "description": "Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.",
@@ -1337,12 +1391,23 @@
             "additionalProperties": false,
             "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
             "properties": {
-                "gene_symbol": {
-                    "description": "A unique, standardized short name for a gene, often formed by the abbreviation of the gene name, that is assigned by the HUGO Gene Nomenclature Committee (HGNC).",
+                "exact_synonym": {
+                    "description": "An alternative name for an entity that has the exact same meaning as the preferred or primary label.",
                     "type": [
                         "string",
                         "null"
                     ]
+                },
+                "gene_id": {
+                    "description": "A numeric identifier assigned by the NCBI Entrez Gene database.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "gene_symbol": {
+                    "description": "A unique, standardized short name for a gene, often formed by the abbreviation of the gene name, that is assigned by the HUGO Gene Nomenclature Committee (HGNC).",
+                    "type": "string"
                 },
                 "gene_type": {
                     "description": "A category for genes based on whether they encode or don't encode proteins.",
@@ -1392,6 +1457,13 @@
                         "string",
                         "null"
                     ]
+                },
+                "uniprot_name": {
+                    "description": "The protein name associated with a gene as curated by UniProt.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
             },
             "required": [
@@ -1405,11 +1477,15 @@
             "description": "A relationship between a gene and a second gene that it modifies the activity of.",
             "properties": {
                 "object": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
                     "description": "Symmetric relation between two genetic entities that interact at the genetic level.",
@@ -1419,11 +1495,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneGeneticallyInteractsWithGene",
@@ -1452,11 +1532,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneHasQualityMutation",
@@ -1485,11 +1569,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneIsGeneticBasisForDisease",
@@ -1518,11 +1606,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneMolecularlyInteractsWithDrug",
@@ -1551,11 +1643,15 @@
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GenePartOfBiomarkerCombination",
@@ -1577,18 +1673,22 @@
                     "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof"
                 },
                 "predicate": {
-                    "description": "A relation between two material entites wherein some process that occurs in a has output b.",
+                    "description": "A relation between two material entities wherein some process that occurs in a has output b.",
                     "type": [
                         "string",
                         "null"
                     ]
                 },
                 "subject": {
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
             "title": "GeneProducesProtein",
@@ -1656,8 +1756,57 @@
             "additionalProperties": false,
             "description": "A sequence_alteration is a sequence_feature whose extent is the deviation from another sequence.",
             "properties": {
+                "evidence_level": {
+                    "description": "A classification indicating the strength of the evidence supporting a genotype-phenotype or pharmacogenomic association.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "genotype": {
+                    "description": "The genetic constitution of an organism at one or more loci.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "genotype_annotation": {
+                    "description": "A textual annotation describing the functional effect of a genotype.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "genotype_id": {
+                    "description": "An identifier for a specific genotype.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "phenotype": {
+                    "description": "An observable characteristic of an organism resulting from the interaction of its genotype with the environment.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "publication": {
+                    "description": "A textual entity intended to identify a particular publication.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "reference_sequence_identifier": {
                     "description": "An identifier assigned by the NIH RefSeq database to the reference sequence for a gene.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source": {
+                    "description": "The resource from which some information, data, or knowledge originated.",
                     "type": [
                         "string",
                         "null"
@@ -1667,7 +1816,7 @@
             "title": "Mutation",
             "type": "object"
         },
-        "MutationHasPharamcologicalEffectDrug": {
+        "MutationHasPharmacologicalEffectDrug": {
             "additionalProperties": false,
             "description": "A relationship between a mutation and a drug such that the nucleic acid sequence alteration changes some effect of the drug.",
             "properties": {
@@ -1701,7 +1850,7 @@
                     "description": "A sequence_alteration is a sequence_feature whose extent is the deviation from another sequence."
                 }
             },
-            "title": "MutationHasPharamcologicalEffectDrug",
+            "title": "MutationHasPharmacologicalEffectDrug",
             "type": "object"
         },
         "OrganismTrait": {
@@ -1751,12 +1900,9 @@
                         "null"
                     ]
                 },
-                "gene_name": {
-                    "description": "The name of a gene.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
+                "gene_symbol": {
+                    "description": "A unique, standardized short name for a gene, often formed by the abbreviation of the gene name, that is assigned by the HUGO Gene Nomenclature Committee (HGNC).",
+                    "type": "string"
                 },
                 "label": {
                     "description": "The name for an entity.",
@@ -1794,6 +1940,9 @@
                     ]
                 }
             },
+            "required": [
+                "gene_symbol"
+            ],
             "title": "Protein",
             "type": "object"
         },
@@ -1970,22 +2119,8 @@
                         "null"
                     ]
                 },
-                "pmcid": {
-                    "description": "An identifier curated by Pubmed Central for a publication.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "pmid": {
-                    "description": "An identifier curated by Pubmed for a publication.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "publication_doi_identifier": {
-                    "description": "A Digital Object Identifier for a publication.",
+                "publication_doi": {
+                    "description": "An identifier for a scientific publication.",
                     "type": [
                         "string",
                         "null"

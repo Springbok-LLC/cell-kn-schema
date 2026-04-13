@@ -27,6 +27,10 @@ prefixes:
     rdfs: http://www.w3.org/2000/01/rdf-schema#
     obo: http://www.geneontology.org/formats/oboInOwl#
     foaf: http://xmlns.com/foaf/0.1/
+    RO: https://purl.obolibrary.org/obo/RO_
+    BFO: https://purl.obolibrary.org/obo/BFO_
+    SKOS: http://www.w3.org/2004/02/skos/core#
+    dc: http://purl.org/dc/elements/1.1/
 
 default_prefix: nlm-ckn
 
@@ -34,6 +38,7 @@ types:
 
     doi:
         typeof: uriorcurie
+        uri: xsd:anyURI
 
     https identifier:
         typeof: string
@@ -153,7 +158,6 @@ slots:
             (HGNC).
         examples:
             - value: HSPA1B
-        identifier: true
         range: string
 
     mutation_id:
@@ -161,12 +165,6 @@ slots:
         examples:
             - value: RS/2070673
         range: string
-  
-    variant_consequence_purl:
-        description: A persistent URL that represents a type of variant consequence.
-        examples:
-            - value: SO:0000436
-        range: uriorcurie
   
     biomarker_combination:
         description: >-
@@ -178,7 +176,7 @@ slots:
   
     binary_gene_set:
         description: >-
-            A collection of genes that are highly expresssed in an instance of some entity
+            A collection of genes that are highly expressed in an instance of some entity
             (e.g., cell).
         examples:
             - value: '[TM4SF18, VPS35L, CCL21, MMRN1, SNCG, PPFIBP1, NRP2, AKAP12, PDPN, GNG11]'
@@ -235,19 +233,6 @@ slots:
     author_list:
         description: A list of people who contributed to a publication.
         slot_uri: IAO:0000321
-        range: string
-
-    pmcid:
-        description: An identifier curated by Pubmed Central for a publication.
-        examples:
-            - value: PMC10387117
-        range: string
-
-    pmid:
-        description: An identifier curated by Pubmed for a publication.
-        slot_uri: OBI:0001617
-        examples:
-            - value: "37516747"
         range: string
 
     journal:
@@ -425,6 +410,58 @@ slots:
         description: The object of a triple.
         range: string
 
+    silhouette_score:
+        description: >-
+            A measure of clustering quality that quantifies how similar an object is to its
+            own cluster compared to other clusters, ranging from -1 to 1.
+        range: float
+
+    collection_id:
+        description: An identifier for a CELLxGENE collection.
+        examples:
+            - value: bcb61471-2a44-4c97-8c7a-26512e27ccc8
+        range: string
+
+    gene_id:
+        description: A numeric identifier assigned by the NCBI Entrez Gene database.
+        examples:
+            - value: "1000"
+        range: string
+
+    uniprot_name:
+        description: The protein name associated with a gene as curated by UniProt.
+        range: string
+
+    drug_type:
+        description: A classification of a drug based on its molecular characteristics.
+        examples:
+            - value: Small molecule
+        range: string
+
+    genotype_id:
+        description: An identifier for a specific genotype.
+        range: string
+
+    genotype:
+        description: The genetic constitution of an organism at one or more loci.
+        range: string
+
+    phenotype:
+        description: >-
+            An observable characteristic of an organism resulting from the interaction of its
+            genotype with the environment.
+        range: string
+
+    genotype_annotation:
+        description: A textual annotation describing the functional effect of a genotype.
+        range: string
+
+    evidence_level:
+        description: >-
+            A classification indicating the strength of the evidence supporting a
+            genotype-phenotype or pharmacogenomic association.
+        range: string
+
     ###############################################################################################################
     #####################################              Relations              #####################################
     ###############################################################################################################
@@ -522,7 +559,7 @@ slots:
         description: A relation between a drug and some clinical trial it was tested in.
         # Placeholder
         exact_mappings:
-            - RO_0020325
+            - RO:0020325
 
     regulates_level_of:
         description: p regulates levels of c if p regulates some amount of c.
@@ -577,7 +614,17 @@ slots:
             processed from a transcript that was transcribed as part of the gene expression
             process.
         exact_mappings:
-            - RO_0002292
+            - RO:0002292
+
+    selectively_expresses:
+        description: >-
+            A relation between a cell type and a gene such that the gene is transcribed
+            at a significantly higher level in that cell type relative to other cell types,
+            and can be used as a marker for the cell type.
+        is_a: expresses
+        # Placeholder — RO_0002294 does not exist in RO; using as a project-local term
+        exact_mappings:
+            - RO:0002294
 
     has_pharmacological_effect:
         description: >-
@@ -585,7 +632,7 @@ slots:
             changes some effect of the drug.
         # Placeholder
         exact_mappings:
-            - RO_0002027
+            - RO:0002027
 
     has_plasma_membrane_part:
         description: >-
@@ -639,7 +686,7 @@ slots:
     expressed_in:
         description: >-
             x expressed in y if and only if there is a gene expression process (gene
-            expressiongo) that occurs in y, and one of the following holds: (i) x is a gene,
+            expression) that occurs in y, and one of the following holds: (i) x is a gene,
             and x is transcribed into a transcript as part of the gene expression process
             (ii) x is a transcript, and the transcription of x is part of the gene
             expression process (iii) x is a mature gene product such as a protein, and x was
@@ -653,7 +700,7 @@ slots:
             Symmetric relation between two genetic entities that interact at the genetic
             level.
         exact_mappings:
-            - RO_:002435
+            - RO:0002435
 
     caused_by_disruption_of:
         description: >-
@@ -661,7 +708,7 @@ slots:
             altered.
         # Placeholder
         exact_mappings:
-            - RO_0004037
+            - RO:0004037
 
     exact_match:
         description: A mapping relation between two entities that are of the same type.
@@ -710,9 +757,12 @@ classes:
             - expressed_genes
             - cellxgene_collection
             - cellxgene_dataset
+            - label
+            - f_beta_score
+            - silhouette_score
         slot_usage:
             ontology_purl:
-                range: CellType
+                pattern: "CL:[0-9]{7}"
   
     CellType:
         description: >-
@@ -749,6 +799,12 @@ classes:
             - refseq_summary
             - mrna_(nm)_and_protein_(np)_sequences
             - reference_sequence_identifier
+            - gene_id
+            - exact_synonym
+            - uniprot_name
+        slot_usage:
+            gene_symbol:
+                required: true
   
     Drug:
         description: A drug product that is bearer of a clinical drug role.
@@ -756,16 +812,17 @@ classes:
         aliases:
             - Bioactive Compound
         slots:
-            - name
+            - label
             - disease
-            - study
+            - study_id
             - uniprot_id
-            - protein_target
-            # - bioactive_molecule_type # Find out more about 'type' annotation before creating a slot for it
+            - protein
             - mechanism_of_action
             - trade_names
             - exact_synonym
             - approval_status
+            - definition
+            - drug_type
 
     AnatomicalStructure:
         description: >-
@@ -803,6 +860,9 @@ classes:
             - cell_count
             - cell_type
             - cellxgene_collection
+            - cellxgene_dataset
+            - collection_id
+            - publication
 
     Publication:
         description: A document that is the output of a publishing process.
@@ -811,9 +871,7 @@ classes:
             - year
             - title
             - author_list
-            - pmcid
-            - pmid
-            - publication_doi_identifier
+            - publication_doi
             - journal
 
     BiomarkerCombination:
@@ -838,8 +896,11 @@ classes:
             - number_of_amino_acids
             - protein_function
             - species
-            - gene_name
+            - gene_symbol
             - annotation_score
+        slot_usage:
+            gene_symbol:
+                required: true
 
     Disease:
         description: >-
@@ -886,7 +947,7 @@ classes:
             macromolecular machine. There are three types of cellular components described
             in the gene ontology: (1) the cellular anatomical entity where a gene product
             carries out a molecular function (e.g., plasma membrane, cytoskeleton) or
-            membrane-enclosed compartments (e.g., mitochondrion); (2)virion components,
+            membrane-enclosed compartments (e.g., mitochondrion); (2) virion components,
             where viral proteins act, and (3) the stable macromolecular complexes of which
             gene product are parts (e.g., the clathrin complex).
         class_uri: GO:0005575
@@ -945,6 +1006,13 @@ classes:
         class_uri: SO:0001059
         slots:
             - reference_sequence_identifier
+            - genotype_id
+            - genotype
+            - phenotype
+            - genotype_annotation
+            - evidence_level
+            - source
+            - publication
 
     ###############################################################################################################
     #########################################          Triples           ##########################################
@@ -1092,10 +1160,10 @@ classes:
             - predicate
             - object
 
-    CellTypeExpressesGene:
+    CellTypeSelectivelyExpressesGene:
         description: >-
-            A relationship between a cell type and a gene such that the process of gene
-            transcription is occuring in the cell type.
+            A relationship between a cell type and a gene such that the gene is
+            selectively expressed in that cell type and can be used as a marker.
         is_a: Association
         slot_usage:
             subject:
@@ -1108,9 +1176,9 @@ classes:
             predicate:
                 name: predicate
                 description: >-
-                    relation between some biological entity and a gene that is the input of some
-                    gene expression process
-                subproperty_of: expresses
+                    A relation between a cell type and a gene that is selectively expressed
+                    in that cell type relative to other cell types.
+                subproperty_of: selectively_expresses
             object:
                 name: object
                 description: >-
@@ -1225,7 +1293,7 @@ classes:
             predicate:
                 name: predicate
                 description: >-
-                    A relation between two material entites wherein some process that occurs in a
+                    A relation between two material entities wherein some process that occurs in a
                     has output b.
                 subproperty_of: produces
             object:
@@ -1295,7 +1363,7 @@ classes:
             - predicate
             - object
 
-    MutationHasPharamcologicalEffectDrug:
+    MutationHasPharmacologicalEffectDrug:
         description: >-
             A relationship between a mutation and a drug such that the nucleic acid sequence
             alteration changes some effect of the drug.
