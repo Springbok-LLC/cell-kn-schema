@@ -279,13 +279,6 @@
                         "null"
                     ]
                 },
-                "f_beta_score": {
-                    "description": "A measure of a binary classification model's accuracy that is calculated by taking the harmonic mean of precision and recall and applying weights to recall.",
-                    "type": [
-                        "number",
-                        "null"
-                    ]
-                },
                 "label": {
                     "description": "The name for an entity.",
                     "type": [
@@ -1071,6 +1064,13 @@
             "additionalProperties": false,
             "description": "A chemical entity is a physical entity of interest in chemistry including molecular entities, parts thereof, and chemical substances.",
             "properties": {
+                "definition": {
+                    "description": "The official description of something that explains its meaning.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "label": {
                     "description": "The name for an entity.",
                     "type": [
@@ -1172,13 +1172,6 @@
                         "null"
                     ]
                 },
-                "disease": {
-                    "description": "A disease associated with an entity.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
                 "drug_type": {
                     "description": "A classification of a drug based on its molecular characteristics.",
                     "type": [
@@ -1209,13 +1202,6 @@
                 },
                 "protein": {
                     "description": "An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "study_id": {
-                    "description": "An identifier for a research study.",
                     "type": [
                         "string",
                         "null"
@@ -1453,13 +1439,6 @@
                 },
                 "uniprot_id": {
                     "description": "An identifier for a protein in Uniprot.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "uniprot_name": {
-                    "description": "The protein name associated with a gene as curated by UniProt.",
                     "type": [
                         "string",
                         "null"
@@ -1893,8 +1872,8 @@
                         "null"
                     ]
                 },
-                "comment": {
-                    "description": "One or more statements that provide additional information about a resource.",
+                "definition": {
+                    "description": "The official description of something that explains its meaning.",
                     "type": [
                         "string",
                         "null"
