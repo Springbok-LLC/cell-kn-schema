@@ -850,6 +850,43 @@
             "title": "CellSetExpressesBinaryGeneSet",
             "type": "object"
         },
+        "CellSetExpressesGene": {
+            "additionalProperties": false,
+            "description": "A relationship between a cell set and a gene that it expresses.",
+            "properties": {
+                "object": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Gene"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
+                },
+                "predicate": {
+                    "description": "relation between some biological entity and a gene that is the input of some gene expression process",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subject": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CellSet"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A collection of cells that have some common property."
+                }
+            },
+            "title": "CellSetExpressesGene",
+            "type": "object"
+        },
         "CellSetHasCharacterizingMarkerSetBiomarkerCombination": {
             "additionalProperties": false,
             "description": "A relationship between a cell set and a biomarker combination that can be used to uniquely identify it.",

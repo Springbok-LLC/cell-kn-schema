@@ -809,6 +809,77 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                              'property.',
                                                                               'name': 'subject',
                                                                               'range': 'CellSet'}}},
+                 'CellSetExpressesGene': {'defining_slots': ['subject',
+                                                             'predicate',
+                                                             'object'],
+                                          'description': 'A relationship between a '
+                                                         'cell set and a gene that '
+                                                         'it expresses.',
+                                          'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                          'is_a': 'Association',
+                                          'name': 'CellSetExpressesGene',
+                                          'slot_usage': {'object': {'description': 'A '
+                                                                                   'region '
+                                                                                   '(or '
+                                                                                   'regions) '
+                                                                                   'that '
+                                                                                   'includes '
+                                                                                   'all '
+                                                                                   'of '
+                                                                                   'the '
+                                                                                   'sequence '
+                                                                                   'elements '
+                                                                                   'necessary '
+                                                                                   'to '
+                                                                                   'encode '
+                                                                                   'a '
+                                                                                   'functional '
+                                                                                   'transcript. '
+                                                                                   'A '
+                                                                                   'gene '
+                                                                                   'may '
+                                                                                   'include '
+                                                                                   'regulatory '
+                                                                                   'regions, '
+                                                                                   'transcribed '
+                                                                                   'regions '
+                                                                                   'and/or '
+                                                                                   'other '
+                                                                                   'functional '
+                                                                                   'sequence '
+                                                                                   'regions.',
+                                                                    'name': 'object',
+                                                                    'range': 'Gene'},
+                                                         'predicate': {'description': 'relation '
+                                                                                      'between '
+                                                                                      'some '
+                                                                                      'biological '
+                                                                                      'entity '
+                                                                                      'and '
+                                                                                      'a '
+                                                                                      'gene '
+                                                                                      'that '
+                                                                                      'is '
+                                                                                      'the '
+                                                                                      'input '
+                                                                                      'of '
+                                                                                      'some '
+                                                                                      'gene '
+                                                                                      'expression '
+                                                                                      'process',
+                                                                       'name': 'predicate',
+                                                                       'subproperty_of': 'expresses'},
+                                                         'subject': {'description': 'A '
+                                                                                    'collection '
+                                                                                    'of '
+                                                                                    'cells '
+                                                                                    'that '
+                                                                                    'have '
+                                                                                    'some '
+                                                                                    'common '
+                                                                                    'property.',
+                                                                     'name': 'subject',
+                                                                     'range': 'CellSet'}}},
                  'CellSetHasCharacterizingMarkerSetBiomarkerCombination': {'defining_slots': ['subject',
                                                                                               'predicate',
                                                                                               'object'],
@@ -8112,6 +8183,64 @@ class CellSetDatasetIsAboutAnatomicalStructure(Association):
          'range': 'AnatomicalStructure'} })
 
 
+class CellSetExpressesGene(Association):
+    """
+    A relationship between a cell set and a gene that it expresses.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
+         'description': 'A relationship between a cell set and a gene that it '
+                        'expresses.',
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'is_a': 'Association',
+         'name': 'CellSetExpressesGene',
+         'slot_usage': {'object': {'description': 'A region (or regions) that includes '
+                                                  'all of the sequence elements '
+                                                  'necessary to encode a functional '
+                                                  'transcript. A gene may include '
+                                                  'regulatory regions, transcribed '
+                                                  'regions and/or other functional '
+                                                  'sequence regions.',
+                                   'name': 'object',
+                                   'range': 'Gene'},
+                        'predicate': {'description': 'relation between some biological '
+                                                     'entity and a gene that is the '
+                                                     'input of some gene expression '
+                                                     'process',
+                                      'name': 'predicate',
+                                      'subproperty_of': 'expresses'},
+                        'subject': {'description': 'A collection of cells that have '
+                                                   'some common property.',
+                                    'name': 'subject',
+                                    'range': 'CellSet'}}})
+
+    subject: Optional[CellSet] = Field(default=None, description="""A collection of cells that have some common property.""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
+         'description': 'A collection of cells that have some common property.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'subject',
+         'owner': 'CellSetExpressesGene',
+         'range': 'CellSet'} })
+    predicate: Optional[str] = Field(default=None, description="""relation between some biological entity and a gene that is the input of some gene expression process""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'relation between some biological entity and a gene that is '
+                        'the input of some gene expression process',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'predicate',
+         'owner': 'CellSetExpressesGene',
+         'range': 'uriorcurie',
+         'subproperty_of': 'expresses'} })
+    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
+         'description': 'A region (or regions) that includes all of the sequence '
+                        'elements necessary to encode a functional transcript. A gene '
+                        'may include regulatory regions, transcribed regions and/or '
+                        'other functional sequence regions.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'object',
+         'owner': 'CellSetExpressesGene',
+         'range': 'Gene'} })
+
+
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 Association.model_rebuild()
@@ -8166,3 +8295,4 @@ ProteinCapableOfMolecularFunction.model_rebuild()
 ProteinInvolvedInBiologicalProcess.model_rebuild()
 ProteinLocatedInCellularComponent.model_rebuild()
 CellSetDatasetIsAboutAnatomicalStructure.model_rebuild()
+CellSetExpressesGene.model_rebuild()
