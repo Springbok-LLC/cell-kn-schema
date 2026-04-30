@@ -31,6 +31,13 @@
                         "string",
                         "null"
                     ]
+                },
+                "organ_dataset_summary": {
+                    "description": "Count of datasets that also contain data about an anatomical entity.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
                 }
             },
             "title": "AnatomicalStructure",
@@ -265,6 +272,20 @@
                         "null"
                     ]
                 },
+                "cluster_annotation": {
+                    "description": "An annotation curated by the author of the cell set dataset for the level at which clustering was done.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cluster_cell_count": {
+                    "description": "Count of cells in the cluster post-filtering.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
                 "dataset_name": {
                     "description": "The label for a dataset.",
                     "type": [
@@ -279,10 +300,73 @@
                         "null"
                     ]
                 },
+                "f_beta_score": {
+                    "description": "A measure of a binary classification model's accuracy that is calculated by taking the harmonic mean of precision and recall and applying weights to recall.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "false_negative": {
+                    "description": "Count of cells outside a cluster that were correctly classified as not belonging to the target class.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "false_positive": {
+                    "description": "Count of cells in a cluster that were correctly classified as not belonging to the target class.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "first_quartile_silhouette": {
+                    "description": "The lowest quartile for a set of silhoette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "label": {
                     "description": "The name for an entity.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "maximum_silhouette": {
+                    "description": "The maximum value from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "mean_silhouette": {
+                    "description": "The mean silhouette score from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "median_silhouette": {
+                    "description": "The median silhouette score from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "minimum_silhouette": {
+                    "description": "The minimum value from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "on_target": {
+                    "description": "A measure--ranging from 0 to 1--of how much of the marker gene expression is restricted to the target cluster. A value of 1 is assigned to markers that are only expressed within their target cell types and not in cells of any other cell types.",
+                    "type": [
+                        "number",
                         "null"
                     ]
                 },
@@ -294,10 +378,31 @@
                         "null"
                     ]
                 },
+                "percent_total_cells": {
+                    "description": "The percent of cells the cluster contains of all the cells for the dataset.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "precision": {
+                    "description": "The number of true positives out of all retrieved positive values.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "publication": {
                     "description": "A textual entity intended to identify a particular publication.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "recall": {
+                    "description": "The number of true positives out of all possible positive values.",
+                    "type": [
+                        "number",
                         "null"
                     ]
                 },
@@ -312,6 +417,27 @@
                     "description": "The taxonomical classification of an organism.",
                     "type": [
                         "string",
+                        "null"
+                    ]
+                },
+                "standard_deviation_of_silhouette": {
+                    "description": "The standard deviation for silhouette score values from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "third_quartile_silhouette": {
+                    "description": "The  quartile for a set of silhoette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "true_positive": {
+                    "description": "Count of cells in a cluster that were correctly classified as belonging to the target class.",
+                    "type": [
+                        "integer",
                         "null"
                     ]
                 }
@@ -367,6 +493,13 @@
                         "null"
                     ]
                 },
+                "assay_summary": {
+                    "description": "Summarized counts for each assay type used to collect data points for the cell set dataset.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "cell_count": {
                     "description": "A count of all cells within a material entity.",
                     "type": [
@@ -394,6 +527,16 @@
                         "string",
                         "null"
                     ]
+                },
+                "cluster_annotation": {
+                    "description": "An annotation curated by the author of the cell set dataset for the level at which clustering was done.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "cluster_summary": {
+                    "description": "Count of clusters in this dataset."
                 },
                 "collection_id": {
                     "description": "An identifier for a CELLxGENE collection.",
@@ -430,6 +573,55 @@
                         "null"
                     ]
                 },
+                "donor_id_count": {
+                    "description": "Count of tissue donors who contributed samples for the cell set dataset.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "embedding": {
+                    "description": "The method used for dimensionality reduction.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "filtered_cell_count": {
+                    "description": "A count of normal cells that matched the following inclusion criteria: 1) matches UBERON ids for that particular organ, 2) matches to PATO \u2018normal\u2019, and 3) all humans older than 15 years of age (HsaDPV term) \u2013 note that this will be different than the author\u2019s cell counts in their dataset because of this filtering process.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "mean_f_beta_score": {
+                    "description": "The mean F-beta score from a set of F-beta scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "mean_silhouette": {
+                    "description": "The mean silhouette score from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "median_of_f_beta_scores": {
+                    "description": "The median F-score from a set of F-beta scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "median_of_median_silhouette": {
+                    "description": "The median value for a set of medians silhouette scores for multiple cell sets.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "publication": {
                     "description": "A textual entity intended to identify a particular publication.",
                     "type": [
@@ -444,6 +636,24 @@
                         "null"
                     ]
                 },
+                "standard_deviation_of_silhouette": {
+                    "description": "The standard deviation for silhouette score values from a set of silhouette scores.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "tissue_annotation": {
+                    "description": "A tissue annotation curated by the author of the cell set dataset.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tissue_annotation_id": {
+                    "$ref": "#/$defs/TissueEnum",
+                    "description": "Ontology ID for the tissue annotation."
+                },
                 "version": {
                     "description": "An information content entity which is a sequence of characters borne by part of each of a class of manufactured products or its packaging and indicates its order within a set of other products having the same name.",
                     "type": [
@@ -455,23 +665,23 @@
             "title": "CellSetDataset",
             "type": "object"
         },
-        "CellSetDatasetHasSourcePublication": {
+        "CellSetDatasetIsAboutAnatomicalStructure": {
             "additionalProperties": false,
-            "description": "A relationship between a cell set dataset and the publication that can be used as a reference for it.",
+            "description": "A relationship between a cell set dataset and an anatomical structure that some of its data pertain to.",
             "properties": {
                 "object": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/Publication"
+                            "$ref": "#/$defs/AnatomicalStructure"
                         },
                         {
                             "type": "null"
                         }
                     ],
-                    "description": "A document that is the output of a publishing process."
+                    "description": "Material anatomical entity that is a single connected structure with inherent 3D shape generated by coordinated expression of the organism's own genome."
                 },
                 "predicate": {
-                    "description": "A relation between some information content entity and the resource from which it originated.",
+                    "description": "A primitive relation that relates an information artifact to an entity.",
                     "type": [
                         "string",
                         "null"
@@ -489,7 +699,44 @@
                     "description": "A dataset that is about cells taken from one or more tissue samples."
                 }
             },
-            "title": "CellSetDatasetHasSourcePublication",
+            "title": "CellSetDatasetIsAboutAnatomicalStructure",
+            "type": "object"
+        },
+        "CellSetDatasetWasAttributedToPublication": {
+            "additionalProperties": false,
+            "description": "A relationship between a cell set dataset and the publication that can be used as a reference for it.",
+            "properties": {
+                "object": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Publication"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A document that is the output of a publishing process."
+                },
+                "predicate": {
+                    "description": "Attribution is the ascribing of an entity to an agent.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subject": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CellSetDataset"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "A dataset that is about cells taken from one or more tissue samples."
+                }
+            },
+            "title": "CellSetDatasetWasAttributedToPublication",
             "type": "object"
         },
         "CellSetDerivesFromAnatomicalStructure": {
@@ -640,7 +887,7 @@
             "title": "CellSetHasCharacterizingMarkerSetBiomarkerCombination",
             "type": "object"
         },
-        "CellSetHasSourceCellSetDataset": {
+        "CellSetMemberOfCellSetDataset": {
             "additionalProperties": false,
             "description": "A relationship between a cell set and the dataset that contains data about it.",
             "properties": {
@@ -656,7 +903,7 @@
                     "description": "A dataset that is about cells taken from one or more tissue samples."
                 },
                 "predicate": {
-                    "description": "A relation between some information content entity and the resource from which it originated.",
+                    "description": "A mereological relation between a item and a collection.",
                     "type": [
                         "string",
                         "null"
@@ -674,7 +921,7 @@
                     "description": "A collection of cells that have some common property."
                 }
             },
-            "title": "CellSetHasSourceCellSetDataset",
+            "title": "CellSetMemberOfCellSetDataset",
             "type": "object"
         },
         "CellType": {
@@ -955,43 +1202,6 @@
                 }
             },
             "title": "CellTypePartOfAnatomicalStructure",
-            "type": "object"
-        },
-        "CellTypeSelectivelyExpressesGene": {
-            "additionalProperties": false,
-            "description": "A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.",
-            "properties": {
-                "object": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/Gene"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
-                },
-                "predicate": {
-                    "description": "A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "subject": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/CellType"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane."
-                }
-            },
-            "title": "CellTypeSelectivelyExpressesGene",
             "type": "object"
         },
         "CellTypeSubclassOfCellType": {
@@ -1451,43 +1661,6 @@
             "title": "Gene",
             "type": "object"
         },
-        "GeneGeneticallyInteractsWithGene": {
-            "additionalProperties": false,
-            "description": "A relationship between a gene and a second gene that it modifies the activity of.",
-            "properties": {
-                "object": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/Gene"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
-                },
-                "predicate": {
-                    "description": "Symmetric relation between two genetic entities that interact at the genetic level.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "subject": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/Gene"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
-                }
-            },
-            "title": "GeneGeneticallyInteractsWithGene",
-            "type": "object"
-        },
         "GeneHasQualityMutation": {
             "additionalProperties": false,
             "description": "A relationship between a gene and some alteration to its nucleic acid sequence.",
@@ -1562,23 +1735,23 @@
             "title": "GeneIsGeneticBasisForDisease",
             "type": "object"
         },
-        "GeneMolecularlyInteractsWithDrug": {
+        "GeneMolecularlyInteractsWithGene": {
             "additionalProperties": false,
-            "description": "A relationship between a gene and a drug wherein a gene product of that gene binds with or modifies the behavior of the drug.",
+            "description": "A relationship between a gene and a second gene that it modifies the activity of.",
             "properties": {
                 "object": {
                     "anyOf": [
                         {
-                            "$ref": "#/$defs/Drug"
+                            "$ref": "#/$defs/Gene"
                         },
                         {
                             "type": "null"
                         }
                     ],
-                    "description": "A drug product that is bearer of a clinical drug role."
+                    "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 },
                 "predicate": {
-                    "description": "Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.",
+                    "description": "An interaction relationship in which the two partners are molecular entities that directly physically interact with each other for example via a stable binding interaction or a brief interaction during which one modifies the other.",
                     "type": [
                         "string",
                         "null"
@@ -1596,7 +1769,7 @@
                     "description": "A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions."
                 }
             },
-            "title": "GeneMolecularlyInteractsWithDrug",
+            "title": "GeneMolecularlyInteractsWithGene",
             "type": "object"
         },
         "GenePartOfBiomarkerCombination": {
@@ -1779,13 +1952,6 @@
                 },
                 "reference_sequence_identifier": {
                     "description": "An identifier assigned by the NIH RefSeq database to the reference sequence for a gene.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "source": {
-                    "description": "The resource from which some information, data, or knowledge originated.",
                     "type": [
                         "string",
                         "null"
@@ -2021,13 +2187,6 @@
                         "null"
                     ]
                 },
-                "source": {
-                    "description": "The resource from which some information, data, or knowledge originated.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
                 "subject": {
                     "anyOf": [
                         {
@@ -2123,7 +2282,7 @@
             "title": "Publication",
             "type": "object"
         },
-        "Species": {
+        "Taxon": {
             "additionalProperties": false,
             "description": "The taxonomical classification of an organism.",
             "properties": {
@@ -2149,8 +2308,13 @@
                     ]
                 }
             },
-            "title": "Species",
+            "title": "Taxon",
             "type": "object"
+        },
+        "TissueEnum": {
+            "description": "",
+            "title": "TissueEnum",
+            "type": "string"
         }
     },
     "$id": "https://w3id.org/nlm-ckn-schema",
