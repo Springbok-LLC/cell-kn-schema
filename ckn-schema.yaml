@@ -31,6 +31,9 @@ prefixes:
     BFO: https://purl.obolibrary.org/obo/BFO_
     SKOS: http://www.w3.org/2004/02/skos/core#
     dc: http://purl.org/dc/elements/1.1/
+    STATO: https://purl.obolibrary.org/obo/STATO_
+    obo: https://purl.obolibrary.org/obo/
+    PROV: http://www.w3.org/ns/prov#
 
 default_prefix: nlm-ckn
 
@@ -275,11 +278,6 @@ slots:
         slot_uri: IAO:0000115
         range: string
 
-    source:
-        description: The resource from which some information, data, or knowledge originated.
-        slot_uri: dc:source
-        range: string
-
     database_cross_reference:
         description: >-
             An annotation property that links an ontology entity or a statement to a
@@ -457,6 +455,118 @@ slots:
             A classification indicating the strength of the evidence supporting a
             genotype-phenotype or pharmacogenomic association.
         range: string
+
+    filtered_cell_count:
+        description: >-
+            A count of normal cells that matched the following inclusion criteria: 1) matches UBERON ids for that particular organ, 2) matches to PATO ‘normal’, and 3) all humans older than 15 years of age (HsaDPV term) – note that this will be different than the author’s cell counts in their dataset because of this filtering process.
+        range: string
+
+    embedding:
+        description: The method used for dimensionality reduction.
+        range: string
+
+    tissue_annotation:
+        description: A tissue annotation curated by the author of the cell set dataset.
+        range: string
+
+    tissue_annotation_id:
+        description: Ontology ID for the tissue annotation.
+        range: tissue_enum
+
+    median_of_median_silhouette:
+        description: The median value for a set of medians silhouette scores for multiple cell sets.
+        range: float
+
+    f_beta_score:
+        description: A measure of the predictive performance of an algorithm based on precision and recall.
+        range: float
+
+    mean_f_beta_score:
+        description: The mean F-beta score from a set of F-beta scores.
+        range: float
+
+    median_of_f_beta_scores:
+        description: The median F-score from a set of F-beta scores.
+        range: float
+
+    mean_silhouette:
+        description: The mean silhouette score from a set of silhouette scores.
+        range: float
+
+    median_silhouette:
+        description: The median silhouette score from a set of silhouette scores.
+        range: float
+
+    standard_deviation_of_silhouette:
+        description: The standard deviation for silhouette score values from a set of silhouette scores.
+        range: float
+
+    cluster_annotation:
+        description: An annotation curated by the author of the cell set dataset for the level at which clustering was done.
+        range: string
+
+    donor_id_count:
+        description: Count of tissue donors who contributed samples for the cell set dataset.
+        range: integer
+
+    assay_summary:
+        description: Summarized counts for each assay type used to collect data points for the cell set dataset.
+        range: string
+
+    organ_dataset_summary:
+        description: Count of datasets that also contain data about an anatomical entity.
+        range: integer
+
+    cluster_summary:
+        description: Count of clusters in this dataset.
+
+    cluster_cell_count:
+        description: Count of cells in the cluster post-filtering.
+        range: integer
+
+    percent_total_cells:
+        description: The percent of cells the cluster contains of all the cells for the dataset.
+        range: float
+
+    maximum_silhouette:
+        description: The maximum value from a set of silhouette scores.
+        range: float
+
+    minimum_silhouette:
+        description: The minimum value from a set of silhouette scores.
+        range: float
+
+    first_quartile_silhouette:
+        description: The lowest quartile for a set of silhoette scores.
+        range: float
+
+    third_quartile_silhouette:
+        description: The  quartile for a set of silhoette scores.
+        range: float
+
+    true_positive:
+        description: Count of cells in a cluster that were correctly classified as belonging to the target class.
+        range: integer
+
+    false_positive:
+        description: Count of cells in a cluster that were correctly classified as not belonging to the target class.
+        range: integer
+
+    false_negative:
+        description: Count of cells outside a cluster that were correctly classified as not belonging to the target class.
+        range: integer
+
+    on_target:
+        description: A measure--ranging from 0 to 1--of how much of the marker gene expression is restricted to the target cluster. A value of 1 is assigned to markers that are only expressed within their target cell types and not in cells of any other cell types.
+        range: float
+
+    precision:
+        description: The number of true positives out of all retrieved positive values.
+        range: float
+
+    recall:
+        description: The number of true positives out of all possible positive values.
+        range: float
 
     ###############################################################################################################
     #####################################              Relations              #####################################
@@ -723,6 +833,11 @@ slots:
         exact_mappings:
             - RO:0000086
 
+    was_attributed_to:
+        description: Attribution is the ascribing of an entity to an agent.
+        exact_mappings:
+            - PROV:wasAttributedTo
+
 classes:
 
     Association:
@@ -755,6 +870,23 @@ classes:
             - cellxgene_dataset
             - label
             - silhouette_score
+            - cluster_annotation
+            - median_silhouette
+            - mean_silhouette
+            - standard_deviation_of_silhouette
+            - cluster_cell_count
+            - percent_total_cells
+            - maximum_silhouette
+            - minimum_silhouette
+            - first_quartile_silhouette
+            - third_quartile_silhouette
+            - true_positive
+            _ false_negative
+            - false_positive
+            - on_target
+            - f_score
+            - precision
+            - recall
         slot_usage:
             ontology_purl:
                 pattern: "CL:[0-9]{7}"
@@ -826,12 +958,13 @@ classes:
             - exact_synonym
             - label
             - database_cross_reference
+            - organ_dataset_summary
 
-    Species:
+    Taxon:
         description: The taxonomical classification of an organism.
         class_uri: NCBITaxon:131567
         aliases:
-            - Taxonomy
+            - Species
         slots:
             - ontology_purl
             - label
@@ -855,6 +988,19 @@ classes:
             - cellxgene_dataset
             - collection_id
             - publication
+            - normal_cell_count
+            - embedding
+            - tissue_annotation
+            - tissue_annotation_id
+            - median_of_medians
+            - mean_f_score
+            - median_of_f_scores
+            - mean_silhouette
+            - standard_deviation_of_silhouette
+            - cluster_annotation
+            - donor_id_count
+            - assay_summary
+            - cluster_summary
 
     Publication:
         description: A document that is the output of a publishing process.
@@ -1148,37 +1294,6 @@ classes:
                     that has as its parts a maximally connected cell compartment surrounded by a
                     plasma membrane.
                 range: CellType
-        defining_slots:
-            - subject
-            - predicate
-            - object
-
-    CellTypeSelectivelyExpressesGene:
-        description: >-
-            A relationship between a cell type and a gene such that the gene is
-            selectively expressed in that cell type and can be used as a marker.
-        is_a: Association
-        slot_usage:
-            subject:
-                name: subject
-                description: >-
-                    A material entity of anatomical origin (part of or deriving from an organism)
-                    that has as its parts a maximally connected cell compartment surrounded by a
-                    plasma membrane.
-                range: CellType
-            predicate:
-                name: predicate
-                description: >-
-                    A relation between a cell type and a gene that is selectively expressed
-                    in that cell type relative to other cell types.
-                subproperty_of: selectively_expresses
-            object:
-                name: object
-                description: >-
-                    A region (or regions) that includes all of the sequence elements necessary to
-                    encode a functional transcript. A gene may include regulatory regions,
-                    transcribed regions and/or other functional sequence regions.
-                range: Gene
         defining_slots:
             - subject
             - predicate
@@ -1493,7 +1608,7 @@ classes:
             - predicate
             - object
 
-    CellSetHasSourceCellSetDataset:
+    CellSetMemberOfCellSetDataset:
         description: A relationship between a cell set and the dataset that contains data about it.
         is_a: Association
         slot_usage:
@@ -1503,10 +1618,8 @@ classes:
                 range: CellSet
             predicate:
                 name: predicate
-                description: >-
-                    A relation between some information content entity and the resource from which
-                    it originated.
-                subproperty_of: source
+                description: A mereological relation between a item and a collection.
+                subproperty_of: member_of
             object:
                 name: object
                 description: A dataset that is about cells taken from one or more tissue samples.
@@ -1571,7 +1684,7 @@ classes:
             - predicate
             - object
 
-    CellSetDatasetHasSourcePublication:
+    CellSetDatasetWasAttributedToPublication:
         description: >-
             A relationship between a cell set dataset and the publication that can be used
             as a reference for it.
@@ -1583,10 +1696,8 @@ classes:
                 range: CellSetDataset
             predicate:
                 name: predicate
-                description: >-
-                    A relation between some information content entity and the resource from which
-                    it originated.
-                subproperty_of: source
+                description: Attribution is the ascribing of an entity to an agent.
+                subproperty_of: was_attributed_to
             object:
                 name: object
                 description: A document that is the output of a publishing process.
@@ -1674,35 +1785,7 @@ classes:
             - predicate
             - object
 
-    GeneMolecularlyInteractsWithDrug:
-        description: >-
-            A relationship between a gene and a drug wherein a gene product of that gene
-            binds with or modifies the behavior of the drug.
-        is_a: Association
-        slot_usage:
-            subject:
-                name: subject
-                description: >-
-                    A region (or regions) that includes all of the sequence elements necessary to
-                    encode a functional transcript. A gene may include regulatory regions,
-                    transcribed regions and/or other functional sequence regions.
-                range: Gene
-            predicate:
-                name: predicate
-                description: >-
-                    Symmetric relation between two molecular entities that directly bind or modify
-                    the behavior of the other.
-                subproperty_of: molecularly_interacts_with
-            object:
-                name: object
-                description: A drug product that is bearer of a clinical drug role.
-                range: Drug
-        defining_slots:
-            - subject
-            - predicate
-            - object
-
-    GeneGeneticallyInteractsWithGene:
+    GeneMolecularlyInteractsWithGene:
         description: >-
             A relationship between a gene and a second gene that it modifies the activity
             of.
@@ -1718,9 +1801,8 @@ classes:
             predicate:
                 name: predicate
                 description: >-
-                    Symmetric relation between two genetic entities that interact at the genetic
-                    level.
-                subproperty_of: genetically_interacts_with
+                    An interaction relationship in which the two partners are molecular entities that directly physically interact with each other for example via a stable binding interaction or a brief interaction during which one modifies the other.
+                subproperty_of: molecularly_interacts_with
             object:
                 name: object
                 description: >-
@@ -1907,6 +1989,30 @@ classes:
         slots:
             - source
 
+    CellSetDatasetIsAboutAnatomicalStructure:
+        description: >-
+            A relationship between a cell set dataset and an anatomical structure that some of its data pertain to.
+        is_a: Association
+        slot_usage:
+            subject:
+                name: subject
+                description: A dataset that is about cells taken from one or more tissue samples.
+                range: CellSetDataset
+            predicate:
+                name: predicate
+                description: A primitive relation that relates an information artifact to an entity.
+                subproperty_of: is_about
+            object:
+                name: object
+                description: >-
+                    Material anatomical entity that is a single connected structure with inherent 3D
+                    shape generated by coordinated expression of the organism's own genome.
+                range: AnatomicalStructure
+        defining_slots:
+            - subject
+            - predicate
+            - object
+
     ###############################################################################################################
     #####################################          Not Yet in Graph           #####################################
     ###############################################################################################################
@@ -1964,3 +2070,14 @@ classes:
     #     class_uri:
     #     slots:
     #         -
+
+enums:
+
+    tissue_enum:
+        reachable_from:
+            source_ontology: obo:UBERON
+            source_nodes:
+                - UBERON:0001062 ## anatomical entity
+            include_self: false
+            relationship_types:
+                - rdfs:subClassOf
