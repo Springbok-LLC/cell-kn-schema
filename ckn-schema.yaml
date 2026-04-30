@@ -456,7 +456,7 @@ slots:
             genotype-phenotype or pharmacogenomic association.
         range: string
 
-    normal_cell_count:
+    filtered_cell_count:
         description: >-
             A count of normal cells that matched the following inclusion criteria: 1) matches UBERON ids for that particular organ, 2) matches to PATO ‘normal’, and 3) all humans older than 15 years of age (HsaDPV term) – note that this will be different than the author’s cell counts in their dataset because of this filtering process.
         range: string
@@ -477,16 +477,16 @@ slots:
         description: The median value for a set of medians silhouette scores for multiple cell sets.
         range: float
 
-    f_score:
+    f_beta_score:
         description: A measure of the predictive performance of an algorithm based on precision and recall.
         range: float
 
-    mean_f_score:
-        description: The mean F-score from a set of F-scores.
+    mean_f_beta_score:
+        description: The mean F-beta score from a set of F-beta scores.
         range: float
 
-    median_of_f_scores:
-        description: The median F-score from a set of F-scores.
+    median_of_f_beta_scores:
+        description: The median F-score from a set of F-beta scores.
         range: float
 
     mean_silhouette:
