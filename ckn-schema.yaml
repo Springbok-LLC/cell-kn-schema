@@ -2013,6 +2013,32 @@ classes:
             - predicate
             - object
 
+    CellSetExpressesGene:
+        description: A relationship between a cell set and a gene that it expresses.
+        is_a: Association
+        slot_usage:
+            subject:
+                name: subject
+                description: A collection of cells that have some common property.
+                range: CellSet
+            predicate:
+                name: predicate
+                description: >-
+                    relation between some biological entity and a gene that is the input of some
+                    gene expression process
+                subproperty_of: expresses
+            object:
+                name: object
+                description: >-
+                    A region (or regions) that includes all of the sequence elements necessary to
+                    encode a functional transcript. A gene may include regulatory regions,
+                    transcribed regions and/or other functional sequence regions.
+                range: Gene
+        defining_slots:
+            - subject
+            - predicate
+            - object
+
     ###############################################################################################################
     #####################################          Not Yet in Graph           #####################################
     ###############################################################################################################
