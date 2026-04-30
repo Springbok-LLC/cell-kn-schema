@@ -33,6 +33,7 @@ prefixes:
     dc: http://purl.org/dc/elements/1.1/
     STATO: https://purl.obolibrary.org/obo/STATO_
     obo: https://purl.obolibrary.org/obo/
+    PROV: http://www.w3.org/ns/prov#
 
 default_prefix: nlm-ckn
 
@@ -277,11 +278,6 @@ slots:
         slot_uri: IAO:0000115
         range: string
 
-    source:
-        description: The resource from which some information, data, or knowledge originated.
-        slot_uri: dc:source
-        range: string
-
     database_cross_reference:
         description: >-
             An annotation property that links an ontology entity or a statement to a
@@ -477,8 +473,8 @@ slots:
         description: Ontology ID for the tissue annotation.
         range: tissue_enum
 
-    median_of_medians:
-        description: An approximation of the median from ...
+    median_of_median_silhouette:
+        description: The median value for a set of medians silhouette scores for multiple cell sets.
         range: float
 
     f_score:
@@ -549,20 +545,20 @@ slots:
         range: float
 
     true_positive:
-        description: Count of cells in a cluster that were validated as belonging to the cluster.
+        description: Count of cells in a cluster that were correctly classified as belonging to the target class.
         range: integer
 
     false_positive:
-        description: Count of cells in a cluster that were validated as incorrectly belonging to the cluster.
+        description: Count of cells in a cluster that were correctly classified as not belonging to the target class.
         range: integer
 
     false_negative:
-        description: Count of cells outside a cluster that were validated as belonging to the cluster.
+        description: Count of cells outside a cluster that were correctly classified as not belonging to the target class.
         range: integer
 
     on_target:
-        description: TBD
-        range: string
+        description: A measure--ranging from 0 to 1--of how much of the marker gene expression is restricted to the target cluster. A value of 1 is assigned to markers that are only expressed within their target cell types and not in cells of any other cell types.
+        range: float
 
     precision:
         description: The number of true positives out of all retrieved positive values.
@@ -836,6 +832,11 @@ slots:
             A relation between an entity and a quality inhering in it.
         exact_mappings:
             - RO:0000086
+
+    was_attributed_to:
+        description: Attribution is the ascribing of an entity to an agent.
+        exact_mappings:
+            - PROV:wasAttributedTo
 
 classes:
 
@@ -1298,37 +1299,6 @@ classes:
             - predicate
             - object
 
-    CellTypeSelectivelyExpressesGene:
-        description: >-
-            A relationship between a cell type and a gene such that the gene is
-            selectively expressed in that cell type and can be used as a marker.
-        is_a: Association
-        slot_usage:
-            subject:
-                name: subject
-                description: >-
-                    A material entity of anatomical origin (part of or deriving from an organism)
-                    that has as its parts a maximally connected cell compartment surrounded by a
-                    plasma membrane.
-                range: CellType
-            predicate:
-                name: predicate
-                description: >-
-                    A relation between a cell type and a gene that is selectively expressed
-                    in that cell type relative to other cell types.
-                subproperty_of: selectively_expresses
-            object:
-                name: object
-                description: >-
-                    A region (or regions) that includes all of the sequence elements necessary to
-                    encode a functional transcript. A gene may include regulatory regions,
-                    transcribed regions and/or other functional sequence regions.
-                range: Gene
-        defining_slots:
-            - subject
-            - predicate
-            - object
-
     CellTypeHasPlasmaMembranePartProtein:
         description: >-
             A relationship between a cell type and a protein that is part of its plasma
@@ -1638,7 +1608,7 @@ classes:
             - predicate
             - object
 
-    CellSetHasSourceCellSetDataset:
+    CellSetMemberOfCellSetDataset:
         description: A relationship between a cell set and the dataset that contains data about it.
         is_a: Association
         slot_usage:
@@ -1648,10 +1618,8 @@ classes:
                 range: CellSet
             predicate:
                 name: predicate
-                description: >-
-                    A relation between some information content entity and the resource from which
-                    it originated.
-                subproperty_of: source
+                description: A mereological relation between a item and a collection.
+                subproperty_of: member_of
             object:
                 name: object
                 description: A dataset that is about cells taken from one or more tissue samples.
@@ -1716,7 +1684,7 @@ classes:
             - predicate
             - object
 
-    CellSetDatasetHasSourcePublication:
+    CellSetDatasetWasAttributedToPublication:
         description: >-
             A relationship between a cell set dataset and the publication that can be used
             as a reference for it.
@@ -1728,10 +1696,8 @@ classes:
                 range: CellSetDataset
             predicate:
                 name: predicate
-                description: >-
-                    A relation between some information content entity and the resource from which
-                    it originated.
-                subproperty_of: source
+                description: Attribution is the ascribing of an entity to an agent.
+                subproperty_of: was_attributed_to
             object:
                 name: object
                 description: A document that is the output of a publishing process.
