@@ -32,7 +32,6 @@ prefixes:
     SKOS: http://www.w3.org/2004/02/skos/core#
     dc: http://purl.org/dc/elements/1.1/
     STATO: https://purl.obolibrary.org/obo/STATO_
-    obo: https://purl.obolibrary.org/obo/
     PROV: http://www.w3.org/ns/prov#
 
 default_prefix: nlm-ckn
@@ -477,10 +476,6 @@ slots:
         description: The median value for a set of medians silhouette scores for multiple cell sets.
         range: float
 
-    f_beta_score:
-        description: A measure of the predictive performance of an algorithm based on precision and recall.
-        range: float
-
     mean_f_beta_score:
         description: The mean F-beta score from a set of F-beta scores.
         range: float
@@ -881,10 +876,10 @@ classes:
             - first_quartile_silhouette
             - third_quartile_silhouette
             - true_positive
-            _ false_negative
+            - false_negative
             - false_positive
             - on_target
-            - f_score
+            - f_beta_score
             - precision
             - recall
         slot_usage:
@@ -988,13 +983,13 @@ classes:
             - cellxgene_dataset
             - collection_id
             - publication
-            - normal_cell_count
+            - filtered_cell_count
             - embedding
             - tissue_annotation
             - tissue_annotation_id
-            - median_of_medians
-            - mean_f_score
-            - median_of_f_scores
+            - median_of_median_silhouette
+            - mean_f_beta_score
+            - median_of_f_beta_scores
             - mean_silhouette
             - standard_deviation_of_silhouette
             - cluster_annotation
@@ -1150,7 +1145,6 @@ classes:
             - phenotype
             - genotype_annotation
             - evidence_level
-            - source
             - publication
 
     ###############################################################################################################
@@ -1986,8 +1980,6 @@ classes:
             - subject
             - predicate
             - object
-        slots:
-            - source
 
     CellSetDatasetIsAboutAnatomicalStructure:
         description: >-
