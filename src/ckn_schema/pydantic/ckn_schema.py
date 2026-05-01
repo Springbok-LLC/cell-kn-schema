@@ -91,7 +91,8 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                          'slots': ['ontology_purl',
                                                    'exact_synonym',
                                                    'label',
-                                                   'database_cross_reference']},
+                                                   'database_cross_reference',
+                                                   'organ_dataset_summary']},
                  'AnatomicalStructurePartOfAnatomicalStructure': {'defining_slots': ['subject',
                                                                                      'predicate',
                                                                                      'object'],
@@ -330,7 +331,24 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                        'cellxgene_collection',
                                        'cellxgene_dataset',
                                        'label',
-                                       'silhouette_score']},
+                                       'silhouette_score',
+                                       'cluster_annotation',
+                                       'median_silhouette',
+                                       'mean_silhouette',
+                                       'standard_deviation_of_silhouette',
+                                       'cluster_cell_count',
+                                       'percent_total_cells',
+                                       'maximum_silhouette',
+                                       'minimum_silhouette',
+                                       'first_quartile_silhouette',
+                                       'third_quartile_silhouette',
+                                       'true_positive',
+                                       'false_negative',
+                                       'false_positive',
+                                       'on_target',
+                                       'f_beta_score',
+                                       'precision',
+                                       'recall']},
                  'CellSetComposedPrimarilyOfCellType': {'defining_slots': ['subject',
                                                                            'predicate',
                                                                            'object'],
@@ -441,68 +459,159 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                               'cellxgene_collection',
                                               'cellxgene_dataset',
                                               'collection_id',
-                                              'publication']},
-                 'CellSetDatasetHasSourcePublication': {'defining_slots': ['subject',
-                                                                           'predicate',
-                                                                           'object'],
-                                                        'description': 'A '
-                                                                       'relationship '
-                                                                       'between a '
-                                                                       'cell set '
-                                                                       'dataset '
-                                                                       'and the '
-                                                                       'publication '
-                                                                       'that can '
-                                                                       'be used as '
-                                                                       'a '
-                                                                       'reference '
-                                                                       'for it.',
-                                                        'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                                                        'is_a': 'Association',
-                                                        'name': 'CellSetDatasetHasSourcePublication',
-                                                        'slot_usage': {'object': {'description': 'A '
-                                                                                                 'document '
-                                                                                                 'that '
-                                                                                                 'is '
-                                                                                                 'the '
-                                                                                                 'output '
-                                                                                                 'of '
-                                                                                                 'a '
-                                                                                                 'publishing '
-                                                                                                 'process.',
-                                                                                  'name': 'object',
-                                                                                  'range': 'Publication'},
-                                                                       'predicate': {'description': 'A '
-                                                                                                    'relation '
-                                                                                                    'between '
-                                                                                                    'some '
-                                                                                                    'information '
-                                                                                                    'content '
-                                                                                                    'entity '
-                                                                                                    'and '
-                                                                                                    'the '
-                                                                                                    'resource '
-                                                                                                    'from '
-                                                                                                    'which '
-                                                                                                    'it '
-                                                                                                    'originated.',
-                                                                                     'name': 'predicate',
-                                                                                     'subproperty_of': 'source'},
-                                                                       'subject': {'description': 'A '
-                                                                                                  'dataset '
-                                                                                                  'that '
-                                                                                                  'is '
-                                                                                                  'about '
-                                                                                                  'cells '
-                                                                                                  'taken '
-                                                                                                  'from '
-                                                                                                  'one '
-                                                                                                  'or '
-                                                                                                  'more '
-                                                                                                  'tissue '
-                                                                                                  'samples.',
-                                                                                   'name': 'subject',
-                                                                                   'range': 'CellSetDataset'}}},
+                                              'publication',
+                                              'filtered_cell_count',
+                                              'embedding',
+                                              'tissue_annotation',
+                                              'tissue_annotation_id',
+                                              'median_of_median_silhouette',
+                                              'mean_f_beta_score',
+                                              'median_of_f_beta_scores',
+                                              'mean_silhouette',
+                                              'standard_deviation_of_silhouette',
+                                              'cluster_annotation',
+                                              'donor_id_count',
+                                              'assay_summary',
+                                              'cluster_summary']},
+                 'CellSetDatasetIsAboutAnatomicalStructure': {'defining_slots': ['subject',
+                                                                                 'predicate',
+                                                                                 'object'],
+                                                              'description': 'A '
+                                                                             'relationship '
+                                                                             'between '
+                                                                             'a '
+                                                                             'cell '
+                                                                             'set '
+                                                                             'dataset '
+                                                                             'and '
+                                                                             'an '
+                                                                             'anatomical '
+                                                                             'structure '
+                                                                             'that '
+                                                                             'some '
+                                                                             'of '
+                                                                             'its '
+                                                                             'data '
+                                                                             'pertain '
+                                                                             'to.',
+                                                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                                              'is_a': 'Association',
+                                                              'name': 'CellSetDatasetIsAboutAnatomicalStructure',
+                                                              'slot_usage': {'object': {'description': 'Material '
+                                                                                                       'anatomical '
+                                                                                                       'entity '
+                                                                                                       'that '
+                                                                                                       'is '
+                                                                                                       'a '
+                                                                                                       'single '
+                                                                                                       'connected '
+                                                                                                       'structure '
+                                                                                                       'with '
+                                                                                                       'inherent '
+                                                                                                       '3D '
+                                                                                                       'shape '
+                                                                                                       'generated '
+                                                                                                       'by '
+                                                                                                       'coordinated '
+                                                                                                       'expression '
+                                                                                                       'of '
+                                                                                                       'the '
+                                                                                                       "organism's "
+                                                                                                       'own '
+                                                                                                       'genome.',
+                                                                                        'name': 'object',
+                                                                                        'range': 'AnatomicalStructure'},
+                                                                             'predicate': {'description': 'A '
+                                                                                                          'primitive '
+                                                                                                          'relation '
+                                                                                                          'that '
+                                                                                                          'relates '
+                                                                                                          'an '
+                                                                                                          'information '
+                                                                                                          'artifact '
+                                                                                                          'to '
+                                                                                                          'an '
+                                                                                                          'entity.',
+                                                                                           'name': 'predicate',
+                                                                                           'subproperty_of': 'is_about'},
+                                                                             'subject': {'description': 'A '
+                                                                                                        'dataset '
+                                                                                                        'that '
+                                                                                                        'is '
+                                                                                                        'about '
+                                                                                                        'cells '
+                                                                                                        'taken '
+                                                                                                        'from '
+                                                                                                        'one '
+                                                                                                        'or '
+                                                                                                        'more '
+                                                                                                        'tissue '
+                                                                                                        'samples.',
+                                                                                         'name': 'subject',
+                                                                                         'range': 'CellSetDataset'}}},
+                 'CellSetDatasetWasAttributedToPublication': {'defining_slots': ['subject',
+                                                                                 'predicate',
+                                                                                 'object'],
+                                                              'description': 'A '
+                                                                             'relationship '
+                                                                             'between '
+                                                                             'a '
+                                                                             'cell '
+                                                                             'set '
+                                                                             'dataset '
+                                                                             'and '
+                                                                             'the '
+                                                                             'publication '
+                                                                             'that '
+                                                                             'can '
+                                                                             'be '
+                                                                             'used '
+                                                                             'as a '
+                                                                             'reference '
+                                                                             'for '
+                                                                             'it.',
+                                                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                                              'is_a': 'Association',
+                                                              'name': 'CellSetDatasetWasAttributedToPublication',
+                                                              'slot_usage': {'object': {'description': 'A '
+                                                                                                       'document '
+                                                                                                       'that '
+                                                                                                       'is '
+                                                                                                       'the '
+                                                                                                       'output '
+                                                                                                       'of '
+                                                                                                       'a '
+                                                                                                       'publishing '
+                                                                                                       'process.',
+                                                                                        'name': 'object',
+                                                                                        'range': 'Publication'},
+                                                                             'predicate': {'description': 'Attribution '
+                                                                                                          'is '
+                                                                                                          'the '
+                                                                                                          'ascribing '
+                                                                                                          'of '
+                                                                                                          'an '
+                                                                                                          'entity '
+                                                                                                          'to '
+                                                                                                          'an '
+                                                                                                          'agent.',
+                                                                                           'name': 'predicate',
+                                                                                           'subproperty_of': 'was_attributed_to'},
+                                                                             'subject': {'description': 'A '
+                                                                                                        'dataset '
+                                                                                                        'that '
+                                                                                                        'is '
+                                                                                                        'about '
+                                                                                                        'cells '
+                                                                                                        'taken '
+                                                                                                        'from '
+                                                                                                        'one '
+                                                                                                        'or '
+                                                                                                        'more '
+                                                                                                        'tissue '
+                                                                                                        'samples.',
+                                                                                         'name': 'subject',
+                                                                                         'range': 'CellSetDataset'}}},
                  'CellSetDerivesFromAnatomicalStructure': {'defining_slots': ['subject',
                                                                               'predicate',
                                                                               'object'],
@@ -700,6 +809,77 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                              'property.',
                                                                               'name': 'subject',
                                                                               'range': 'CellSet'}}},
+                 'CellSetExpressesGene': {'defining_slots': ['subject',
+                                                             'predicate',
+                                                             'object'],
+                                          'description': 'A relationship between a '
+                                                         'cell set and a gene that '
+                                                         'it expresses.',
+                                          'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                          'is_a': 'Association',
+                                          'name': 'CellSetExpressesGene',
+                                          'slot_usage': {'object': {'description': 'A '
+                                                                                   'region '
+                                                                                   '(or '
+                                                                                   'regions) '
+                                                                                   'that '
+                                                                                   'includes '
+                                                                                   'all '
+                                                                                   'of '
+                                                                                   'the '
+                                                                                   'sequence '
+                                                                                   'elements '
+                                                                                   'necessary '
+                                                                                   'to '
+                                                                                   'encode '
+                                                                                   'a '
+                                                                                   'functional '
+                                                                                   'transcript. '
+                                                                                   'A '
+                                                                                   'gene '
+                                                                                   'may '
+                                                                                   'include '
+                                                                                   'regulatory '
+                                                                                   'regions, '
+                                                                                   'transcribed '
+                                                                                   'regions '
+                                                                                   'and/or '
+                                                                                   'other '
+                                                                                   'functional '
+                                                                                   'sequence '
+                                                                                   'regions.',
+                                                                    'name': 'object',
+                                                                    'range': 'Gene'},
+                                                         'predicate': {'description': 'relation '
+                                                                                      'between '
+                                                                                      'some '
+                                                                                      'biological '
+                                                                                      'entity '
+                                                                                      'and '
+                                                                                      'a '
+                                                                                      'gene '
+                                                                                      'that '
+                                                                                      'is '
+                                                                                      'the '
+                                                                                      'input '
+                                                                                      'of '
+                                                                                      'some '
+                                                                                      'gene '
+                                                                                      'expression '
+                                                                                      'process',
+                                                                       'name': 'predicate',
+                                                                       'subproperty_of': 'expresses'},
+                                                         'subject': {'description': 'A '
+                                                                                    'collection '
+                                                                                    'of '
+                                                                                    'cells '
+                                                                                    'that '
+                                                                                    'have '
+                                                                                    'some '
+                                                                                    'common '
+                                                                                    'property.',
+                                                                     'name': 'subject',
+                                                                     'range': 'CellSet'}}},
                  'CellSetHasCharacterizingMarkerSetBiomarkerCombination': {'defining_slots': ['subject',
                                                                                               'predicate',
                                                                                               'object'],
@@ -797,60 +977,55 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                                                      'property.',
                                                                                                       'name': 'subject',
                                                                                                       'range': 'CellSet'}}},
-                 'CellSetHasSourceCellSetDataset': {'defining_slots': ['subject',
-                                                                       'predicate',
-                                                                       'object'],
-                                                    'description': 'A relationship '
-                                                                   'between a cell '
-                                                                   'set and the '
-                                                                   'dataset that '
-                                                                   'contains data '
-                                                                   'about it.',
-                                                    'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                                                    'is_a': 'Association',
-                                                    'name': 'CellSetHasSourceCellSetDataset',
-                                                    'slot_usage': {'object': {'description': 'A '
-                                                                                             'dataset '
-                                                                                             'that '
-                                                                                             'is '
-                                                                                             'about '
+                 'CellSetMemberOfCellSetDataset': {'defining_slots': ['subject',
+                                                                      'predicate',
+                                                                      'object'],
+                                                   'description': 'A relationship '
+                                                                  'between a cell '
+                                                                  'set and the '
+                                                                  'dataset that '
+                                                                  'contains data '
+                                                                  'about it.',
+                                                   'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                                   'is_a': 'Association',
+                                                   'name': 'CellSetMemberOfCellSetDataset',
+                                                   'slot_usage': {'object': {'description': 'A '
+                                                                                            'dataset '
+                                                                                            'that '
+                                                                                            'is '
+                                                                                            'about '
+                                                                                            'cells '
+                                                                                            'taken '
+                                                                                            'from '
+                                                                                            'one '
+                                                                                            'or '
+                                                                                            'more '
+                                                                                            'tissue '
+                                                                                            'samples.',
+                                                                             'name': 'object',
+                                                                             'range': 'CellSetDataset'},
+                                                                  'predicate': {'description': 'A '
+                                                                                               'mereological '
+                                                                                               'relation '
+                                                                                               'between '
+                                                                                               'a '
+                                                                                               'item '
+                                                                                               'and '
+                                                                                               'a '
+                                                                                               'collection.',
+                                                                                'name': 'predicate',
+                                                                                'subproperty_of': 'member_of'},
+                                                                  'subject': {'description': 'A '
+                                                                                             'collection '
+                                                                                             'of '
                                                                                              'cells '
-                                                                                             'taken '
-                                                                                             'from '
-                                                                                             'one '
-                                                                                             'or '
-                                                                                             'more '
-                                                                                             'tissue '
-                                                                                             'samples.',
-                                                                              'name': 'object',
-                                                                              'range': 'CellSetDataset'},
-                                                                   'predicate': {'description': 'A '
-                                                                                                'relation '
-                                                                                                'between '
-                                                                                                'some '
-                                                                                                'information '
-                                                                                                'content '
-                                                                                                'entity '
-                                                                                                'and '
-                                                                                                'the '
-                                                                                                'resource '
-                                                                                                'from '
-                                                                                                'which '
-                                                                                                'it '
-                                                                                                'originated.',
-                                                                                 'name': 'predicate',
-                                                                                 'subproperty_of': 'source'},
-                                                                   'subject': {'description': 'A '
-                                                                                              'collection '
-                                                                                              'of '
-                                                                                              'cells '
-                                                                                              'that '
-                                                                                              'have '
-                                                                                              'some '
-                                                                                              'common '
-                                                                                              'property.',
-                                                                               'name': 'subject',
-                                                                               'range': 'CellSet'}}},
+                                                                                             'that '
+                                                                                             'have '
+                                                                                             'some '
+                                                                                             'common '
+                                                                                             'property.',
+                                                                              'name': 'subject',
+                                                                              'range': 'CellSet'}}},
                  'CellType': {'class_uri': 'CL:0000000',
                               'description': 'A material entity of anatomical '
                                              'origin (part of or deriving from an '
@@ -1428,111 +1603,6 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                                  'membrane.',
                                                                                   'name': 'subject',
                                                                                   'range': 'CellType'}}},
-                 'CellTypeSelectivelyExpressesGene': {'defining_slots': ['subject',
-                                                                         'predicate',
-                                                                         'object'],
-                                                      'description': 'A '
-                                                                     'relationship '
-                                                                     'between a '
-                                                                     'cell type '
-                                                                     'and a gene '
-                                                                     'such that '
-                                                                     'the gene is '
-                                                                     'selectively '
-                                                                     'expressed in '
-                                                                     'that cell '
-                                                                     'type and can '
-                                                                     'be used as a '
-                                                                     'marker.',
-                                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                                                      'is_a': 'Association',
-                                                      'name': 'CellTypeSelectivelyExpressesGene',
-                                                      'slot_usage': {'object': {'description': 'A '
-                                                                                               'region '
-                                                                                               '(or '
-                                                                                               'regions) '
-                                                                                               'that '
-                                                                                               'includes '
-                                                                                               'all '
-                                                                                               'of '
-                                                                                               'the '
-                                                                                               'sequence '
-                                                                                               'elements '
-                                                                                               'necessary '
-                                                                                               'to '
-                                                                                               'encode '
-                                                                                               'a '
-                                                                                               'functional '
-                                                                                               'transcript. '
-                                                                                               'A '
-                                                                                               'gene '
-                                                                                               'may '
-                                                                                               'include '
-                                                                                               'regulatory '
-                                                                                               'regions, '
-                                                                                               'transcribed '
-                                                                                               'regions '
-                                                                                               'and/or '
-                                                                                               'other '
-                                                                                               'functional '
-                                                                                               'sequence '
-                                                                                               'regions.',
-                                                                                'name': 'object',
-                                                                                'range': 'Gene'},
-                                                                     'predicate': {'description': 'A '
-                                                                                                  'relation '
-                                                                                                  'between '
-                                                                                                  'a '
-                                                                                                  'cell '
-                                                                                                  'type '
-                                                                                                  'and '
-                                                                                                  'a '
-                                                                                                  'gene '
-                                                                                                  'that '
-                                                                                                  'is '
-                                                                                                  'selectively '
-                                                                                                  'expressed '
-                                                                                                  'in '
-                                                                                                  'that '
-                                                                                                  'cell '
-                                                                                                  'type '
-                                                                                                  'relative '
-                                                                                                  'to '
-                                                                                                  'other '
-                                                                                                  'cell '
-                                                                                                  'types.',
-                                                                                   'name': 'predicate',
-                                                                                   'subproperty_of': 'selectively_expresses'},
-                                                                     'subject': {'description': 'A '
-                                                                                                'material '
-                                                                                                'entity '
-                                                                                                'of '
-                                                                                                'anatomical '
-                                                                                                'origin '
-                                                                                                '(part '
-                                                                                                'of '
-                                                                                                'or '
-                                                                                                'deriving '
-                                                                                                'from '
-                                                                                                'an '
-                                                                                                'organism) '
-                                                                                                'that '
-                                                                                                'has '
-                                                                                                'as '
-                                                                                                'its '
-                                                                                                'parts '
-                                                                                                'a '
-                                                                                                'maximally '
-                                                                                                'connected '
-                                                                                                'cell '
-                                                                                                'compartment '
-                                                                                                'surrounded '
-                                                                                                'by '
-                                                                                                'a '
-                                                                                                'plasma '
-                                                                                                'membrane.',
-                                                                                 'name': 'subject',
-                                                                                 'range': 'CellType'}}},
                  'CellTypeSubclassOfCellType': {'defining_slots': ['subject',
                                                                    'predicate',
                                                                    'object'],
@@ -1996,98 +2066,6 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                     'reference_sequence_identifier',
                                     'gene_id',
                                     'exact_synonym']},
-                 'GeneGeneticallyInteractsWithGene': {'defining_slots': ['subject',
-                                                                         'predicate',
-                                                                         'object'],
-                                                      'description': 'A '
-                                                                     'relationship '
-                                                                     'between a '
-                                                                     'gene and a '
-                                                                     'second gene '
-                                                                     'that it '
-                                                                     'modifies the '
-                                                                     'activity of.',
-                                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                                                      'is_a': 'Association',
-                                                      'name': 'GeneGeneticallyInteractsWithGene',
-                                                      'slot_usage': {'object': {'description': 'A '
-                                                                                               'region '
-                                                                                               '(or '
-                                                                                               'regions) '
-                                                                                               'that '
-                                                                                               'includes '
-                                                                                               'all '
-                                                                                               'of '
-                                                                                               'the '
-                                                                                               'sequence '
-                                                                                               'elements '
-                                                                                               'necessary '
-                                                                                               'to '
-                                                                                               'encode '
-                                                                                               'a '
-                                                                                               'functional '
-                                                                                               'transcript. '
-                                                                                               'A '
-                                                                                               'gene '
-                                                                                               'may '
-                                                                                               'include '
-                                                                                               'regulatory '
-                                                                                               'regions, '
-                                                                                               'transcribed '
-                                                                                               'regions '
-                                                                                               'and/or '
-                                                                                               'other '
-                                                                                               'functional '
-                                                                                               'sequence '
-                                                                                               'regions.',
-                                                                                'name': 'object',
-                                                                                'range': 'Gene'},
-                                                                     'predicate': {'description': 'Symmetric '
-                                                                                                  'relation '
-                                                                                                  'between '
-                                                                                                  'two '
-                                                                                                  'genetic '
-                                                                                                  'entities '
-                                                                                                  'that '
-                                                                                                  'interact '
-                                                                                                  'at '
-                                                                                                  'the '
-                                                                                                  'genetic '
-                                                                                                  'level.',
-                                                                                   'name': 'predicate',
-                                                                                   'subproperty_of': 'genetically_interacts_with'},
-                                                                     'subject': {'description': 'A '
-                                                                                                'region '
-                                                                                                '(or '
-                                                                                                'regions) '
-                                                                                                'that '
-                                                                                                'includes '
-                                                                                                'all '
-                                                                                                'of '
-                                                                                                'the '
-                                                                                                'sequence '
-                                                                                                'elements '
-                                                                                                'necessary '
-                                                                                                'to '
-                                                                                                'encode '
-                                                                                                'a '
-                                                                                                'functional '
-                                                                                                'transcript. '
-                                                                                                'A '
-                                                                                                'gene '
-                                                                                                'may '
-                                                                                                'include '
-                                                                                                'regulatory '
-                                                                                                'regions, '
-                                                                                                'transcribed '
-                                                                                                'regions '
-                                                                                                'and/or '
-                                                                                                'other '
-                                                                                                'functional '
-                                                                                                'sequence '
-                                                                                                'regions.',
-                                                                                 'name': 'subject',
-                                                                                 'range': 'Gene'}}},
                  'GeneHasQualityMutation': {'defining_slots': ['subject',
                                                                'predicate',
                                                                'object'],
@@ -2248,51 +2226,85 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                             'regions.',
                                                                              'name': 'subject',
                                                                              'range': 'Gene'}}},
-                 'GeneMolecularlyInteractsWithDrug': {'defining_slots': ['subject',
+                 'GeneMolecularlyInteractsWithGene': {'defining_slots': ['subject',
                                                                          'predicate',
                                                                          'object'],
                                                       'description': 'A '
                                                                      'relationship '
                                                                      'between a '
                                                                      'gene and a '
-                                                                     'drug wherein '
-                                                                     'a gene '
-                                                                     'product of '
-                                                                     'that gene '
-                                                                     'binds with '
-                                                                     'or modifies '
-                                                                     'the behavior '
-                                                                     'of the drug.',
+                                                                     'second gene '
+                                                                     'that it '
+                                                                     'modifies the '
+                                                                     'activity of.',
                                                       'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                                       'is_a': 'Association',
-                                                      'name': 'GeneMolecularlyInteractsWithDrug',
+                                                      'name': 'GeneMolecularlyInteractsWithGene',
                                                       'slot_usage': {'object': {'description': 'A '
-                                                                                               'drug '
-                                                                                               'product '
+                                                                                               'region '
+                                                                                               '(or '
+                                                                                               'regions) '
                                                                                                'that '
-                                                                                               'is '
-                                                                                               'bearer '
+                                                                                               'includes '
+                                                                                               'all '
                                                                                                'of '
+                                                                                               'the '
+                                                                                               'sequence '
+                                                                                               'elements '
+                                                                                               'necessary '
+                                                                                               'to '
+                                                                                               'encode '
                                                                                                'a '
-                                                                                               'clinical '
-                                                                                               'drug '
-                                                                                               'role.',
+                                                                                               'functional '
+                                                                                               'transcript. '
+                                                                                               'A '
+                                                                                               'gene '
+                                                                                               'may '
+                                                                                               'include '
+                                                                                               'regulatory '
+                                                                                               'regions, '
+                                                                                               'transcribed '
+                                                                                               'regions '
+                                                                                               'and/or '
+                                                                                               'other '
+                                                                                               'functional '
+                                                                                               'sequence '
+                                                                                               'regions.',
                                                                                 'name': 'object',
-                                                                                'range': 'Drug'},
-                                                                     'predicate': {'description': 'Symmetric '
-                                                                                                  'relation '
-                                                                                                  'between '
+                                                                                'range': 'Gene'},
+                                                                     'predicate': {'description': 'An '
+                                                                                                  'interaction '
+                                                                                                  'relationship '
+                                                                                                  'in '
+                                                                                                  'which '
+                                                                                                  'the '
                                                                                                   'two '
+                                                                                                  'partners '
+                                                                                                  'are '
                                                                                                   'molecular '
                                                                                                   'entities '
                                                                                                   'that '
                                                                                                   'directly '
-                                                                                                  'bind '
+                                                                                                  'physically '
+                                                                                                  'interact '
+                                                                                                  'with '
+                                                                                                  'each '
+                                                                                                  'other '
+                                                                                                  'for '
+                                                                                                  'example '
+                                                                                                  'via '
+                                                                                                  'a '
+                                                                                                  'stable '
+                                                                                                  'binding '
+                                                                                                  'interaction '
                                                                                                   'or '
-                                                                                                  'modify '
-                                                                                                  'the '
-                                                                                                  'behavior '
-                                                                                                  'of '
+                                                                                                  'a '
+                                                                                                  'brief '
+                                                                                                  'interaction '
+                                                                                                  'during '
+                                                                                                  'which '
+                                                                                                  'one '
+                                                                                                  'modifies '
                                                                                                   'the '
                                                                                                   'other.',
                                                                                    'name': 'predicate',
@@ -2545,7 +2557,6 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                         'phenotype',
                                         'genotype_annotation',
                                         'evidence_level',
-                                        'source',
                                         'publication']},
                  'MutationHasPharmacologicalEffectDrug': {'defining_slots': ['subject',
                                                                              'predicate',
@@ -3025,8 +3036,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                                                                  'derivatives '
                                                                                                  'thereof',
                                                                                   'name': 'subject',
-                                                                                  'range': 'Protein'}},
-                                                       'slots': ['source']},
+                                                                                  'range': 'Protein'}}},
                  'ProteinPartOfCellType': {'defining_slots': ['subject',
                                                               'predicate',
                                                               'object'],
@@ -3111,18 +3121,24 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                            'author_list',
                                            'publication_doi',
                                            'journal']},
-                 'Species': {'aliases': ['Taxonomy'],
-                             'class_uri': 'NCBITaxon:131567',
-                             'description': 'The taxonomical classification of an '
-                                            'organism.',
-                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                             'name': 'Species',
-                             'slots': ['ontology_purl',
-                                       'label',
-                                       'database_cross_reference']}},
+                 'Taxon': {'aliases': ['Species'],
+                           'class_uri': 'NCBITaxon:131567',
+                           'description': 'The taxonomical classification of an '
+                                          'organism.',
+                           'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                           'name': 'Taxon',
+                           'slots': ['ontology_purl',
+                                     'label',
+                                     'database_cross_reference']}},
      'default_prefix': 'nlm-ckn',
      'description': 'Data model for cell phenotypes and biological entities they '
                     'relate to.',
+     'enums': {'tissue_enum': {'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                               'name': 'tissue_enum',
+                               'reachable_from': {'include_self': False,
+                                                  'relationship_types': ['rdfs:subClassOf'],
+                                                  'source_nodes': ['UBERON:0001062'],
+                                                  'source_ontology': 'obo:UBERON'}}},
      'id': 'https://w3id.org/nlm-ckn-schema',
      'imports': ['linkml:types'],
      'name': 'nlm-ckn-schema',
@@ -3154,12 +3170,16 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'prefix_reference': 'https://purl.obolibrary.org/obo/PATO_'},
                   'PR': {'prefix_prefix': 'PR',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/PR_'},
+                  'PROV': {'prefix_prefix': 'PROV',
+                           'prefix_reference': 'http://www.w3.org/ns/prov#'},
                   'RO': {'prefix_prefix': 'RO',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/RO_'},
                   'SKOS': {'prefix_prefix': 'SKOS',
                            'prefix_reference': 'http://www.w3.org/2004/02/skos/core#'},
                   'SO': {'prefix_prefix': 'SO',
                          'prefix_reference': 'https://purl.obolibrary.org/obo/SO_'},
+                  'STATO': {'prefix_prefix': 'STATO',
+                            'prefix_reference': 'https://purl.obolibrary.org/obo/STATO_'},
                   'UBERON': {'prefix_prefix': 'UBERON',
                              'prefix_reference': 'https://purl.obolibrary.org/obo/UBERON_'},
                   'dc': {'prefix_prefix': 'dc',
@@ -3210,6 +3230,13 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                          'name': 'assay',
                          'range': 'string',
                          'slot_uri': 'OBI:0000070'},
+               'assay_summary': {'description': 'Summarized counts for each assay '
+                                                'type used to collect data points '
+                                                'for the cell set dataset.',
+                                 'domain_of': ['CellSetDataset'],
+                                 'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                 'name': 'assay_summary',
+                                 'range': 'string'},
                'author_cell_term': {'description': 'A label for a cell set that '
                                                    'was assigned to it by some '
                                                    'author of the dataset.',
@@ -3319,6 +3346,25 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                      'is_a': 'dataset_identifier',
                                      'name': 'cellxgene_dataset',
                                      'range': 'string'},
+               'cluster_annotation': {'description': 'An annotation curated by the '
+                                                     'author of the cell set '
+                                                     'dataset for the level at '
+                                                     'which clustering was done.',
+                                      'domain_of': ['CellSet', 'CellSetDataset'],
+                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                      'name': 'cluster_annotation',
+                                      'range': 'string'},
+               'cluster_cell_count': {'description': 'Count of cells in the '
+                                                     'cluster post-filtering.',
+                                      'domain_of': ['CellSet'],
+                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                      'name': 'cluster_cell_count',
+                                      'range': 'integer'},
+               'cluster_summary': {'description': 'Count of clusters in this '
+                                                  'dataset.',
+                                   'domain_of': ['CellSetDataset'],
+                                   'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                   'name': 'cluster_summary'},
                'collection_id': {'description': 'An identifier for a CELLxGENE '
                                                 'collection.',
                                  'domain_of': ['CellSetDataset'],
@@ -3348,7 +3394,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                            'identifier or URI.',
                                             'domain_of': ['CellType',
                                                           'AnatomicalStructure',
-                                                          'Species',
+                                                          'Taxon',
                                                           'Disease'],
                                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                             'name': 'database_cross_reference',
@@ -3441,6 +3487,13 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                      'name': 'disease_type_purl',
                                      'range': 'uriorcurie'},
+               'donor_id_count': {'description': 'Count of tissue donors who '
+                                                 'contributed samples for the cell '
+                                                 'set dataset.',
+                                  'domain_of': ['CellSetDataset'],
+                                  'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                  'name': 'donor_id_count',
+                                  'range': 'integer'},
                'drug_product_id': {'description': 'An identifier for a drug '
                                                   'compound.',
                                    'examples': [{'value': 'CHEMBL26'}],
@@ -3454,6 +3507,12 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                              'examples': [{'value': 'Small molecule'}],
                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
                              'name': 'drug_type',
+                             'range': 'string'},
+               'embedding': {'description': 'The method used for dimensionality '
+                                            'reduction.',
+                             'domain_of': ['CellSetDataset'],
+                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                             'name': 'embedding',
                              'range': 'string'},
                'evaluated_in': {'description': 'A relation between a drug and some '
                                                'clinical trial it was tested in.',
@@ -3539,11 +3598,50 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                                'harmonic mean of precision and '
                                                'recall and applying weights to '
                                                'recall.',
-                                'domain_of': ['BiomarkerCombination'],
+                                'domain_of': ['CellSet', 'BiomarkerCombination'],
                                 'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                 'name': 'f_beta_score',
                                 'range': 'float',
                                 'slot_uri': 'STATO:0000663'},
+               'false_negative': {'description': 'Count of cells outside a cluster '
+                                                 'that were correctly classified '
+                                                 'as not belonging to the target '
+                                                 'class.',
+                                  'domain_of': ['CellSet'],
+                                  'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                  'name': 'false_negative',
+                                  'range': 'integer'},
+               'false_positive': {'description': 'Count of cells in a cluster that '
+                                                 'were correctly classified as not '
+                                                 'belonging to the target class.',
+                                  'domain_of': ['CellSet'],
+                                  'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                  'name': 'false_positive',
+                                  'range': 'integer'},
+               'filtered_cell_count': {'description': 'A count of normal cells '
+                                                      'that matched the following '
+                                                      'inclusion criteria: 1) '
+                                                      'matches UBERON ids for that '
+                                                      'particular organ, 2) '
+                                                      'matches to PATO ‘normal’, '
+                                                      'and 3) all humans older '
+                                                      'than 15 years of age '
+                                                      '(HsaDPV term) – note that '
+                                                      'this will be different than '
+                                                      'the author’s cell counts in '
+                                                      'their dataset because of '
+                                                      'this filtering process.',
+                                       'domain_of': ['CellSetDataset'],
+                                       'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                       'name': 'filtered_cell_count',
+                                       'range': 'string'},
+               'first_quartile_silhouette': {'description': 'The lowest quartile '
+                                                            'for a set of '
+                                                            'silhoette scores.',
+                                             'domain_of': ['CellSet'],
+                                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                             'name': 'first_quartile_silhouette',
+                                             'range': 'float'},
                'gene_id': {'description': 'A numeric identifier assigned by the '
                                           'NCBI Entrez Gene database.',
                            'domain_of': ['Gene'],
@@ -3744,7 +3842,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                        'Gene',
                                        'Drug',
                                        'AnatomicalStructure',
-                                       'Species',
+                                       'Taxon',
                                        'Protein',
                                        'Disease',
                                        'BiologicalProcess',
@@ -3781,6 +3879,24 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'name': 'markers',
                            'range': 'string',
                            'slot_uri': 'CHEBI:59163'},
+               'maximum_silhouette': {'description': 'The maximum value from a set '
+                                                     'of silhouette scores.',
+                                      'domain_of': ['CellSet'],
+                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                      'name': 'maximum_silhouette',
+                                      'range': 'float'},
+               'mean_f_beta_score': {'description': 'The mean F-beta score from a '
+                                                    'set of F-beta scores.',
+                                     'domain_of': ['CellSetDataset'],
+                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                     'name': 'mean_f_beta_score',
+                                     'range': 'float'},
+               'mean_silhouette': {'description': 'The mean silhouette score from '
+                                                  'a set of silhouette scores.',
+                                   'domain_of': ['CellSet', 'CellSetDataset'],
+                                   'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                   'name': 'mean_silhouette',
+                                   'range': 'float'},
                'mechanism_of_action': {'description': 'A drug category based on '
                                                       'biological mechanism or '
                                                       'pathway that a given drug '
@@ -3789,11 +3905,39 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                        'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                        'name': 'mechanism_of_action',
                                        'range': 'string'},
+               'median_of_f_beta_scores': {'description': 'The median F-score from '
+                                                          'a set of F-beta scores.',
+                                           'domain_of': ['CellSetDataset'],
+                                           'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                           'name': 'median_of_f_beta_scores',
+                                           'range': 'float'},
+               'median_of_median_silhouette': {'description': 'The median value '
+                                                              'for a set of '
+                                                              'medians silhouette '
+                                                              'scores for multiple '
+                                                              'cell sets.',
+                                               'domain_of': ['CellSetDataset'],
+                                               'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                               'name': 'median_of_median_silhouette',
+                                               'range': 'float'},
+               'median_silhouette': {'description': 'The median silhouette score '
+                                                    'from a set of silhouette '
+                                                    'scores.',
+                                     'domain_of': ['CellSet'],
+                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                     'name': 'median_silhouette',
+                                     'range': 'float'},
                'member_of': {'description': 'A mereological relation between a '
                                             'item and a collection.',
                              'exact_mappings': ['RO:0002350'],
                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
                              'name': 'member_of'},
+               'minimum_silhouette': {'description': 'The minimum value from a set '
+                                                     'of silhouette scores.',
+                                      'domain_of': ['CellSet'],
+                                      'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                      'name': 'minimum_silhouette',
+                                      'range': 'float'},
                'molecularly_interacts_with': {'description': 'An interaction '
                                                              'relationship in '
                                                              'which the two '
@@ -3848,6 +3992,18 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                           'from_schema': 'https://w3id.org/nlm-ckn-schema',
                           'name': 'object',
                           'range': 'string'},
+               'on_target': {'description': 'A measure--ranging from 0 to 1--of '
+                                            'how much of the marker gene '
+                                            'expression is restricted to the '
+                                            'target cluster. A value of 1 is '
+                                            'assigned to markers that are only '
+                                            'expressed within their target cell '
+                                            'types and not in cells of any other '
+                                            'cell types.',
+                             'domain_of': ['CellSet'],
+                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                             'name': 'on_target',
+                             'range': 'float'},
                'ontology_purl': {'abstract': True,
                                  'description': 'A Uniform Resource Locator that '
                                                 'redirects to an ontology '
@@ -3855,7 +4011,7 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                  'domain_of': ['CellSet',
                                                'CellType',
                                                'AnatomicalStructure',
-                                               'Species',
+                                               'Taxon',
                                                'Disease',
                                                'BiologicalProcess',
                                                'CellularComponent',
@@ -3866,11 +4022,25 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                  'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                  'name': 'ontology_purl',
                                  'range': 'uriorcurie'},
+               'organ_dataset_summary': {'description': 'Count of datasets that '
+                                                        'also contain data about '
+                                                        'an anatomical entity.',
+                                         'domain_of': ['AnatomicalStructure'],
+                                         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                         'name': 'organ_dataset_summary',
+                                         'range': 'integer'},
                'part_of': {'description': 'A core relation that holds between a '
                                           'part and its whole.',
                            'exact_mappings': ['BFO:0000050'],
                            'from_schema': 'https://w3id.org/nlm-ckn-schema',
                            'name': 'part_of'},
+               'percent_total_cells': {'description': 'The percent of cells the '
+                                                      'cluster contains of all the '
+                                                      'cells for the dataset.',
+                                       'domain_of': ['CellSet'],
+                                       'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                       'name': 'percent_total_cells',
+                                       'range': 'float'},
                'phenotype': {'description': 'An observable characteristic of an '
                                             'organism resulting from the '
                                             'interaction of its genotype with the '
@@ -3879,6 +4049,12 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
                              'name': 'phenotype',
                              'range': 'string'},
+               'precision': {'description': 'The number of true positives out of '
+                                            'all retrieved positive values.',
+                             'domain_of': ['CellSet'],
+                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                             'name': 'precision',
+                             'range': 'float'},
                'predicate': {'description': 'The predicate of a triple.',
                              'domain_of': ['Association'],
                              'from_schema': 'https://w3id.org/nlm-ckn-schema',
@@ -3929,6 +4105,12 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                    'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                    'name': 'publication_doi',
                                    'range': 'doi'},
+               'recall': {'description': 'The number of true positives out of all '
+                                         'possible positive values.',
+                          'domain_of': ['CellSet'],
+                          'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                          'name': 'recall',
+                          'range': 'float'},
                'recommended_name': {'description': 'A name that a source prefers '
                                                    'to use for an entity.',
                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
@@ -3990,15 +4172,6 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                     'name': 'silhouette_score',
                                     'range': 'float'},
-               'source': {'description': 'The resource from which some '
-                                         'information, data, or knowledge '
-                                         'originated.',
-                          'domain_of': ['Mutation',
-                                        'ProteinLocatedInCellularComponent'],
-                          'from_schema': 'https://w3id.org/nlm-ckn-schema',
-                          'name': 'source',
-                          'range': 'string',
-                          'slot_uri': 'dc:source'},
                'species': {'description': 'The taxonomical classification of an '
                                           'organism.',
                            'domain_of': ['CellSet',
@@ -4010,6 +4183,18 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'name': 'species',
                            'range': 'uriorcurie',
                            'slot_uri': 'NCBITaxon:131567'},
+               'standard_deviation_of_silhouette': {'description': 'The standard '
+                                                                   'deviation for '
+                                                                   'silhouette '
+                                                                   'score values '
+                                                                   'from a set of '
+                                                                   'silhouette '
+                                                                   'scores.',
+                                                    'domain_of': ['CellSet',
+                                                                  'CellSetDataset'],
+                                                    'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                                    'name': 'standard_deviation_of_silhouette',
+                                                    'range': 'float'},
                'study_id': {'description': 'An identifier for a research study.',
                             'domain_of': ['ClinicalTrial'],
                             'examples': [{'value': 'NCT00494511'}],
@@ -4032,6 +4217,26 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'from_schema': 'https://w3id.org/nlm-ckn-schema',
                            'name': 'subject',
                            'range': 'string'},
+               'third_quartile_silhouette': {'description': 'The  quartile for a '
+                                                            'set of silhoette '
+                                                            'scores.',
+                                             'domain_of': ['CellSet'],
+                                             'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                             'name': 'third_quartile_silhouette',
+                                             'range': 'float'},
+               'tissue_annotation': {'description': 'A tissue annotation curated '
+                                                    'by the author of the cell set '
+                                                    'dataset.',
+                                     'domain_of': ['CellSetDataset'],
+                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                     'name': 'tissue_annotation',
+                                     'range': 'string'},
+               'tissue_annotation_id': {'description': 'Ontology ID for the tissue '
+                                                       'annotation.',
+                                        'domain_of': ['CellSetDataset'],
+                                        'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                        'name': 'tissue_annotation_id',
+                                        'range': 'tissue_enum'},
                'title': {'description': 'A word or phrase used as a name for some '
                                         'entity.',
                          'domain_of': ['Publication'],
@@ -4045,6 +4250,13 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                                'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                'name': 'trade_names',
                                'range': 'string'},
+               'true_positive': {'description': 'Count of cells in a cluster that '
+                                                'were correctly classified as '
+                                                'belonging to the target class.',
+                                 'domain_of': ['CellSet'],
+                                 'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                 'name': 'true_positive',
+                                 'range': 'integer'},
                'uniprot_annotation_score': {'description': 'A heuristic measure of '
                                                            'the annotation content '
                                                            'of a Uniprot entry. It '
@@ -4076,6 +4288,11 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                            'name': 'version',
                            'range': 'string',
                            'slot_uri': 'IAO:0000129'},
+               'was_attributed_to': {'description': 'Attribution is the ascribing '
+                                                    'of an entity to an agent.',
+                                     'exact_mappings': ['PROV:wasAttributedTo'],
+                                     'from_schema': 'https://w3id.org/nlm-ckn-schema',
+                                     'name': 'was_attributed_to'},
                'year': {'description': 'A numeric string that represents one '
                                        'calendar year.',
                         'domain_of': ['Publication'],
@@ -4091,6 +4308,10 @@ linkml_meta = LinkMLMeta({'classes': {'AnatomicalStructure': {'class_uri': 'UBER
                'https identifier': {'from_schema': 'https://w3id.org/nlm-ckn-schema',
                                     'name': 'https identifier',
                                     'typeof': 'string'}}} )
+
+class TissueEnum(str):
+    pass
+
 
 
 class Association(ConfiguredBaseModel):
@@ -4150,7 +4371,24 @@ class CellSet(ConfiguredBaseModel):
                    'cellxgene_collection',
                    'cellxgene_dataset',
                    'label',
-                   'silhouette_score']})
+                   'silhouette_score',
+                   'cluster_annotation',
+                   'median_silhouette',
+                   'mean_silhouette',
+                   'standard_deviation_of_silhouette',
+                   'cluster_cell_count',
+                   'percent_total_cells',
+                   'maximum_silhouette',
+                   'minimum_silhouette',
+                   'first_quartile_silhouette',
+                   'third_quartile_silhouette',
+                   'true_positive',
+                   'false_negative',
+                   'false_positive',
+                   'on_target',
+                   'f_beta_score',
+                   'precision',
+                   'recall']})
 
     author_cell_term: Optional[str] = Field(default=None, description="""A label for a cell set that was assigned to it by some author of the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'author_cell_term',
          'description': 'A label for a cell set that was assigned to it by some author '
@@ -4178,7 +4416,7 @@ class CellSet(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -4287,7 +4525,7 @@ class CellSet(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4308,6 +4546,140 @@ class CellSet(ConfiguredBaseModel):
          'domain_of': ['CellSet'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'silhouette_score',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    cluster_annotation: Optional[str] = Field(default=None, description="""An annotation curated by the author of the cell set dataset for the level at which clustering was done.""", json_schema_extra = { "linkml_meta": {'alias': 'cluster_annotation',
+         'description': 'An annotation curated by the author of the cell set dataset '
+                        'for the level at which clustering was done.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'cluster_annotation',
+         'owner': 'CellSet',
+         'range': 'string'} })
+    median_silhouette: Optional[float] = Field(default=None, description="""The median silhouette score from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'median_silhouette',
+         'description': 'The median silhouette score from a set of silhouette scores.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'median_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    mean_silhouette: Optional[float] = Field(default=None, description="""The mean silhouette score from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'mean_silhouette',
+         'description': 'The mean silhouette score from a set of silhouette scores.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'mean_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    standard_deviation_of_silhouette: Optional[float] = Field(default=None, description="""The standard deviation for silhouette score values from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'standard_deviation_of_silhouette',
+         'description': 'The standard deviation for silhouette score values from a set '
+                        'of silhouette scores.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'standard_deviation_of_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    cluster_cell_count: Optional[int] = Field(default=None, description="""Count of cells in the cluster post-filtering.""", json_schema_extra = { "linkml_meta": {'alias': 'cluster_cell_count',
+         'description': 'Count of cells in the cluster post-filtering.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'cluster_cell_count',
+         'owner': 'CellSet',
+         'range': 'integer'} })
+    percent_total_cells: Optional[float] = Field(default=None, description="""The percent of cells the cluster contains of all the cells for the dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'percent_total_cells',
+         'description': 'The percent of cells the cluster contains of all the cells '
+                        'for the dataset.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'percent_total_cells',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    maximum_silhouette: Optional[float] = Field(default=None, description="""The maximum value from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'maximum_silhouette',
+         'description': 'The maximum value from a set of silhouette scores.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'maximum_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    minimum_silhouette: Optional[float] = Field(default=None, description="""The minimum value from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'minimum_silhouette',
+         'description': 'The minimum value from a set of silhouette scores.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'minimum_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    first_quartile_silhouette: Optional[float] = Field(default=None, description="""The lowest quartile for a set of silhoette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'first_quartile_silhouette',
+         'description': 'The lowest quartile for a set of silhoette scores.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'first_quartile_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    third_quartile_silhouette: Optional[float] = Field(default=None, description="""The  quartile for a set of silhoette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'third_quartile_silhouette',
+         'description': 'The  quartile for a set of silhoette scores.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'third_quartile_silhouette',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    true_positive: Optional[int] = Field(default=None, description="""Count of cells in a cluster that were correctly classified as belonging to the target class.""", json_schema_extra = { "linkml_meta": {'alias': 'true_positive',
+         'description': 'Count of cells in a cluster that were correctly classified as '
+                        'belonging to the target class.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'true_positive',
+         'owner': 'CellSet',
+         'range': 'integer'} })
+    false_negative: Optional[int] = Field(default=None, description="""Count of cells outside a cluster that were correctly classified as not belonging to the target class.""", json_schema_extra = { "linkml_meta": {'alias': 'false_negative',
+         'description': 'Count of cells outside a cluster that were correctly '
+                        'classified as not belonging to the target class.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'false_negative',
+         'owner': 'CellSet',
+         'range': 'integer'} })
+    false_positive: Optional[int] = Field(default=None, description="""Count of cells in a cluster that were correctly classified as not belonging to the target class.""", json_schema_extra = { "linkml_meta": {'alias': 'false_positive',
+         'description': 'Count of cells in a cluster that were correctly classified as '
+                        'not belonging to the target class.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'false_positive',
+         'owner': 'CellSet',
+         'range': 'integer'} })
+    on_target: Optional[float] = Field(default=None, description="""A measure--ranging from 0 to 1--of how much of the marker gene expression is restricted to the target cluster. A value of 1 is assigned to markers that are only expressed within their target cell types and not in cells of any other cell types.""", json_schema_extra = { "linkml_meta": {'alias': 'on_target',
+         'description': 'A measure--ranging from 0 to 1--of how much of the marker '
+                        'gene expression is restricted to the target cluster. A value '
+                        'of 1 is assigned to markers that are only expressed within '
+                        'their target cell types and not in cells of any other cell '
+                        'types.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'on_target',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    f_beta_score: Optional[float] = Field(default=None, description="""A measure of a binary classification model's accuracy that is calculated by taking the harmonic mean of precision and recall and applying weights to recall.""", json_schema_extra = { "linkml_meta": {'alias': 'f_beta_score',
+         'description': "A measure of a binary classification model's accuracy that is "
+                        'calculated by taking the harmonic mean of precision and '
+                        'recall and applying weights to recall.',
+         'domain_of': ['CellSet', 'BiomarkerCombination'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'f_beta_score',
+         'owner': 'CellSet',
+         'range': 'float',
+         'slot_uri': 'STATO:0000663'} })
+    precision: Optional[float] = Field(default=None, description="""The number of true positives out of all retrieved positive values.""", json_schema_extra = { "linkml_meta": {'alias': 'precision',
+         'description': 'The number of true positives out of all retrieved positive '
+                        'values.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'precision',
+         'owner': 'CellSet',
+         'range': 'float'} })
+    recall: Optional[float] = Field(default=None, description="""The number of true positives out of all possible positive values.""", json_schema_extra = { "linkml_meta": {'alias': 'recall',
+         'description': 'The number of true positives out of all possible positive '
+                        'values.',
+         'domain_of': ['CellSet'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'recall',
          'owner': 'CellSet',
          'range': 'float'} })
 
@@ -4352,7 +4724,7 @@ class CellType(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -4372,7 +4744,7 @@ class CellType(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4425,7 +4797,7 @@ class CellType(ConfiguredBaseModel):
     database_cross_reference: Optional[str] = Field(default=None, description="""An annotation property that links an ontology entity or a statement to a prefixed identifier or URI.""", json_schema_extra = { "linkml_meta": {'alias': 'database_cross_reference',
          'description': 'An annotation property that links an ontology entity or a '
                         'statement to a prefixed identifier or URI.',
-         'domain_of': ['CellType', 'AnatomicalStructure', 'Species', 'Disease'],
+         'domain_of': ['CellType', 'AnatomicalStructure', 'Taxon', 'Disease'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'database_cross_reference',
          'owner': 'CellType',
@@ -4504,7 +4876,7 @@ class Gene(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4613,7 +4985,7 @@ class Drug(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4721,7 +5093,8 @@ class AnatomicalStructure(ConfiguredBaseModel):
          'slots': ['ontology_purl',
                    'exact_synonym',
                    'label',
-                   'database_cross_reference']})
+                   'database_cross_reference',
+                   'organ_dataset_summary']})
 
     ontology_purl: Optional[str] = Field(default=None, description="""A Uniform Resource Locator that redirects to an ontology resource.""", json_schema_extra = { "linkml_meta": {'abstract': True,
          'alias': 'ontology_purl',
@@ -4730,7 +5103,7 @@ class AnatomicalStructure(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -4758,7 +5131,7 @@ class AnatomicalStructure(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4775,23 +5148,31 @@ class AnatomicalStructure(ConfiguredBaseModel):
     database_cross_reference: Optional[str] = Field(default=None, description="""An annotation property that links an ontology entity or a statement to a prefixed identifier or URI.""", json_schema_extra = { "linkml_meta": {'alias': 'database_cross_reference',
          'description': 'An annotation property that links an ontology entity or a '
                         'statement to a prefixed identifier or URI.',
-         'domain_of': ['CellType', 'AnatomicalStructure', 'Species', 'Disease'],
+         'domain_of': ['CellType', 'AnatomicalStructure', 'Taxon', 'Disease'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'database_cross_reference',
          'owner': 'AnatomicalStructure',
          'range': 'string',
          'slot_uri': 'obo:hasDbXref'} })
+    organ_dataset_summary: Optional[int] = Field(default=None, description="""Count of datasets that also contain data about an anatomical entity.""", json_schema_extra = { "linkml_meta": {'alias': 'organ_dataset_summary',
+         'description': 'Count of datasets that also contain data about an anatomical '
+                        'entity.',
+         'domain_of': ['AnatomicalStructure'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'organ_dataset_summary',
+         'owner': 'AnatomicalStructure',
+         'range': 'integer'} })
 
 
-class Species(ConfiguredBaseModel):
+class Taxon(ConfiguredBaseModel):
     """
     The taxonomical classification of an organism.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['Taxonomy'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'aliases': ['Species'],
          'class_uri': 'NCBITaxon:131567',
          'description': 'The taxonomical classification of an organism.',
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'Species',
+         'name': 'Taxon',
          'slots': ['ontology_purl', 'label', 'database_cross_reference']})
 
     ontology_purl: Optional[str] = Field(default=None, description="""A Uniform Resource Locator that redirects to an ontology resource.""", json_schema_extra = { "linkml_meta": {'abstract': True,
@@ -4801,7 +5182,7 @@ class Species(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -4811,7 +5192,7 @@ class Species(ConfiguredBaseModel):
                        'OrganismTrait'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'ontology_purl',
-         'owner': 'Species',
+         'owner': 'Taxon',
          'range': 'uriorcurie'} })
     label: Optional[str] = Field(default=None, description="""The name for an entity.""", json_schema_extra = { "linkml_meta": {'alias': 'label',
          'description': 'The name for an entity.',
@@ -4820,7 +5201,7 @@ class Species(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -4831,16 +5212,16 @@ class Species(ConfiguredBaseModel):
                        'OrganismTrait'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'label',
-         'owner': 'Species',
+         'owner': 'Taxon',
          'range': 'string',
          'slot_uri': 'rdfs:label'} })
     database_cross_reference: Optional[str] = Field(default=None, description="""An annotation property that links an ontology entity or a statement to a prefixed identifier or URI.""", json_schema_extra = { "linkml_meta": {'alias': 'database_cross_reference',
          'description': 'An annotation property that links an ontology entity or a '
                         'statement to a prefixed identifier or URI.',
-         'domain_of': ['CellType', 'AnatomicalStructure', 'Species', 'Disease'],
+         'domain_of': ['CellType', 'AnatomicalStructure', 'Taxon', 'Disease'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'database_cross_reference',
-         'owner': 'Species',
+         'owner': 'Taxon',
          'range': 'string',
          'slot_uri': 'obo:hasDbXref'} })
 
@@ -4867,7 +5248,20 @@ class CellSetDataset(ConfiguredBaseModel):
                    'cellxgene_collection',
                    'cellxgene_dataset',
                    'collection_id',
-                   'publication']})
+                   'publication',
+                   'filtered_cell_count',
+                   'embedding',
+                   'tissue_annotation',
+                   'tissue_annotation_id',
+                   'median_of_median_silhouette',
+                   'mean_f_beta_score',
+                   'median_of_f_beta_scores',
+                   'mean_silhouette',
+                   'standard_deviation_of_silhouette',
+                   'cluster_annotation',
+                   'donor_id_count',
+                   'assay_summary',
+                   'cluster_summary']})
 
     dataset_name: Optional[str] = Field(default=None, description="""The label for a dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'dataset_name',
          'description': 'The label for a dataset.',
@@ -4985,6 +5379,107 @@ class CellSetDataset(ConfiguredBaseModel):
          'name': 'collection_id',
          'owner': 'CellSetDataset',
          'range': 'string'} })
+    filtered_cell_count: Optional[str] = Field(default=None, description="""A count of normal cells that matched the following inclusion criteria: 1) matches UBERON ids for that particular organ, 2) matches to PATO ‘normal’, and 3) all humans older than 15 years of age (HsaDPV term) – note that this will be different than the author’s cell counts in their dataset because of this filtering process.""", json_schema_extra = { "linkml_meta": {'alias': 'filtered_cell_count',
+         'description': 'A count of normal cells that matched the following inclusion '
+                        'criteria: 1) matches UBERON ids for that particular organ, 2) '
+                        'matches to PATO ‘normal’, and 3) all humans older than 15 '
+                        'years of age (HsaDPV term) – note that this will be different '
+                        'than the author’s cell counts in their dataset because of '
+                        'this filtering process.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'filtered_cell_count',
+         'owner': 'CellSetDataset',
+         'range': 'string'} })
+    embedding: Optional[str] = Field(default=None, description="""The method used for dimensionality reduction.""", json_schema_extra = { "linkml_meta": {'alias': 'embedding',
+         'description': 'The method used for dimensionality reduction.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'embedding',
+         'owner': 'CellSetDataset',
+         'range': 'string'} })
+    tissue_annotation: Optional[str] = Field(default=None, description="""A tissue annotation curated by the author of the cell set dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'tissue_annotation',
+         'description': 'A tissue annotation curated by the author of the cell set '
+                        'dataset.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'tissue_annotation',
+         'owner': 'CellSetDataset',
+         'range': 'string'} })
+    tissue_annotation_id: Optional[TissueEnum] = Field(default=None, description="""Ontology ID for the tissue annotation.""", json_schema_extra = { "linkml_meta": {'alias': 'tissue_annotation_id',
+         'description': 'Ontology ID for the tissue annotation.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'tissue_annotation_id',
+         'owner': 'CellSetDataset',
+         'range': 'tissue_enum'} })
+    median_of_median_silhouette: Optional[float] = Field(default=None, description="""The median value for a set of medians silhouette scores for multiple cell sets.""", json_schema_extra = { "linkml_meta": {'alias': 'median_of_median_silhouette',
+         'description': 'The median value for a set of medians silhouette scores for '
+                        'multiple cell sets.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'median_of_median_silhouette',
+         'owner': 'CellSetDataset',
+         'range': 'float'} })
+    mean_f_beta_score: Optional[float] = Field(default=None, description="""The mean F-beta score from a set of F-beta scores.""", json_schema_extra = { "linkml_meta": {'alias': 'mean_f_beta_score',
+         'description': 'The mean F-beta score from a set of F-beta scores.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'mean_f_beta_score',
+         'owner': 'CellSetDataset',
+         'range': 'float'} })
+    median_of_f_beta_scores: Optional[float] = Field(default=None, description="""The median F-score from a set of F-beta scores.""", json_schema_extra = { "linkml_meta": {'alias': 'median_of_f_beta_scores',
+         'description': 'The median F-score from a set of F-beta scores.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'median_of_f_beta_scores',
+         'owner': 'CellSetDataset',
+         'range': 'float'} })
+    mean_silhouette: Optional[float] = Field(default=None, description="""The mean silhouette score from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'mean_silhouette',
+         'description': 'The mean silhouette score from a set of silhouette scores.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'mean_silhouette',
+         'owner': 'CellSetDataset',
+         'range': 'float'} })
+    standard_deviation_of_silhouette: Optional[float] = Field(default=None, description="""The standard deviation for silhouette score values from a set of silhouette scores.""", json_schema_extra = { "linkml_meta": {'alias': 'standard_deviation_of_silhouette',
+         'description': 'The standard deviation for silhouette score values from a set '
+                        'of silhouette scores.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'standard_deviation_of_silhouette',
+         'owner': 'CellSetDataset',
+         'range': 'float'} })
+    cluster_annotation: Optional[str] = Field(default=None, description="""An annotation curated by the author of the cell set dataset for the level at which clustering was done.""", json_schema_extra = { "linkml_meta": {'alias': 'cluster_annotation',
+         'description': 'An annotation curated by the author of the cell set dataset '
+                        'for the level at which clustering was done.',
+         'domain_of': ['CellSet', 'CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'cluster_annotation',
+         'owner': 'CellSetDataset',
+         'range': 'string'} })
+    donor_id_count: Optional[int] = Field(default=None, description="""Count of tissue donors who contributed samples for the cell set dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'donor_id_count',
+         'description': 'Count of tissue donors who contributed samples for the cell '
+                        'set dataset.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'donor_id_count',
+         'owner': 'CellSetDataset',
+         'range': 'integer'} })
+    assay_summary: Optional[str] = Field(default=None, description="""Summarized counts for each assay type used to collect data points for the cell set dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'assay_summary',
+         'description': 'Summarized counts for each assay type used to collect data '
+                        'points for the cell set dataset.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'assay_summary',
+         'owner': 'CellSetDataset',
+         'range': 'string'} })
+    cluster_summary: Optional[str] = Field(default=None, description="""Count of clusters in this dataset.""", json_schema_extra = { "linkml_meta": {'alias': 'cluster_summary',
+         'description': 'Count of clusters in this dataset.',
+         'domain_of': ['CellSetDataset'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'cluster_summary',
+         'owner': 'CellSetDataset'} })
 
 
 class Publication(ConfiguredBaseModel):
@@ -5064,7 +5559,7 @@ class BiomarkerCombination(ConfiguredBaseModel):
          'description': "A measure of a binary classification model's accuracy that is "
                         'calculated by taking the harmonic mean of precision and '
                         'recall and applying weights to recall.',
-         'domain_of': ['BiomarkerCombination'],
+         'domain_of': ['CellSet', 'BiomarkerCombination'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'f_beta_score',
          'owner': 'BiomarkerCombination',
@@ -5099,7 +5594,7 @@ class Protein(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5205,7 +5700,7 @@ class Disease(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5224,7 +5719,7 @@ class Disease(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5277,7 +5772,7 @@ class Disease(ConfiguredBaseModel):
     database_cross_reference: Optional[str] = Field(default=None, description="""An annotation property that links an ontology entity or a statement to a prefixed identifier or URI.""", json_schema_extra = { "linkml_meta": {'alias': 'database_cross_reference',
          'description': 'An annotation property that links an ontology entity or a '
                         'statement to a prefixed identifier or URI.',
-         'domain_of': ['CellType', 'AnatomicalStructure', 'Species', 'Disease'],
+         'domain_of': ['CellType', 'AnatomicalStructure', 'Taxon', 'Disease'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'database_cross_reference',
          'owner': 'Disease',
@@ -5350,7 +5845,7 @@ class BiologicalProcess(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5369,7 +5864,7 @@ class BiologicalProcess(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5428,7 +5923,7 @@ class CellularComponent(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5447,7 +5942,7 @@ class CellularComponent(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5502,7 +5997,7 @@ class MolecularFunction(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5521,7 +6016,7 @@ class MolecularFunction(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5573,7 +6068,7 @@ class LifeCycleStage(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5592,7 +6087,7 @@ class LifeCycleStage(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5646,7 +6141,7 @@ class ChemicalEntity(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5665,7 +6160,7 @@ class ChemicalEntity(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5718,7 +6213,7 @@ class OrganismTrait(ConfiguredBaseModel):
          'domain_of': ['CellSet',
                        'CellType',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Disease',
                        'BiologicalProcess',
                        'CellularComponent',
@@ -5737,7 +6232,7 @@ class OrganismTrait(ConfiguredBaseModel):
                        'Gene',
                        'Drug',
                        'AnatomicalStructure',
-                       'Species',
+                       'Taxon',
                        'Protein',
                        'Disease',
                        'BiologicalProcess',
@@ -5786,7 +6281,6 @@ class Mutation(ConfiguredBaseModel):
                    'phenotype',
                    'genotype_annotation',
                    'evidence_level',
-                   'source',
                    'publication']})
 
     reference_sequence_identifier: Optional[str] = Field(default=None, description="""An identifier assigned by the NIH RefSeq database to the reference sequence for a gene.""", json_schema_extra = { "linkml_meta": {'alias': 'reference_sequence_identifier',
@@ -5837,15 +6331,6 @@ class Mutation(ConfiguredBaseModel):
          'name': 'evidence_level',
          'owner': 'Mutation',
          'range': 'string'} })
-    source: Optional[str] = Field(default=None, description="""The resource from which some information, data, or knowledge originated.""", json_schema_extra = { "linkml_meta": {'alias': 'source',
-         'description': 'The resource from which some information, data, or knowledge '
-                        'originated.',
-         'domain_of': ['Mutation', 'ProteinLocatedInCellularComponent'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'source',
-         'owner': 'Mutation',
-         'range': 'string',
-         'slot_uri': 'dc:source'} })
     publication: Optional[str] = Field(default=None, description="""A textual entity intended to identify a particular publication.""", json_schema_extra = { "linkml_meta": {'alias': 'publication',
          'description': 'A textual entity intended to identify a particular '
                         'publication.',
@@ -6157,71 +6642,6 @@ class CellTypeSubclassOfCellType(Association):
          'name': 'object',
          'owner': 'CellTypeSubclassOfCellType',
          'range': 'CellType'} })
-
-
-class CellTypeSelectivelyExpressesGene(Association):
-    """
-    A relationship between a cell type and a gene such that the gene is selectively expressed in that cell type and can be used as a marker.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
-         'description': 'A relationship between a cell type and a gene such that the '
-                        'gene is selectively expressed in that cell type and can be '
-                        'used as a marker.',
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'is_a': 'Association',
-         'name': 'CellTypeSelectivelyExpressesGene',
-         'slot_usage': {'object': {'description': 'A region (or regions) that includes '
-                                                  'all of the sequence elements '
-                                                  'necessary to encode a functional '
-                                                  'transcript. A gene may include '
-                                                  'regulatory regions, transcribed '
-                                                  'regions and/or other functional '
-                                                  'sequence regions.',
-                                   'name': 'object',
-                                   'range': 'Gene'},
-                        'predicate': {'description': 'A relation between a cell type '
-                                                     'and a gene that is selectively '
-                                                     'expressed in that cell type '
-                                                     'relative to other cell types.',
-                                      'name': 'predicate',
-                                      'subproperty_of': 'selectively_expresses'},
-                        'subject': {'description': 'A material entity of anatomical '
-                                                   'origin (part of or deriving from '
-                                                   'an organism) that has as its parts '
-                                                   'a maximally connected cell '
-                                                   'compartment surrounded by a plasma '
-                                                   'membrane.',
-                                    'name': 'subject',
-                                    'range': 'CellType'}}})
-
-    subject: Optional[CellType] = Field(default=None, description="""A material entity of anatomical origin (part of or deriving from an organism) that has as its parts a maximally connected cell compartment surrounded by a plasma membrane.""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
-         'description': 'A material entity of anatomical origin (part of or deriving '
-                        'from an organism) that has as its parts a maximally connected '
-                        'cell compartment surrounded by a plasma membrane.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'subject',
-         'owner': 'CellTypeSelectivelyExpressesGene',
-         'range': 'CellType'} })
-    predicate: Optional[str] = Field(default=None, description="""A relation between a cell type and a gene that is selectively expressed in that cell type relative to other cell types.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
-         'description': 'A relation between a cell type and a gene that is selectively '
-                        'expressed in that cell type relative to other cell types.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'predicate',
-         'owner': 'CellTypeSelectivelyExpressesGene',
-         'range': 'uriorcurie',
-         'subproperty_of': 'selectively_expresses'} })
-    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
-         'description': 'A region (or regions) that includes all of the sequence '
-                        'elements necessary to encode a functional transcript. A gene '
-                        'may include regulatory regions, transcribed regions and/or '
-                        'other functional sequence regions.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'object',
-         'owner': 'CellTypeSelectivelyExpressesGene',
-         'range': 'Gene'} })
 
 
 class CellTypeHasPlasmaMembranePartProtein(Association):
@@ -6872,7 +7292,7 @@ class CellSetDerivesFromAnatomicalStructure(Association):
          'range': 'AnatomicalStructure'} })
 
 
-class CellSetHasSourceCellSetDataset(Association):
+class CellSetMemberOfCellSetDataset(Association):
     """
     A relationship between a cell set and the dataset that contains data about it.
     """
@@ -6881,17 +7301,15 @@ class CellSetHasSourceCellSetDataset(Association):
                         'contains data about it.',
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'is_a': 'Association',
-         'name': 'CellSetHasSourceCellSetDataset',
+         'name': 'CellSetMemberOfCellSetDataset',
          'slot_usage': {'object': {'description': 'A dataset that is about cells taken '
                                                   'from one or more tissue samples.',
                                    'name': 'object',
                                    'range': 'CellSetDataset'},
-                        'predicate': {'description': 'A relation between some '
-                                                     'information content entity and '
-                                                     'the resource from which it '
-                                                     'originated.',
+                        'predicate': {'description': 'A mereological relation between '
+                                                     'a item and a collection.',
                                       'name': 'predicate',
-                                      'subproperty_of': 'source'},
+                                      'subproperty_of': 'member_of'},
                         'subject': {'description': 'A collection of cells that have '
                                                    'some common property.',
                                     'name': 'subject',
@@ -6902,24 +7320,23 @@ class CellSetHasSourceCellSetDataset(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'subject',
-         'owner': 'CellSetHasSourceCellSetDataset',
+         'owner': 'CellSetMemberOfCellSetDataset',
          'range': 'CellSet'} })
-    predicate: Optional[str] = Field(default=None, description="""A relation between some information content entity and the resource from which it originated.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
-         'description': 'A relation between some information content entity and the '
-                        'resource from which it originated.',
+    predicate: Optional[str] = Field(default=None, description="""A mereological relation between a item and a collection.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'A mereological relation between a item and a collection.',
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'predicate',
-         'owner': 'CellSetHasSourceCellSetDataset',
+         'owner': 'CellSetMemberOfCellSetDataset',
          'range': 'uriorcurie',
-         'subproperty_of': 'source'} })
+         'subproperty_of': 'member_of'} })
     object: Optional[CellSetDataset] = Field(default=None, description="""A dataset that is about cells taken from one or more tissue samples.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
          'description': 'A dataset that is about cells taken from one or more tissue '
                         'samples.',
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'object',
-         'owner': 'CellSetHasSourceCellSetDataset',
+         'owner': 'CellSetMemberOfCellSetDataset',
          'range': 'CellSetDataset'} })
 
 
@@ -7044,7 +7461,7 @@ class CellSetHasCharacterizingMarkerSetBiomarkerCombination(Association):
          'range': 'BiomarkerCombination'} })
 
 
-class CellSetDatasetHasSourcePublication(Association):
+class CellSetDatasetWasAttributedToPublication(Association):
     """
     A relationship between a cell set dataset and the publication that can be used as a reference for it.
     """
@@ -7053,17 +7470,15 @@ class CellSetDatasetHasSourcePublication(Association):
                         'that can be used as a reference for it.',
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'is_a': 'Association',
-         'name': 'CellSetDatasetHasSourcePublication',
+         'name': 'CellSetDatasetWasAttributedToPublication',
          'slot_usage': {'object': {'description': 'A document that is the output of a '
                                                   'publishing process.',
                                    'name': 'object',
                                    'range': 'Publication'},
-                        'predicate': {'description': 'A relation between some '
-                                                     'information content entity and '
-                                                     'the resource from which it '
-                                                     'originated.',
+                        'predicate': {'description': 'Attribution is the ascribing of '
+                                                     'an entity to an agent.',
                                       'name': 'predicate',
-                                      'subproperty_of': 'source'},
+                                      'subproperty_of': 'was_attributed_to'},
                         'subject': {'description': 'A dataset that is about cells '
                                                    'taken from one or more tissue '
                                                    'samples.',
@@ -7076,23 +7491,22 @@ class CellSetDatasetHasSourcePublication(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'subject',
-         'owner': 'CellSetDatasetHasSourcePublication',
+         'owner': 'CellSetDatasetWasAttributedToPublication',
          'range': 'CellSetDataset'} })
-    predicate: Optional[str] = Field(default=None, description="""A relation between some information content entity and the resource from which it originated.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
-         'description': 'A relation between some information content entity and the '
-                        'resource from which it originated.',
+    predicate: Optional[str] = Field(default=None, description="""Attribution is the ascribing of an entity to an agent.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'Attribution is the ascribing of an entity to an agent.',
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'predicate',
-         'owner': 'CellSetDatasetHasSourcePublication',
+         'owner': 'CellSetDatasetWasAttributedToPublication',
          'range': 'uriorcurie',
-         'subproperty_of': 'source'} })
+         'subproperty_of': 'was_attributed_to'} })
     object: Optional[Publication] = Field(default=None, description="""A document that is the output of a publishing process.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
          'description': 'A document that is the output of a publishing process.',
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'object',
-         'owner': 'CellSetDatasetHasSourcePublication',
+         'owner': 'CellSetDatasetWasAttributedToPublication',
          'range': 'Publication'} })
 
 
@@ -7263,25 +7677,33 @@ class DrugMolecularlyInteractsWithGene(Association):
          'range': 'Gene'} })
 
 
-class GeneMolecularlyInteractsWithDrug(Association):
+class GeneMolecularlyInteractsWithGene(Association):
     """
-    A relationship between a gene and a drug wherein a gene product of that gene binds with or modifies the behavior of the drug.
+    A relationship between a gene and a second gene that it modifies the activity of.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
-         'description': 'A relationship between a gene and a drug wherein a gene '
-                        'product of that gene binds with or modifies the behavior of '
-                        'the drug.',
+         'description': 'A relationship between a gene and a second gene that it '
+                        'modifies the activity of.',
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'is_a': 'Association',
-         'name': 'GeneMolecularlyInteractsWithDrug',
-         'slot_usage': {'object': {'description': 'A drug product that is bearer of a '
-                                                  'clinical drug role.',
+         'name': 'GeneMolecularlyInteractsWithGene',
+         'slot_usage': {'object': {'description': 'A region (or regions) that includes '
+                                                  'all of the sequence elements '
+                                                  'necessary to encode a functional '
+                                                  'transcript. A gene may include '
+                                                  'regulatory regions, transcribed '
+                                                  'regions and/or other functional '
+                                                  'sequence regions.',
                                    'name': 'object',
-                                   'range': 'Drug'},
-                        'predicate': {'description': 'Symmetric relation between two '
+                                   'range': 'Gene'},
+                        'predicate': {'description': 'An interaction relationship in '
+                                                     'which the two partners are '
                                                      'molecular entities that directly '
-                                                     'bind or modify the behavior of '
-                                                     'the other.',
+                                                     'physically interact with each '
+                                                     'other for example via a stable '
+                                                     'binding interaction or a brief '
+                                                     'interaction during which one '
+                                                     'modifies the other.',
                                       'name': 'predicate',
                                       'subproperty_of': 'molecularly_interacts_with'},
                         'subject': {'description': 'A region (or regions) that '
@@ -7302,79 +7724,19 @@ class GeneMolecularlyInteractsWithDrug(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'subject',
-         'owner': 'GeneMolecularlyInteractsWithDrug',
+         'owner': 'GeneMolecularlyInteractsWithGene',
          'range': 'Gene'} })
-    predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two molecular entities that directly bind or modify the behavior of the other.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
-         'description': 'Symmetric relation between two molecular entities that '
-                        'directly bind or modify the behavior of the other.',
+    predicate: Optional[str] = Field(default=None, description="""An interaction relationship in which the two partners are molecular entities that directly physically interact with each other for example via a stable binding interaction or a brief interaction during which one modifies the other.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'An interaction relationship in which the two partners are '
+                        'molecular entities that directly physically interact with '
+                        'each other for example via a stable binding interaction or a '
+                        'brief interaction during which one modifies the other.',
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'predicate',
-         'owner': 'GeneMolecularlyInteractsWithDrug',
+         'owner': 'GeneMolecularlyInteractsWithGene',
          'range': 'uriorcurie',
          'subproperty_of': 'molecularly_interacts_with'} })
-    object: Optional[Drug] = Field(default=None, description="""A drug product that is bearer of a clinical drug role.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
-         'description': 'A drug product that is bearer of a clinical drug role.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'object',
-         'owner': 'GeneMolecularlyInteractsWithDrug',
-         'range': 'Drug'} })
-
-
-class GeneGeneticallyInteractsWithGene(Association):
-    """
-    A relationship between a gene and a second gene that it modifies the activity of.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
-         'description': 'A relationship between a gene and a second gene that it '
-                        'modifies the activity of.',
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'is_a': 'Association',
-         'name': 'GeneGeneticallyInteractsWithGene',
-         'slot_usage': {'object': {'description': 'A region (or regions) that includes '
-                                                  'all of the sequence elements '
-                                                  'necessary to encode a functional '
-                                                  'transcript. A gene may include '
-                                                  'regulatory regions, transcribed '
-                                                  'regions and/or other functional '
-                                                  'sequence regions.',
-                                   'name': 'object',
-                                   'range': 'Gene'},
-                        'predicate': {'description': 'Symmetric relation between two '
-                                                     'genetic entities that interact '
-                                                     'at the genetic level.',
-                                      'name': 'predicate',
-                                      'subproperty_of': 'genetically_interacts_with'},
-                        'subject': {'description': 'A region (or regions) that '
-                                                   'includes all of the sequence '
-                                                   'elements necessary to encode a '
-                                                   'functional transcript. A gene may '
-                                                   'include regulatory regions, '
-                                                   'transcribed regions and/or other '
-                                                   'functional sequence regions.',
-                                    'name': 'subject',
-                                    'range': 'Gene'}}})
-
-    subject: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
-         'description': 'A region (or regions) that includes all of the sequence '
-                        'elements necessary to encode a functional transcript. A gene '
-                        'may include regulatory regions, transcribed regions and/or '
-                        'other functional sequence regions.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'subject',
-         'owner': 'GeneGeneticallyInteractsWithGene',
-         'range': 'Gene'} })
-    predicate: Optional[str] = Field(default=None, description="""Symmetric relation between two genetic entities that interact at the genetic level.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
-         'description': 'Symmetric relation between two genetic entities that interact '
-                        'at the genetic level.',
-         'domain_of': ['Association'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'predicate',
-         'owner': 'GeneGeneticallyInteractsWithGene',
-         'range': 'uriorcurie',
-         'subproperty_of': 'genetically_interacts_with'} })
     object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
          'description': 'A region (or regions) that includes all of the sequence '
                         'elements necessary to encode a functional transcript. A gene '
@@ -7383,7 +7745,7 @@ class GeneGeneticallyInteractsWithGene(Association):
          'domain_of': ['Association'],
          'from_schema': 'https://w3id.org/nlm-ckn-schema',
          'name': 'object',
-         'owner': 'GeneGeneticallyInteractsWithGene',
+         'owner': 'GeneMolecularlyInteractsWithGene',
          'range': 'Gene'} })
 
 
@@ -7727,18 +8089,8 @@ class ProteinLocatedInCellularComponent(Association):
                                                    'genetically-encoded mRNA, and any '
                                                    'derivatives thereof',
                                     'name': 'subject',
-                                    'range': 'Protein'}},
-         'slots': ['source']})
+                                    'range': 'Protein'}}})
 
-    source: Optional[str] = Field(default=None, description="""The resource from which some information, data, or knowledge originated.""", json_schema_extra = { "linkml_meta": {'alias': 'source',
-         'description': 'The resource from which some information, data, or knowledge '
-                        'originated.',
-         'domain_of': ['Mutation', 'ProteinLocatedInCellularComponent'],
-         'from_schema': 'https://w3id.org/nlm-ckn-schema',
-         'name': 'source',
-         'owner': 'ProteinLocatedInCellularComponent',
-         'range': 'string',
-         'slot_uri': 'dc:source'} })
     subject: Optional[Protein] = Field(default=None, description="""An amino acid chain that is canonically produced de novo by ribosome-mediated translation of a genetically-encoded mRNA, and any derivatives thereof""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
          'description': 'An amino acid chain that is canonically produced de novo by '
                         'ribosome-mediated translation of a genetically-encoded mRNA, '
@@ -7775,6 +8127,120 @@ class ProteinLocatedInCellularComponent(Association):
          'range': 'CellularComponent'} })
 
 
+class CellSetDatasetIsAboutAnatomicalStructure(Association):
+    """
+    A relationship between a cell set dataset and an anatomical structure that some of its data pertain to.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
+         'description': 'A relationship between a cell set dataset and an anatomical '
+                        'structure that some of its data pertain to.',
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'is_a': 'Association',
+         'name': 'CellSetDatasetIsAboutAnatomicalStructure',
+         'slot_usage': {'object': {'description': 'Material anatomical entity that is '
+                                                  'a single connected structure with '
+                                                  'inherent 3D shape generated by '
+                                                  'coordinated expression of the '
+                                                  "organism's own genome.",
+                                   'name': 'object',
+                                   'range': 'AnatomicalStructure'},
+                        'predicate': {'description': 'A primitive relation that '
+                                                     'relates an information artifact '
+                                                     'to an entity.',
+                                      'name': 'predicate',
+                                      'subproperty_of': 'is_about'},
+                        'subject': {'description': 'A dataset that is about cells '
+                                                   'taken from one or more tissue '
+                                                   'samples.',
+                                    'name': 'subject',
+                                    'range': 'CellSetDataset'}}})
+
+    subject: Optional[CellSetDataset] = Field(default=None, description="""A dataset that is about cells taken from one or more tissue samples.""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
+         'description': 'A dataset that is about cells taken from one or more tissue '
+                        'samples.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'subject',
+         'owner': 'CellSetDatasetIsAboutAnatomicalStructure',
+         'range': 'CellSetDataset'} })
+    predicate: Optional[str] = Field(default=None, description="""A primitive relation that relates an information artifact to an entity.""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'A primitive relation that relates an information artifact to '
+                        'an entity.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'predicate',
+         'owner': 'CellSetDatasetIsAboutAnatomicalStructure',
+         'range': 'uriorcurie',
+         'subproperty_of': 'is_about'} })
+    object: Optional[AnatomicalStructure] = Field(default=None, description="""Material anatomical entity that is a single connected structure with inherent 3D shape generated by coordinated expression of the organism's own genome.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
+         'description': 'Material anatomical entity that is a single connected '
+                        'structure with inherent 3D shape generated by coordinated '
+                        "expression of the organism's own genome.",
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'object',
+         'owner': 'CellSetDatasetIsAboutAnatomicalStructure',
+         'range': 'AnatomicalStructure'} })
+
+
+class CellSetExpressesGene(Association):
+    """
+    A relationship between a cell set and a gene that it expresses.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'defining_slots': ['subject', 'predicate', 'object'],
+         'description': 'A relationship between a cell set and a gene that it '
+                        'expresses.',
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'is_a': 'Association',
+         'name': 'CellSetExpressesGene',
+         'slot_usage': {'object': {'description': 'A region (or regions) that includes '
+                                                  'all of the sequence elements '
+                                                  'necessary to encode a functional '
+                                                  'transcript. A gene may include '
+                                                  'regulatory regions, transcribed '
+                                                  'regions and/or other functional '
+                                                  'sequence regions.',
+                                   'name': 'object',
+                                   'range': 'Gene'},
+                        'predicate': {'description': 'relation between some biological '
+                                                     'entity and a gene that is the '
+                                                     'input of some gene expression '
+                                                     'process',
+                                      'name': 'predicate',
+                                      'subproperty_of': 'expresses'},
+                        'subject': {'description': 'A collection of cells that have '
+                                                   'some common property.',
+                                    'name': 'subject',
+                                    'range': 'CellSet'}}})
+
+    subject: Optional[CellSet] = Field(default=None, description="""A collection of cells that have some common property.""", json_schema_extra = { "linkml_meta": {'alias': 'subject',
+         'description': 'A collection of cells that have some common property.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'subject',
+         'owner': 'CellSetExpressesGene',
+         'range': 'CellSet'} })
+    predicate: Optional[str] = Field(default=None, description="""relation between some biological entity and a gene that is the input of some gene expression process""", json_schema_extra = { "linkml_meta": {'alias': 'predicate',
+         'description': 'relation between some biological entity and a gene that is '
+                        'the input of some gene expression process',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'predicate',
+         'owner': 'CellSetExpressesGene',
+         'range': 'uriorcurie',
+         'subproperty_of': 'expresses'} })
+    object: Optional[Gene] = Field(default=None, description="""A region (or regions) that includes all of the sequence elements necessary to encode a functional transcript. A gene may include regulatory regions, transcribed regions and/or other functional sequence regions.""", json_schema_extra = { "linkml_meta": {'alias': 'object',
+         'description': 'A region (or regions) that includes all of the sequence '
+                        'elements necessary to encode a functional transcript. A gene '
+                        'may include regulatory regions, transcribed regions and/or '
+                        'other functional sequence regions.',
+         'domain_of': ['Association'],
+         'from_schema': 'https://w3id.org/nlm-ckn-schema',
+         'name': 'object',
+         'owner': 'CellSetExpressesGene',
+         'range': 'Gene'} })
+
+
 # Model rebuild
 # see https://pydantic-docs.helpmanual.io/usage/models/#rebuilding-a-model
 Association.model_rebuild()
@@ -7783,7 +8249,7 @@ CellType.model_rebuild()
 Gene.model_rebuild()
 Drug.model_rebuild()
 AnatomicalStructure.model_rebuild()
-Species.model_rebuild()
+Taxon.model_rebuild()
 CellSetDataset.model_rebuild()
 Publication.model_rebuild()
 BiomarkerCombination.model_rebuild()
@@ -7803,7 +8269,6 @@ AnatomicalStructurePartOfAnatomicalStructure.model_rebuild()
 CellTypeInteractsWithCellType.model_rebuild()
 CellTypeDevelopsFromCellType.model_rebuild()
 CellTypeSubclassOfCellType.model_rebuild()
-CellTypeSelectivelyExpressesGene.model_rebuild()
 CellTypeHasPlasmaMembranePartProtein.model_rebuild()
 CellTypeLacksPlasmaMembranePartProtein.model_rebuild()
 ProteinPartOfCellType.model_rebuild()
@@ -7815,18 +8280,19 @@ DrugMolecularlyInteractsWithProtein.model_rebuild()
 DrugIsSubstanceThatTreatsDisease.model_rebuild()
 CellTypeHasExemplarDataCellSetDataset.model_rebuild()
 CellSetDerivesFromAnatomicalStructure.model_rebuild()
-CellSetHasSourceCellSetDataset.model_rebuild()
+CellSetMemberOfCellSetDataset.model_rebuild()
 GenePartOfBiomarkerCombination.model_rebuild()
 CellSetHasCharacterizingMarkerSetBiomarkerCombination.model_rebuild()
-CellSetDatasetHasSourcePublication.model_rebuild()
+CellSetDatasetWasAttributedToPublication.model_rebuild()
 CellSetComposedPrimarilyOfCellType.model_rebuild()
 DrugEvaluatedInClinicalTrial.model_rebuild()
 DrugMolecularlyInteractsWithGene.model_rebuild()
-GeneMolecularlyInteractsWithDrug.model_rebuild()
-GeneGeneticallyInteractsWithGene.model_rebuild()
+GeneMolecularlyInteractsWithGene.model_rebuild()
 CellSetExactMatchCellSet.model_rebuild()
 BiomarkerCombinationSubclusterOfBinaryGeneSet.model_rebuild()
 CellSetExpressesBinaryGeneSet.model_rebuild()
 ProteinCapableOfMolecularFunction.model_rebuild()
 ProteinInvolvedInBiologicalProcess.model_rebuild()
 ProteinLocatedInCellularComponent.model_rebuild()
+CellSetDatasetIsAboutAnatomicalStructure.model_rebuild()
+CellSetExpressesGene.model_rebuild()
