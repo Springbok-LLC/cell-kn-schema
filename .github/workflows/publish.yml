@@ -32,15 +32,18 @@ jobs:
           OWNER_TYPE=$(curl -s "https://api.github.com/users/${OWNER}" | python3 -c "import sys,json; print(json.load(sys.stdin)['type'])")
           PKG_NAME=$(python3 -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['name'])")
           if [ "$OWNER_TYPE" = "Organization" ]; then
-            echo "url=https://upload.pkg.github.com/orgs/${OWNER}/packages/pypi/${PKG_NAME}/" >> "$GITHUB_OUTPUT"
+            URL="https://upload.pkg.github.com/orgs/${OWNER}/packages/pypi/${PKG_NAME}/"
           else
-            echo "url=https://upload.pkg.github.com/user/packages/pypi/${PKG_NAME}/" >> "$GITHUB_OUTPUT"
+            URL="https://upload.pkg.github.com/user/packages/pypi/${PKG_NAME}/"
           fi
+          echo "Resolved owner type: ${OWNER_TYPE}"
+          echo "Resolved upload URL: ${URL}"
+          echo "url=${URL}" >> "$GITHUB_OUTPUT"
 
       - name: Publish to GitHub Packages
         run: |
           pip install twine
-          twine upload --repository-url ${{ steps.pkg-url.outputs.url }} dist/*
+          twine upload --verbose --repository-url ${{ steps.pkg-url.outputs.url }} dist/*
         env:
           TWINE_USERNAME: ${{ github.actor }}
           TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
