@@ -8,8 +8,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,11 +23,7 @@ jobs:
           pip install build hatch-vcs
           python -m build
 
-      - name: Publish to GitHub Packages
-        run: |
-          pip install twine
-          twine upload --repository-url "https://upload.pkg.github.com/${REPOSITORY}" dist/*
+      - name: Attach to release
+        run: gh release upload "${{ github.ref_name }}" dist/*
         env:
-          REPOSITORY: ${{ github.repository }}
-          TWINE_USERNAME: ${{ github.actor }}
-          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
